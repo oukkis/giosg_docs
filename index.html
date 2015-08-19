@@ -47,47 +47,7 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="introduction">Introduction</h1>
-
-<p>Welcome to the giosg developer docs! You can use our http API to access various endpoints, javascript API to control chat behaviour etc.</p>
-
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="http://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&rsquo;s documentation.</p>
-
-<h1 id="authentication">Authentication</h1>
-
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre>
-<pre class="highlight shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
-
-<blockquote>
-<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
-</blockquote>
-
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-<h1 id="kittens">Kittens</h1>
+        <h1 id="kittens">Kittens</h1>
 
 <h2 id="get-all-kittens">Get All Kittens</h2>
 <pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
@@ -270,63 +230,1827 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 </tbody></table>
 
-          <h1 id="errors">Errors</h1>
+          <h1 id="using-the-api">Using the API</h1>
 
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
+<h2 id="authentication">Authentication</h2>
 
-<p>The Kittn API uses the following error codes:</p>
+<p>You need to provide a valid API key in order access the API. You can create an API key from &ldquo;API keys&rdquo; section in your company settings:</p>
+
+<p><em>Log in to Console → Settings Menu → Company → API keys</em></p>
+
+<p>Once you have obtained your API key, define the Authorization HTTP header for all your API requests:</p>
+
+<p><code class="prettyprint">Authorization: Token 12d5da2085267caa5e41594a47b47e08fcef2530</code></p>
+
+<aside class="notice">
+The string in the end of the header should be replaced with your API key.
+</aside>
+
+<p>Alternatively, if you are unable to customize headers, you may add the token as a GET parameter: <code class="prettyprint">token=12d5da2085267caa5e41594a47b47e08fcef2530</code>. However, we strongly recommend using HTTP headers.</p>
+
+<h2 id="accept-header">Accept Header</h2>
+
+<p>You also need to define that you accept JSON-formatted responses by providing the Accept HTTP header:</p>
+
+<p><code class="prettyprint">Accept: application/json</code></p>
+
+<p>Alternatively, if you are unable to customize headers, you may add <code class="prettyprint">format=json</code> GET parameter.</p>
+
+<h2 id="paginated-collections">Paginated Collections</h2>
+
+<p>Some of the API endpoints return paginated collections. Unless stated otherwise, all these endpoints accept the following optional GET parameters.</p>
 
 <table><thead>
 <tr>
-<th>Error Code</th>
-<th>Meaning</th>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th>Default</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>400</td>
-<td>Bad Request &ndash; Your request sucks</td>
+<td style="text-align: left"><code class="prettyprint">page</code></td>
+<td style="text-align: left">integer</td>
+<td><code class="prettyprint">1</code></td>
+<td>Which page of the results to return. If omitted, the first page with index 1 is returned.</td>
 </tr>
 <tr>
-<td>401</td>
-<td>Unauthorized &ndash; Your API key is wrong</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found &ndash; The specified kitten could not be found</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone &ndash; The kitten requested has been removed from our servers</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&rsquo;m a teapot</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slow down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
+<td style="text-align: left"><code class="prettyprint">page_size</code></td>
+<td style="text-align: left">integer</td>
+<td>(varies)</td>
+<td>Maximum number of returned objects per page. The default value and limitations depend on the API end-point.</td>
 </tr>
 </tbody></table>
+
+<p>Those API endpoints that return paginated collections return an object with the following attributes.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">count</code></td>
+<td style="text-align: left">integer</td>
+<td>The total number of objects matching the query. This may be much larger than the number of the actually returned objects in this response.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">per_page</code></td>
+<td style="text-align: left">integer</td>
+<td>Maximum number of objects per page. The actual number of returned objects on the last page may be fewer than this number. This equals to the &lsquo;page_size&rsquo; GET parameter or its default value.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">num_pages</code></td>
+<td style="text-align: left">integer</td>
+<td>The total number of pages for the matching query results. In practice, this is same than count / per_page, rounded up.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">current_page</code></td>
+<td style="text-align: left">integer</td>
+<td>The index of the current page. The counting starts from one (1).</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">next_page</code></td>
+<td style="text-align: left">integer</td>
+<td>Index of the next available page. This is null if the current page is the last page.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">previous_page</code></td>
+<td style="text-align: left">integer</td>
+<td>Index of the previous available page. This is <code class="prettyprint">null</code> if the current page is the first page.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">next_page_url</code></td>
+<td style="text-align: left">string</td>
+<td>For convenience, ready-to-use URL for requesting the next page. This is <code class="prettyprint">null</code> if the current page is the last page.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">previous_page_url</code></td>
+<td style="text-align: left">string</td>
+<td>For convenience, ready-to-use URL for requesting the previous page. This is <code class="prettyprint">null</code> if the current page is the first page</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">results</code></td>
+<td style="text-align: left">array of objects</td>
+<td>The list containing the results for the current page</td>
+</tr>
+</tbody></table>
+
+<h2 id="ordering-collections">Ordering Collections</h2>
+
+<p><a href="#paginated-collections">Paginated collection</a> can usually be ordered by using a <code class="prettyprint">ordering</code> attribute. The allowed sorting criteria depends on the endpoint, but the basic usage is always the same. You have an allowed set of sorting attributes, e.g. <code class="prettyprint">first_name</code>, <code class="prettyprint">last_name</code> and <code class="prettyprint">created_at</code>. You may then choose the primary sorting key and any secondary sorting keys with a comma-separated string, e.g. <code class="prettyprint">last_name,first_name</code>. Any sorting order is ascending by default, but may be reverted to descending order by prefixing with a minus (<code class="prettyprint">-</code>) character, e.g. <code class="prettyprint">-created_at</code> or <code class="prettyprint">last_name,-created_at</code>.</p>
+
+<h2 id="date-time-format">Date/time format</h2>
+
+<p>All the date/times are defined in ISO-8601 format strings, for example: <code class="prettyprint">2015-06-12T12:34:56.000000Z</code></p>
+
+          <h1 id="customer-api">Customer API</h1>
+
+<h2 id="companies">Companies</h2>
+
+<p>A company represents any organization account on giosg system. A company consists of a number of users with their own user accounts. A user always belongs to exactly one company.</p>
+
+<p>Please note that despite its name a &ldquo;company&rdquo; in this context means any organization or group. It can even consists of only one person.</p>
+
+<p>A company object contains the following attributes. Note that the contact information is public.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>Unique identifier for this company</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">name</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>required?</strong></td>
+<td>The name of the company. Required, if your company is using Network features.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">email</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Contact email address, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">phone</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Contact phone number, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">street</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Contact street address, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">postal_code</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Contact address postal code, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">city</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Contact address city, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">country</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Country as a two-letter, lowercase ISO 3166-1 code, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">business_id</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Business ID of the company, if any, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When this company account was created <strong>Visible only for your own company.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">modified_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When company details were changed last time. <strong>Visible only for your own company.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">billing_street</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Billing street address, or <code class="prettyprint">null</code>. <strong>Visible only for your own company</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">billing_postal_code</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Billing postal code, or <code class="prettyprint">null</code>. <strong>Visible only for your own company</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">billing_city</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Billing city, or <code class="prettyprint">null</code>. <strong>Visible only for your own company</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">billing_country</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Billing country as a two-letter ISO 3166-1 code, or <code class="prettyprint">null</code>. <strong>Visible only for your own company</strong></td>
+</tr>
+</tbody></table>
+
+<h3 id="retrieve-company-details">Retrieve company details</h3>
+
+<p>Get a single <a href="#companies">company</a> object by its ID.
+<code class="prettyprint">
+GET /api/v3/customer/companies/[company_id]
+</code></p>
+
+<h3 id="update-company-details">Update company details</h3>
+
+<p>You may update some of the attributes a company, if you have permissions to do so.
+<code class="prettyprint">
+PUT /api/v3/customer/companies/[company_id]
+</code>
+<code class="prettyprint">
+PATCH /api/v3/customer/companies/[company_id]
+</code></p>
+
+<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes the <a href="#companies">company</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
+
+<h2 id="persons">Persons</h2>
+
+<p>A person represents a giosg user account. A person resource has the following attributes.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>Unique identifier</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">email</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">read-only</td>
+<td>Email address</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">company_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the company to which the person belongs to</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">company</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#companies">company</a> resource to which the person belongs to</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">first_name</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>First name</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">last_name</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Last name</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_manager</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>Whether the person is a manager. You cannot change this for yourself. You may change the value for the other members of your company, if you are a manager.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">alias</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Display name, used when chatting. May be <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">gender</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Gender with three options: <code class="prettyprint">1</code>= male, <code class="prettyprint">2</code>= female, <code class="prettyprint">null</code>= unknown</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">birthday</code></td>
+<td style="text-align: left"><a href="#date-format">date</a></td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Date of birth in format <code class="prettyprint">YYYY-MM-DD</code>, e.g. <code class="prettyprint">1980-06-19</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">phone</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Contact phone number</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">title</code></td>
+<td style="text-align: left">title</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Title of the person</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When the person resource was created</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">modified_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When the person resource was modified last time</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">avatar</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The avatar of the person as an object. It contains attributes <code class="prettyprint">id</code>and <code class="prettyprint">url</code>. This is <code class="prettyprint">null</code> if the person has no avatar.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_online</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">read-only</td>
+<td>Whether the person is currently in online status as an operator, based on the most recent information about the user.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_signed_in</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">read-only</td>
+<td>Whether the person is currenlty logged in to the service, based on the most recent information about the user.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">current_chat_count</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>The number of chats the person has currently, based on the most recent information about the user.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_deleted</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">read-only</td>
+<td>Whether this person exists no more. If <code class="prettyprint">true</code>, the resource exists only for historical purposes and cannot be used in any other context!</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">team_memberships</code></td>
+<td style="text-align: left">array of objects</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#team-memberships">team membership</a> resources, listing the teams this person belongs to. Each object in the array has the attributes <code class="prettyprint">id</code>, <code class="prettyprint">team_id</code>, <code class="prettyprint">team</code>, <code class="prettyprint">is_admin</code></td>
+</tr>
+</tbody></table>
+
+<h3 id="retrieve-person-details">Retrieve person details</h3>
+
+<p>Get a single <a href="#persons">person</a> object by its ID.
+<code class="prettyprint">
+GET /api/v3/customer/persons/[person_id]
+</code>
+Alternatively, you may get <strong>your own</strong> user account details by replacing the ID with the word <code class="prettyprint">me</code>.
+<code class="prettyprint">
+GET /api/v3/customer/persons/me
+</code></p>
+
+<p>This endpoint accepts the following GET parameters.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">include_deleted</code></td>
+<td>boolean</td>
+<td>false</td>
+<td>If <code class="prettyprint">true</code>, does not return 404 for deleted resources.</td>
+</tr>
+</tbody></table>
+
+<p>If you try to get a person that has been deleted, the endpoint results in 404 response by default. You may access the removed persons of your company for historical purposes by adding <code class="prettyprint">include_deleted=true</code> to the GET parameters.</p>
+
+<h3 id="update-person-details">Update person details</h3>
+
+<p>You may update some of the attributes of a user account.
+<code class="prettyprint">
+PUT /api/v3/customer/persons/[person_id]
+</code>
+<code class="prettyprint">
+PATCH /api/v3/customer/persons/[person_id]
+</code></p>
+
+<p>Once again, you may replace the person ID with word <code class="prettyprint">me</code> in order to update your own account details.</p>
+
+<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains all the changed attributes of the <a href="#persons">person</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
+
+<h3 id="get-a-collection-of-persons">Get a collection of persons</h3>
+
+<p>Get a <a href="#paginated-collections">paginated collection</a> of persons that you are allowed to list.
+<code class="prettyprint">
+GET /api/v3/customer/persons/
+</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ordering</code></td>
+<td><a href="#ordering-collections">ordering</a></td>
+<td><code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">last_name</code>, <code class="prettyprint">first_name</code>, <code class="prettyprint">email</code>, <code class="prettyprint">alias</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">modified_at</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">include_deleted</code></td>
+<td>boolean</td>
+<td>false</td>
+<td>If <code class="prettyprint">true</code>, include deleted resources to results. If <code class="prettyprint">false</code> (default), excludes any deleted resources.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">is_manager</code></td>
+<td>boolean</td>
+<td>(none)</td>
+<td>If <code class="prettyprint">true</code>, only include managers. If <code class="prettyprint">false</code>, exclude all managers.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page</code></td>
+<td>integer</td>
+<td>1</td>
+<td><a href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page_size</code></td>
+<td>integer</td>
+<td>50</td>
+<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+</tr>
+</tbody></table>
+
+<h2 id="rooms">Rooms</h2>
+
+<p>A room object contains the following attributes.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">integer</td>
+<td>The unique identifier of this room</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">token</code></td>
+<td style="text-align: left">string</td>
+<td>A signed Giosg token, used as a public identifier of this room</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">company_id</code></td>
+<td style="text-align: left">integer</td>
+<td>ID of the company who owns this room.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">company</code></td>
+<td style="text-align: left">object</td>
+<td>The <a href="#companies">company</a> who owns this room.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">domain</code></td>
+<td style="text-align: left">string</td>
+<td>A domain hostname if this room is a domain room, otherwise <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">name</code></td>
+<td style="text-align: left">string</td>
+<td>Name of the room, set by the owner</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">display_name</code></td>
+<td style="text-align: left">string</td>
+<td>Display name of the room. It may equal to the <code class="prettyprint">name</code> attribute, unless this room is <a href="#outgoing-room-shares">shared</a> to your company with a custom <code class="prettyprint">share_name</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_shared</code></td>
+<td style="text-align: left">boolean</td>
+<td><code class="prettyprint">true</code> if the room is shared to your company, <code class="prettyprint">false</code> if your company owns the room</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">allowed_domains</code></td>
+<td style="text-align: left">array of objects</td>
+<td>List of domain rooms on which this room may be used. Each object in the array contains <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">display_name</code> and <code class="prettyprint">domain</code> attributes.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">language_code</code></td>
+<td style="text-align: left">string</td>
+<td>Language of this room in ISO 639-1 code, or <code class="prettyprint">null</code> if undefined.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td>When this room was created. <strong>Visible only to your own company.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">modified_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td>When this room was modified last time. <strong>Visible only to your own company.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">last_modifier_id</code></td>
+<td style="text-align: left">integer</td>
+<td>ID of the person who last modified this room, or <code class="prettyprint">null</code> if unknown. <strong>Visible only to your own company.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">last_modifier</code></td>
+<td style="text-align: left">object</td>
+<td>Details of the person who last modified this room, or <code class="prettyprint">null</code> if unknown. <strong>Visible only to your own company.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_deleted</code></td>
+<td style="text-align: left">boolean</td>
+<td>read-only</td>
+</tr>
+</tbody></table>
+
+<h3 id="retrieve-room-details">Retrieve room details</h3>
+
+<p>Get a single room object that your company has access to, by its ID. This may be a shared room.
+<code class="prettyprint">
+GET /api/v3/customer/rooms/[room_id]
+</code></p>
+
+<p>This endpoint accepts the following GET parameters.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">include_deleted</code></td>
+<td>boolean</td>
+<td>false</td>
+<td>If <code class="prettyprint">true</code>, does not return 404 for deleted resources.</td>
+</tr>
+</tbody></table>
+
+<p>If you try to get a room that has been deleted, the endpoint results in 404 response by default. You may access the removed rooms of your company for historical purposes by adding <code class="prettyprint">include_deleted=true</code> to the GET parameters.</p>
+
+<h3 id="get-a-collection-of-rooms">Get a collection of rooms</h3>
+
+<p>Return a <a href="#paginated-collections">paginated collection</a> of all the <a href="#rooms">room</a> resources you have access to, including any shared rooms:
+<code class="prettyprint">
+GET /api/v3/customer/rooms
+</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ordering</code></td>
+<td><a href="#ordering-collections">ordering</a></td>
+<td><code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">domain</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">modified_at</code>, <code class="prettyprint">company_id</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">include_deleted</code></td>
+<td>boolean</td>
+<td><code class="prettyprint">false</code></td>
+<td>If <code class="prettyprint">true</code>, include deleted resources to results. If <code class="prettyprint">false</code> (default), excludes any deleted resources.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">is_shared</code></td>
+<td>boolean</td>
+<td>(none)</td>
+<td>If <code class="prettyprint">true</code>, return only rooms shared to your company. If <code class="prettyprint">false</code>, return only your own company&rsquo;s rooms.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">company_id</code></td>
+<td>integer</td>
+<td>(none)</td>
+<td>Return only rooms owned by this company ID</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page</code></td>
+<td>integer</td>
+<td>1</td>
+<td><a href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page_size</code></td>
+<td>integer</td>
+<td>50</td>
+<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+</tr>
+</tbody></table>
+
+<h2 id="teams">Teams</h2>
+
+<p>A team object contains the following attributes.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">integer</td>
+<td>The unique identifier of this team</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">company_id</code></td>
+<td style="text-align: left">integer</td>
+<td>ID of the company who owns this room.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">company</code></td>
+<td style="text-align: left">object</td>
+<td>The <a href="#companies">company</a> who owns this room.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">name</code></td>
+<td style="text-align: left">string</td>
+<td>Name of the team, set by the owner</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">display_name</code></td>
+<td style="text-align: left">string</td>
+<td>Display name of the team. It may equal to the <code class="prettyprint">name</code> attribute, unless this team is <a href="#outgoing-team-shares">shared</a> to your company with a custom <code class="prettyprint">share_name</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_shared</code></td>
+<td style="text-align: left">boolean</td>
+<td><code class="prettyprint">true</code> if the room is shared to your company, <code class="prettyprint">false</code> if your company owns the room</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">member_count</code></td>
+<td style="text-align: left">integer</td>
+<td>Number of <a href="#team-memberships">members</a> in this team, including both admins and non-admins. <strong>Visible only to your own company.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">admin_count</code></td>
+<td style="text-align: left">integer</td>
+<td>Number of <a href="#team-memberships">admins</a> in this team. <strong>Visible only to your own company.</strong></td>
+</tr>
+</tbody></table>
+
+<h3 id="retrieve-team-details">Retrieve team details</h3>
+
+<p>Get a single team object that your company has access to, by its ID. This may be a shared team.
+<code class="prettyprint">
+GET /api/v3/customer/teams/[team_id]
+</code></p>
+
+<h3 id="get-a-collection-of-teams">Get a collection of teams</h3>
+
+<p>Return a <a href="#paginated-collections">paginated collection</a> of all the <a href="#teams">team</a> resources you have access to, including any shared teams:
+<code class="prettyprint">
+GET /api/v3/customer/teams
+</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ordering</code></td>
+<td><a href="#ordering-collections">ordering</a></td>
+<td><code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">company_id</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">is_shared</code></td>
+<td>boolean</td>
+<td>(none)</td>
+<td>If <code class="prettyprint">true</code>, return only teams shared to your company. If <code class="prettyprint">false</code>, return only your own company&rsquo;s teams.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">company_id</code></td>
+<td>integer</td>
+<td>(none)</td>
+<td>Return only rooms owned by this company ID</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page</code></td>
+<td>integer</td>
+<td>1</td>
+<td><a href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page_size</code></td>
+<td>integer</td>
+<td>50</td>
+<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+</tr>
+</tbody></table>
+
+<h2 id="team-memberships">Team memberships</h2>
+
+<p>A <strong>team membership</strong> represents a person belonging to a specific team. Team memberships are only visible for teams of your own company. A team membership resource has the following attributes.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">integer</td>
+<td>The unique identifier of this team</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">team_id</code></td>
+<td style="text-align: left">integer</td>
+<td>ID of the team to which this member belongs.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">team</code></td>
+<td style="text-align: left">object</td>
+<td>The <a href="#teams">team</a> to which this member belongs, with attributes <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">display_name</code>, and <code class="prettyprint">company_id</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">person_id</code></td>
+<td style="text-align: left">integer</td>
+<td>ID of the member person.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">person</code></td>
+<td style="text-align: left">object</td>
+<td>The member <a href="#persons">person</a> resource. Has all other attributes than <code class="prettyprint">company</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_admin</code></td>
+<td style="text-align: left">boolean</td>
+<td>Whether or not the member is the admin of the team.</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-a-collection-of-team-memberships-for-a-team">Get a collection of team memberships for a team</h3>
+
+<p>Return a <a href="#paginated-collections">paginated collection</a> of all the <a href="#team-memberships">team membership</a> resources for a specific <a href="#teams">team</a>.
+<code class="prettyprint">
+GET /api/v3/customer/teams/[team_id]/memberships
+</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">is_admin</code></td>
+<td>boolean</td>
+<td>(none)</td>
+<td>If <code class="prettyprint">true</code>, return only admin memberships. If <code class="prettyprint">false</code>, return only non-admin memberships.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page</code></td>
+<td>integer</td>
+<td>1</td>
+<td><a href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page_size</code></td>
+<td>integer</td>
+<td>50</td>
+<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+</tr>
+</tbody></table>
+
+          <h1 id="partnership-api">Partnership API</h1>
+
+<h2 id="outgoing-partnership-invitations">Outgoing partnership invitations</h2>
+
+<p>You may build your giosg NETWORK by inviting them. This is done with invitation objects. When sending and managing invitations from your company account to your partners, we use <strong>outgoing invitations</strong>. An outgoing invitation object has the following attributes:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>Unique identifier of this invitation</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">status</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>Status of the invitation, with the following possible values: <code class="prettyprint">0</code>= Pending, <code class="prettyprint">1</code>= Accepted by the received, <code class="prettyprint">2</code>= Rejected by the received</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">email</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>A valid email address to which the invitation will be sent. Must be set on creation and cannot be changed later.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">message</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Message to be sent with the invitation to your partner. May only be set on creation.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">partner_display_name</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>A display name that will be set to the new partner when they accept the invitation and the partnership is created. The display name is visible to your organization members. May be <code class="prettyprint">null</code>, in which case the partner will be shown with their original name.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">partner_visible_to_everyone</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>If <code class="prettyprint">true</code>, the new partner will become visible to your company members. If <code class="prettyprint">false</code>, it will be shown only on company management.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">room_shares</code></td>
+<td style="text-align: left">array of objects</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>You may <strong>share rooms</strong> to your partner when they accept your invitation. This should be an array of objects similar to <a href="#outgoing-room-shares">outgoing room share</a> objects. On creation, the objects may contain attributes <code class="prettyprint">room_id</code> and <code class="prettyprint">share_name</code>. In responses these objects contain the attributes <code class="prettyprint">room_id</code>, <code class="prettyprint">room</code>, and <code class="prettyprint">share_name</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">team_shares</code></td>
+<td style="text-align: left">array of objects</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>You may <strong>share teams</strong> to your partner when they accept your invitation. This should be an array of objects similar to <a href="#outgoing-team-shares">outgoing team share</a> objects. On creation, the objects may contain attributes <code class="prettyprint">team_id</code> and <code class="prettyprint">share_name</code>. In responses these objects contain the attributes <code class="prettyprint">team_id</code>, <code class="prettyprint">team</code>, and <code class="prettyprint">share_name</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When this invitation was sent</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">creator_company_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the company who sent this invitation</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">creator_company</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#companies">company</a> resource who sent this invitation, with all of its attributes.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">creator_person_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the person who sent this invitation</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">creator_person</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#persons">person</a> resource who sent this invitation, with all other attributes except <code class="prettyprint">company</code> and <code class="prettyprint">company_id</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">resolved_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When this invitation was accepted or rejected, <code class="prettyprint">null</code> if still pending</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">resolver_company_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the company who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">resolver_company</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#companies">company</a> resource who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">resolver_person_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the person who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">resolver_person</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#persons">person</a> who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the <a href="#partnerships">partnership</a> of the partner who accepted this invitation, or <code class="prettyprint">null</code> if not accepted</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_new_partnership</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">read-only</td>
+<td>This is <code class="prettyprint">true</code> if the invitation was accepted by a new partner, <code class="prettyprint">false</code> if it was accepted by an existing partner, or <code class="prettyprint">null</code> if not yet accepted.</td>
+</tr>
+</tbody></table>
+
+<p>If your invitation is accepted by an existing partner, then any shared teams or rooms are added to that partner. No existing shares are removed in this case.</p>
+
+<h3 id="send-an-invitation">Send an invitation</h3>
+
+<p>You may send an invitation to your partner&rsquo;s email address by creating a new <a href="#outgoing-partnership-invitations">outgoing invitation</a> object.
+<code class="prettyprint">
+POST /api/v3/network/invitations/outgoing/
+</code></p>
+
+<h3 id="cancel-an-outgoing-invitation">Cancel an outgoing invitation</h3>
+
+<p>You may cancel a partnership invitation before it is accepted or rejected, by a given ID.
+<code class="prettyprint">
+DELETE /api/v3/network/invitations/outgoing/[invitation_id]
+</code>
+The endpoint returns a 404 status code if the invitation is not found or if you are not authenticated as the sender of this invitation or if the invitation has already been cancelled.</p>
+
+<p>The endpoint returns a 403 status code if the invitation has already been accepted or rejected.</p>
+
+<h3 id="retrieve-outgoing-invitation-details">Retrieve outgoing invitation details</h3>
+
+<p>Get a single <a href="#outgoing-partnership-invitations">outgoing invitation</a> object sent by your company, by a given ID.
+<code class="prettyprint">
+GET /api/v3/network/invitations/outgoing/[invitation_id]
+</code></p>
+
+<h3 id="get-a-collection-of-outgoing-invitations">Get a collection of outgoing invitations</h3>
+
+<p>Get a <a href="#paginated-collections">paginated collection</a> of all sent <a href="#outgoing-partnership-invitations">outgoing invitation</a> objects.
+<code class="prettyprint">
+GET /api/v3/network/invitations/outgoing/
+</code></p>
+
+<p>This endpoint accepts the following GET parameters.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ordering</code></td>
+<td><a href="#ordering-collections">ordering</a></td>
+<td><code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">status</code>, <code class="prettyprint">email</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">resolved_at</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">status</code></td>
+<td>integer</td>
+<td>(none)</td>
+<td>Filter the results by the <code class="prettyprint">status</code> attribute</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page</code></td>
+<td>integer</td>
+<td>1</td>
+<td><a href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page_size</code></td>
+<td>integer</td>
+<td>50</td>
+<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+</tr>
+</tbody></table>
+
+<h2 id="incoming-partnership-invitations">Incoming partnership invitations</h2>
+
+<p>When you are a receiving party of a partnership invitation then you handle the invitation objects as <strong>incoming partnership invitations</strong>. An incoming invitation has the following attributes:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">key</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">read-only</td>
+<td>Unique key for this invitation. You need to use this to identify <em>incoming</em> invitations.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>Unique identifier of this invitation</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">status</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>Status of the invitation, with the following possible values: <code class="prettyprint">0</code>= Pending, <code class="prettyprint">1</code>= Accepted by the received, <code class="prettyprint">2</code>= Rejected by the received</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">email</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">read-only</td>
+<td>The email address to which this invitation was sent</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">message</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">read-only</td>
+<td>Message to be sent with the invitation to your partner.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">room_shares</code></td>
+<td style="text-align: left">array of objects</td>
+<td style="text-align: left">read-only</td>
+<td>The rooms that will be shared when the invitation is accepted. An array where each item has the following attributes of an <a href="#incoming-room-shares">incoming room share</a> objects: <code class="prettyprint">room_id</code> and <code class="prettyprint">room</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">team_shares</code></td>
+<td style="text-align: left">array of objects</td>
+<td style="text-align: left">read-only</td>
+<td>The teams that will be shared when the invitation is accepted. An array where each item has the following attributes of an <a href="#incoming-team-shares">incoming team share</a> object: <code class="prettyprint">team_id</code> and <code class="prettyprint">team</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When this invitation sent</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">creator_company_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the company who sent this invitation</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">creator_company</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#companies">company</a> who sent this invitation, with all of its attributes.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">creator_person_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the person who sent this invitation</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">creator_person</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#persons">person</a> who sent this invitation, with all other attributes except <code class="prettyprint">company</code> and <code class="prettyprint">company_id</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">resolved_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When this invitation was accepted or rejected, <code class="prettyprint">null</code> if still pending</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">resolver_company_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the company who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">resolver_company</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#companies">company</a> resource who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">resolver_person_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the person who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">resolver_person</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#persons">person</a> who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the <a href="#partnerships">partnership</a> of the partner whose invitation was accepted, or <code class="prettyprint">null</code> if not accepted</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_new_partnership</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">read-only</td>
+<td>This is <code class="prettyprint">true</code> if the invitation was accepted by a new partner, <code class="prettyprint">false</code> if it was accepted by an existing partner, or <code class="prettyprint">null</code> if not yet accepted.</td>
+</tr>
+</tbody></table>
+
+<h3 id="retrieve-incoming-invitation-details">Retrieve incoming invitation details</h3>
+
+<p>Retrieve a <a href="#incoming-partnership-invitations">incoming invitation</a> resource by its <strong>invitation key</strong>. Incoming invitations are identified by their automatically generated, random key strings, instead of integer IDs.
+<code class="prettyprint">
+GET /api/v3/network/invitations/incoming/[invitation_key]
+</code></p>
+
+<h3 id="get-a-collection-of-incoming-invitations">Get a collection of incoming invitations</h3>
+
+<p>Get a <a href="#paginated-collections">paginated collection</a> of all received <a href="#incoming-partnership-invitations">incoming invitation</a> objects. This endpoint returns invitations accepted or rejected by your company. It also returns those invitations that are sent to one of your company&rsquo;s email address. <strong>NOTE</strong> that the company who sends the invitation does not know if this email address actually exists in giosg system.</p>
+<pre class="highlight plaintext"><code>GET /api/v3/network/invitations/incoming/
+</code></pre>
+
+<p>This endpoint accepts the following GET parameters.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ordering</code></td>
+<td><a href="#ordering-collections">ordering</a></td>
+<td><code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">status</code>, <code class="prettyprint">email</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">resolved_at</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">status</code></td>
+<td>integer</td>
+<td>(none)</td>
+<td>Filter the results by the <code class="prettyprint">status</code> attribute</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page</code></td>
+<td>integer</td>
+<td>1</td>
+<td><a href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page_size</code></td>
+<td>integer</td>
+<td>50</td>
+<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+</tr>
+</tbody></table>
+
+<h3 id="accept-an-incoming-invitation">Accept an incoming invitation</h3>
+
+<p>You need to accept an invitation to become partners with the sender. In order to accept the invitation, you need the invitation key.
+<code class="prettyprint">
+POST /api/v3/network/invitations/incoming/[invitation_key]/accept
+</code>
+As soon as you accept the invitation, the partnership will be created. Also, any shared rooms and teams will become available to your company.</p>
+
+<p>You should send an object as a payload with the following attributes, matching the attributes on a <a href="#partnerships">partnership</a> resource. They may be omitted, see below.</p>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">display_name</code></td>
+<td>string</td>
+<td><strong>optional</strong></td>
+<td>A display name that will be set to the newly created partner. The display name is visible to your organization members. May be <code class="prettyprint">null</code>, in which case the partner will be shown with their original name.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">visible_to_everyone</code></td>
+<td>boolean</td>
+<td><strong>required</strong></td>
+<td>If <code class="prettyprint">true</code>, the new partner will become visible to your company members. If <code class="prettyprint">false</code>, it will be shown only on company management.</td>
+</tr>
+</tbody></table>
+
+<p>It is possible to accept an invitation from an existing partner. In this case, no new partnership is created. The <code class="prettyprint">display_name</code> and <code class="prettyprint">visible_to_everyone</code> will overwrite the corresponding attributes of the existing <a href="#partnerships">partnership</a> resource, <strong>unless they are omitted</strong>, in which case the old values are preserved.</p>
+
+<p>If you are accepting the invitation with <a href="#incoming-room-shares">shared rooms</a> or <a href="#incoming-team-shares">teams</a> from an existing partner, then the rooms and teams will become available to you.</p>
+
+<p>After accepting an invitation, its status will become <code class="prettyprint">1</code>.</p>
+
+<p>The request will result in 404 response if the invitation was not found, has been cancelled, or has already been accepted/rejected by some other company. The request will result in 403 response if the invitation has already been accepted or rejected by your company, or if you are not allowed to accept/reject the invitation, e.g. you are the original creator of this invitation.</p>
+
+<p>A successful response will result in the updated <a href="#incoming-partnership-invitations">incoming invitation</a> resource.</p>
+
+<h3 id="reject-an-invitation">Reject an invitation</h3>
+
+<p>You may reject an invitation by its invitation key.
+<code class="prettyprint">
+POST /api/v3/network/invitations/incoming/[invitation_key]/reject
+</code>
+No request payload is required. After rejecting an invitation, its status will become <code class="prettyprint">2</code>.</p>
+
+<p>The request will result in 404 response if the invitation was not found, has been cancelled, or has already been accepted/rejected by some other company. The request will result in 403 response if the invitation has already been accepted or rejected by your company, or if you are not allowed to accept/reject the invitation, e.g. you are the original creator of this invitation.</p>
+
+<p>A successful response will result in the updated <a href="#incoming-partnership-invitations">incoming invitation</a> resource.</p>
+
+<h2 id="partnerships">Partnerships</h2>
+
+<p>A partnership object describes a connection between your company and one of your partner companies. Partnerships can only be created with <a href="#outgoing-partnership-invitations">partnership invitation</a> resources.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>Unique identifier for this partnership. <strong>Note</strong> that your partner will see the partnership with a different identifier.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When you became partners</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">partner_company_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the partner company</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">partner_company</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The partner <a href="#companies">company</a> resource, with all of its available attributes</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">company_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of your company, for convenience</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">company</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>Your <a href="#companies">company</a> resource, for convenience</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">dislay_name</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Name that is shown to your company members for this partner. May be <code class="prettyprint">null</code>, in which case the original name is shown</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">visible_to_everyone</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>If <code class="prettyprint">true</code>, the new partner will become visible to your company members. If <code class="prettyprint">false</code>, it will be shown only on company management.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">incoming_invitation_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">ID of the incoming invitation that resulted in creation of this partnership, or <code class="prettyprint">null</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">incoming_invitation</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">The <a href="#incoming-partnership-invitations">incoming invitation</a> resource that resulted in creation of this partnership, or <code class="prettyprint">null</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">outgoing_invitation_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">ID of the outgoing invitation that resulted in creation of this partnership, or <code class="prettyprint">null</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">outgoing_invitation</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">The <a href="#outgoing-partnership-invitations">outgoing invitation</a> resource that resulted in creation of this partnership, or <code class="prettyprint">null</code>.</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h3 id="get-a-collection-of-partnerships">Get a collection of partnerships</h3>
+
+<p>Get a <a href="#paginated-collections">paginated collection</a> of all the known partnerships.
+<code class="prettyprint">
+GET /api/v3/network/partnerships/
+</code></p>
+
+<p>This end-point accepts the following GET parameters.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ordering</code></td>
+<td><a href="#ordering-collections">ordering</a></td>
+<td><code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">partner_company_name</code>, <code class="prettyprint">created_at</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">page</code></td>
+<td>integer</td>
+<td>1</td>
+<td><a href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page_size</code></td>
+<td>integer</td>
+<td>25</td>
+<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 100</td>
+</tr>
+</tbody></table>
+
+<h3 id="retrieve-partnership-details">Retrieve partnership details</h3>
+
+<p>Retrieve a single <a href="#partnerships">partnership</a> resource by the partnership ID (not partner company&rsquo;s ID).
+<code class="prettyprint">
+GET /api/v3/network/partnerships/[partnership_id]
+</code></p>
+
+<h3 id="remove-a-partnership">Remove a partnership</h3>
+
+<p><strong>WARNING!</strong> This will immediately remove the company from your partners and remove your partner&rsquo;s access to your shared resources. You cannot undo this action! You need to invite your partner again and re-share all your rooms/teams and re-set any permissions.</p>
+
+<p>Being aware of this, you may remove another company from your partners.
+<code class="prettyprint">
+DELETE /api/v3/network/partnerships/[partnership_id]
+</code></p>
+
+<h3 id="update-a-partnership">Update a partnership</h3>
+
+<p>You may update the editable attributes of a partnership.
+<code class="prettyprint">
+PUT /api/v3/network/partnerships/[partnership_id]
+</code>
+<code class="prettyprint">
+PATCH /api/v3/network/partnerships/[partnership_id]
+</code></p>
+
+<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes of the <a href="#partnerships">partnership</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
+
+          <h1 id="sharing-api">Sharing API</h1>
+
+<p>Once you have become partners, you may share resources to your partner company. Shared resources are represented by <strong>share resources</strong>. Currently there are two types of shares:</p>
+
+<ul>
+<li><strong>Room shares</strong>
+
+<ul>
+<li><a href="#outgoing-room-shares">Outgoing room share</a></li>
+<li><a href="#incoming-room-shares">Incoming room share</a></li>
+</ul></li>
+<li><strong>Team shares</strong>
+
+<ul>
+<li><a href="#outgoing-team-shares">Outgoing team share</a></li>
+<li><a href="#incoming-team-shares">Incoming team share</a></li>
+</ul></li>
+</ul>
+
+<p>Additionally, each type of share are represented as either outgoing or incoming share, depending on whether you are the sharing or the receiving party.</p>
+
+<h2 id="outgoing-shares">Outgoing shares</h2>
+
+<p>Each <strong>outgoing share</strong> resource has the following attributes, regardless of the type of resource that is being shared.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>Unique identifier for the share</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When the resource was shared</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">creator_person_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the person who shared the resource</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">creator_person</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#persons">person</a> resource who shared the resource, with all of the available attributes</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">share_name</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Name that is shown to the receiver as a display name for this resource. If <code class="prettyprint">null</code>, the original name is displayed. This may be updated later.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>ID of the <a href="#partnerships">partnership</a> of the partner to whom the resource is shared. <strong>Cannot be changed after creation.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">original_share_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left"><strong>required (?)</strong></td>
+<td>ID of the incoming share if the resource is being re-shared, or <code class="prettyprint">null</code> otherwise. Required if you are sharing forward a resource that has been shared to you. <strong>Cannot be changed after creation.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">original_share</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The incoming share resource if the room is being re-shared, or <code class="prettyprint">null</code> otherwise. Its <code class="prettyprint">id</code> equals to <code class="prettyprint">original_share_id</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">sharer_company_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the company who shared the resource</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">sharer_company</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#companies">company</a> object who shared the resource, with all of its attributes.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">receiver_company_id</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the company to whom the resource was shared</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">receiver_company</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#companies">company</a> object to whon the resource was shared</td>
+</tr>
+</tbody></table>
+
+<p>If you are re-sharing a resource that is shared to your company, then you must set the attribute <code class="prettyprint">original_share_id</code> to the ID of the corresponding <a href="#incoming-shares">incoming share</a> resource that shares the resource to <strong>your</strong> company. If you own the shared room, this should always be <code class="prettyprint">null</code>.</p>
+
+<p>By default, resources are shared with their original names. However, these are usually for your company&rsquo;s internal use, and you may want to display the resource with more descriptive name to your partners. In this case, you may want to define the <code class="prettyprint">share_name</code> attribute.</p>
+
+<h3 id="outgoing-room-shares">Outgoing room shares</h3>
+
+<p>Your company may share rooms to their partners by creating outgoing room share resources that extend <a href="#outgoing-shares">outgoing share</a> resources. Additionally, an outgoing room share object has the following attributes.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">room_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>ID of the room to be shared. <strong>Cannot be changed after creation.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">room</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#rooms">room</a> resource that has been shared</td>
+</tr>
+</tbody></table>
+
+<h3 id="outgoing-team-shares">Outgoing team shares</h3>
+
+<p>Your company may share teams to their partners by creating outgoing team share resources that extend <a href="#outgoing-shares">outgoing share</a> resources. Additionally, an outgoing team share object has the following attributes.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">team_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>ID of the team to be shared. <strong>Cannot be changed after creation.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">team</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#teams">team</a> resource that has been shared</td>
+</tr>
+</tbody></table>
+
+<h3 id="share-a-resource">Share a resource</h3>
+
+<p>You may share a resource to one of your partners by making a <code class="prettyprint">POST</code> request.
+<code class="prettyprint">
+POST /api/v3/network/shares/outgoing/[resource_type]/
+</code>
+The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. You may only share resources that you own or are being shared to your company. You need to provide the required attributes of an <a href="#outgoing-room-shares">outgoing room share</a> or an <a href="#outgoing-team-shares">outgoing team share</a> as well as desired optional attributes as a payload.</p>
+
+<p>The API returns an <a href="#outgoing-room-shares">outgoing room share</a> or an <a href="#outgoing-team-shares">outgoing team share</a> as a response.</p>
+
+<h3 id="retrieve-outgoing-share-details">Retrieve outgoing share details</h3>
+
+<p>Returns an <a href="#outgoing-room-shares">outgoing room share</a> or an <a href="#outgoing-team-shares">outgoing team share</a> resource by the given ID.
+<code class="prettyprint">
+GET /api/v3/network/shares/outgoing/[resource_type]/[share_id]
+</code>
+The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. Results in 404 response if you have no access to the share.</p>
+
+<h3 id="unshare-a-resource">Unshare a resource</h3>
+
+<p>You may decide not to share a resource any more to the specific partner. In this case, you may delete the <a href="#outgoing-shares">outgoing share</a> resource.
+<code class="prettyprint">
+DELETE /api/v3/network/shares/outgoing/[resource_type]/[share_id]
+</code></p>
+
+<h3 id="get-a-collection-of-outgoing-shares">Get a collection of outgoing shares</h3>
+
+<p>You may get a <a href="#paginated-collections">paginated collection</a> of all the <a href="#outgoing-room-shares">outgoing room share</a> or <a href="#outgoing-team-shares">outgoing team share</a> resources that your company has created.
+<code class="prettyprint">
+GET /api/v3/network/shares/outgoing/[resource_type]/
+</code>
+The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. This endpoint accepts the following GET parameters.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ordering</code></td>
+<td><a href="#ordering-collections">ordering</a></td>
+<td><code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">created_at</code>, <code class="prettyprint">partnership_id</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">partnership_id</code></td>
+<td>integer</td>
+<td>(none)</td>
+<td>Filter the results by a partnership ID</td>
+</tr>
+<tr>
+<td><code class="prettyprint">receiver_company_id</code></td>
+<td>integer</td>
+<td>(none)</td>
+<td>Filter the results by a receiving partner company ID</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page</code></td>
+<td>integer</td>
+<td>1</td>
+<td><a href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page_size</code></td>
+<td>integer</td>
+<td>25</td>
+<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+</tr>
+</tbody></table>
+
+<h3 id="update-an-outgoing-share">Update an outgoing share</h3>
+
+<p>Once a resource share is created, you cannot change its resource, partnership or other relations. If you shared a wrong resource or to a wrong partner, you need to delete the share and create a new one. You may still update a resource share resource, specifically its <code class="prettyprint">share_name</code>, by making a <code class="prettyprint">PUT</code> or <code class="prettyprint">PATCH</code> request:
+<code class="prettyprint">
+PUT /api/v3/network/shares/outgoing/[resource_type]/[resourceshare_id]
+</code>
+<code class="prettyprint">
+PATCH /api/v3/network/shares/outgoing/[resource_type]/[resourceshare_id]
+</code>
+The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>.</p>
+
+<h2 id="incoming-shares">Incoming shares</h2>
+
+<p>Each <strong>incoming share</strong> resource has the following attributes, regardless of the type of resource that is being shared.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>Unique identifier for the share</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When the resource was shared</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the <a href="#partnerships">partnership</a> of the partner to whom the resource is shared.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">sharer_company_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the company who shared the resource</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">sharer_company</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#companies">company</a> object who shared the resource, with all of its attributes.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">receiver_company_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the company to whom the resource was shared</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">receiver_company</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#companies">company</a> object to whon the resource was shared</td>
+</tr>
+</tbody></table>
+
+<h2 id="incoming-room-shares">Incoming room shares</h2>
+
+<p>If you are a receiving party of a shared room, then you use the room share objects as <strong>incoming room shares</strong> that extend the <a href="#incoming-shares">incoming share</a> resource. Additionally, an incoming room share has the following attributes.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">room_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the shared room</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">room</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#rooms">room</a> resource that has been shared</td>
+</tr>
+</tbody></table>
+
+<h2 id="incoming-team-shares">Incoming team shares</h2>
+
+<p>If you are a receiving party of a shared team, then you use the team share objects as <strong>incoming team shares</strong> that extend the <a href="#incoming-shares">incoming share</a> resource. Additionally, an incoming team share has the following attributes.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">team_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the shared team</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">team</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a href="#teams">team</a> resource that has been shared</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-a-collection-of-incoming-shares">Get a collection of incoming shares</h3>
+
+<p>You may get a <a href="#paginated-collections">paginated collection</a> of all the <a href="#incoming-room-shares">incoming room share</a> or <a href="#incoming-team-shares">incoming team share</a> resources that are shared to your company.
+<code class="prettyprint">
+GET /api/v3/network/shares/incoming/[resource_type]/
+</code>
+The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. This endpoint accepts the following GET parameters.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ordering</code></td>
+<td><a href="#ordering-collections">ordering</a></td>
+<td><code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">created_at</code>, <code class="prettyprint">partnership_id</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">partnership_id</code></td>
+<td>integer</td>
+<td>(none)</td>
+<td>Filter the results by a partnership ID</td>
+</tr>
+<tr>
+<td><code class="prettyprint">sharer_company_id</code></td>
+<td>integer</td>
+<td>(none)</td>
+<td>Filter the results by a receiving partner company ID</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page</code></td>
+<td>integer</td>
+<td>1</td>
+<td><a href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page_size</code></td>
+<td>integer</td>
+<td>25</td>
+<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+</tr>
+</tbody></table>
+
+<h3 id="retrieve-incoming-share-details">Retrieve incoming share details</h3>
+
+<p>Returns an <a href="#incoming-room-shares">incoming room share</a> or <a href="#incoming-team-shares">incoming team share</a> resource by the given ID.
+<code class="prettyprint">
+GET /api/v3/network/shares/incoming/[resource_type]/[share_id]
+</code>
+The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>.</p>
 
       </div>
       <div class="dark-box">
