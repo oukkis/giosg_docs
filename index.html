@@ -30,6 +30,7 @@
       </div>
         <ul class="toc-footer">
             <li><a href='http://www.giosg.com' target="_blank">Sign Up on giosg.com</a></li>
+            <li><a href="https://docs.giosg.com/doku.php?id=public:technical-documentation:backend-api" target="_blank">Old API documentation</a></li>
             <li><a href='https://github.com/tripit/slate' target="_blank">Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -115,7 +116,7 @@ The string in the end of the header should be replaced with your API key.
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>Those API endpoints that return paginated collections return an object with the following attributes.</p>
+<p>Paginated collections are objects with the following attributes.</p>
 
 <table><thead>
 <tr>
@@ -132,12 +133,12 @@ The string in the end of the header should be replaced with your API key.
 <tr>
 <td style="text-align: left"><code class="prettyprint">per_page</code></td>
 <td style="text-align: left">integer</td>
-<td>Maximum number of objects per page. The actual number of returned objects on the last page may be fewer than this number. This equals to the &lsquo;page_size&rsquo; GET parameter or its default value.</td>
+<td>Maximum number of objects per page. The actual number of returned objects on the last page may be fewer than this number. This equals to the <code class="prettyprint">page_size</code> GET parameter or its default value.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">num_pages</code></td>
 <td style="text-align: left">integer</td>
-<td>The total number of pages for the matching query results. In practice, this is same than count / per_page, rounded up.</td>
+<td>The total number of pages for the matching query results. In practice, this is same than <code class="prettyprint">count</code> / <code class="prettyprint">per_page</code>, rounded up.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">current_page</code></td>
@@ -147,7 +148,7 @@ The string in the end of the header should be replaced with your API key.
 <tr>
 <td style="text-align: left"><code class="prettyprint">next_page</code></td>
 <td style="text-align: left">integer</td>
-<td>Index of the next available page. This is null if the current page is the last page.</td>
+<td>Index of the next available page. This is <code class="prettyprint">null</code> if the current page is the last page.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">previous_page</code></td>
@@ -167,17 +168,23 @@ The string in the end of the header should be replaced with your API key.
 <tr>
 <td style="text-align: left"><code class="prettyprint">results</code></td>
 <td style="text-align: left">array of objects</td>
-<td>The list containing the results for the current page</td>
+<td>The list containing the results for the current page. Each item is an object whose attributes depend on the returned resource type.</td>
 </tr>
 </tbody></table>
 
 <h2 id="ordering-collections">Ordering Collections</h2>
 
-<p><a href="#paginated-collections">Paginated collection</a> can usually be ordered by using a <code class="prettyprint">ordering</code> attribute. The allowed sorting criteria depends on the endpoint, but the basic usage is always the same. You have an allowed set of sorting attributes, e.g. <code class="prettyprint">first_name</code>, <code class="prettyprint">last_name</code> and <code class="prettyprint">created_at</code>. You may then choose the primary sorting key and any secondary sorting keys with a comma-separated string, e.g. <code class="prettyprint">last_name,first_name</code>. Any sorting order is ascending by default, but may be reverted to descending order by prefixing with a minus (<code class="prettyprint">-</code>) character, e.g. <code class="prettyprint">-created_at</code> or <code class="prettyprint">last_name,-created_at</code>.</p>
+<p>A <a href="#paginated-collections">paginated collection</a> can usually be ordered by using an <code class="prettyprint">ordering</code> attribute.</p>
+
+<p>The allowed sorting criteria depends on the endpoint, but the basic usage is always the same. You have an allowed set of sorting attributes, e.g. <code class="prettyprint">first_name</code>, <code class="prettyprint">last_name</code> and <code class="prettyprint">created_at</code>. You may then choose the primary sorting key and any secondary sorting keys with a comma-separated string, e.g. <code class="prettyprint">last_name,first_name</code>.</p>
+
+<p>Any sorting order is ascending by default, but may be reverted to descending order by prefixing with a minus (<code class="prettyprint">-</code>) character, e.g. <code class="prettyprint">-created_at</code> or <code class="prettyprint">last_name,-created_at</code>.</p>
 
 <h2 id="date-time-format">Date/time format</h2>
 
-<p>Unless stated otherwise, all the date/times returned by API endpoints in ISO-8601 format strings with format <code class="prettyprint">YYYY-MM-DDTHH:MM:SS.MSS</code>, for example: <code class="prettyprint">2015-06-12T12:34:56.000</code>. Also, any date/time URL parameters or attributes send as a request payload accept this same format. Unless stated otherwise, the times are in UTC timezone!</p>
+<p>Unless stated otherwise, all the date/times returned by API endpoints are ISO-8601 strings with format <code class="prettyprint">YYYY-MM-DDTHH:MM:SS.MSS</code>, for example: <code class="prettyprint">2015-06-12T12:34:56.000</code>. Also, any date/time URL parameters or attributes send as a request payload accept this same format.</p>
+
+<p>Unless stated otherwise, the times are expressed in UTC timezone!</p>
 
           <h1 id="chat-api">Chat API</h1>
 
@@ -751,15 +758,15 @@ This is the new, recommended version (v4) of the customer API!
 
 <p>Get a single <a href="#companies">company</a> object by its ID.</p>
 
-<p><code class="prettyprint">GET /api/v4/customer/companies/[company_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/companies/[company_id]</code></p>
 
 <h3 id="update-company-details">Update company details</h3>
 
 <p>You may update some of the attributes a company, if you have permissions to do so.</p>
 
-<p><code class="prettyprint">PUT /api/v4/customer/companies/[company_id]</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v4/customer/companies/[company_id]</code></p>
 
-<p><code class="prettyprint">PATCH /api/v4/customer/companies/[company_id]</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v4/customer/companies/[company_id]</code></p>
 
 <p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes the <a href="#companies">company</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
 
@@ -901,10 +908,10 @@ This is the new, recommended version (v4) of the customer API!
 
 <p>Get a single <a href="#persons">person</a> object by its ID.</p>
 
-<p><code class="prettyprint">GET /api/v4/customer/persons/[person_id]</code>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/persons/[person_id]</code>
 Alternatively, you may get <strong>your own</strong> user account details by replacing the ID with the word <code class="prettyprint">me</code>.</p>
 
-<p><code class="prettyprint">GET /api/v4/customer/persons/me</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/persons/me</code></p>
 
 <p>This endpoint accepts the following GET parameters.</p>
 
@@ -930,9 +937,9 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 
 <p>You may update some of the attributes of a user account.</p>
 
-<p><code class="prettyprint">PUT /api/v4/customer/persons/[person_id]</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v4/customer/persons/[person_id]</code></p>
 
-<p><code class="prettyprint">PATCH /api/v4/customer/persons/[person_id]</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v4/customer/persons/[person_id]</code></p>
 
 <p>Once again, you may replace the person ID with word <code class="prettyprint">me</code> in order to update your own account details.</p>
 
@@ -942,7 +949,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 
 <p>Get a <a href="#paginated-collections">paginated collection</a> of persons that you are allowed to list.</p>
 
-<p><code class="prettyprint">GET /api/v4/customer/persons/</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/persons/</code></p>
 
 <table><thead>
 <tr>
@@ -1076,7 +1083,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 
 <p>Get a single room object that your company has access to, by its ID. This may be a shared room.</p>
 
-<p><code class="prettyprint">GET /api/v4/customer/rooms/[room_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/rooms/[room_id]</code></p>
 
 <p>This endpoint accepts the following GET parameters.</p>
 
@@ -1102,7 +1109,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 
 <p>Return a <a href="#paginated-collections">paginated collection</a> of all the <a href="#rooms">room</a> resources you have access to, including any shared rooms:</p>
 
-<p><code class="prettyprint">GET /api/v4/customer/rooms</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/rooms</code></p>
 
 <table><thead>
 <tr>
@@ -1207,13 +1214,13 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 
 <p>Get a single team object that your company has access to, by its ID. This may be a shared team.</p>
 
-<p><code class="prettyprint">GET /api/v4/customer/teams/[team_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/teams/[team_id]</code></p>
 
 <h3 id="get-a-collection-of-teams">Get a collection of teams</h3>
 
 <p>Return a <a href="#paginated-collections">paginated collection</a> of all the <a href="#teams">team</a> resources you have access to, including any shared teams:</p>
 
-<p><code class="prettyprint">GET /api/v4/customer/teams</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/teams</code></p>
 
 <table><thead>
 <tr>
@@ -1302,7 +1309,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 
 <p>Return a <a href="#paginated-collections">paginated collection</a> of all the <a href="#team-memberships">team membership</a> resources for a specific <a href="#teams">team</a>.</p>
 
-<p><code class="prettyprint">GET /api/v4/customer/teams/[team_id]/memberships</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/teams/[team_id]/memberships</code></p>
 
 <table><thead>
 <tr>
@@ -1430,7 +1437,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 
 <p>You can get the time-based aggregated visitor statistics by making a GET request:</p>
 
-<p><code class="prettyprint">GET /api/v3/reporting/visitorstats/timeline</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/visitorstats/timeline</code></p>
 
 <p>You may define define these optional GET parameters to localize and filter the visitor stats aggregation results.</p>
 
@@ -1514,7 +1521,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 
 <p>You can get the time-based aggregated chat statistics by making a GET request:</p>
 
-<p><code class="prettyprint">GET /api/v3/reporting/chatstats/timeline</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/chatstats/timeline</code></p>
 
 <p>You may define define these optional GET parameters to localize and filter the chat stats aggregation results.</p>
 
@@ -1683,7 +1690,7 @@ The following wait time stats are available only for chat sessions started on 20
 
 <p>You can get the time-based aggregated chat statistics per-room by making a GET request:</p>
 
-<p><code class="prettyprint">GET /api/v3/reporting/chatstats/rooms/timeline</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/chatstats/rooms/timeline</code></p>
 
 <p>You may define define these optional GET parameters to localize and filter the chat stats aggregation results.</p>
 
@@ -1836,11 +1843,11 @@ This endpoint returns a paginated collection!
 </tr>
 </tbody></table>
 
-<p>===== GET /api/v3/reporting/operatorstats/timeline =====</p>
+<h2 id="operator-statistics-time-series">Operator statistics time series</h2>
 
 <p>You can get the time-based aggregated operator statistics by making a GET request.</p>
 
-<p><code class="prettyprint">GET /api/v3/reporting/operatorstats/timeline</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/operatorstats/timeline</code></p>
 
 <aside class="warning">
 <strong>Note</strong> that this API provides data only starting from 2015-05-12!
@@ -1938,7 +1945,7 @@ This endpoint has been updated on August 2015 to a new version <strong>v4</stron
 
 <p>You can get the aggregated shopping cart (giosg BASKET) statistics by making a GET request.</p>
 
-<p><code class="prettyprint">GET /api/v4/reporting/salesstats/timeline</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v4/reporting/salesstats/timeline</code></p>
 
 <p>You may define define these optional GET parameters to localize and filter the sales stats aggregation results.</p>
 
@@ -2165,16 +2172,15 @@ This endpoint has been updated on August 2015 to a new version <strong>v4</stron
 
 <h3 id="send-an-invitation">Send an invitation</h3>
 
-<p>You may send an invitation to your partner&rsquo;s email address by creating a new <a href="#outgoing-partnership-invitations">outgoing invitation</a> object.
-<code class="prettyprint">
-POST /api/v3/network/invitations/outgoing/
-</code></p>
+<p>You may send an invitation to your partner&rsquo;s email address by creating a new <a href="#outgoing-partnership-invitations">outgoing invitation</a> object.</p>
+
+<p><code class="prettyprint">POST https://service.giosg.com/api/v3/network/invitations/outgoing/</code></p>
 
 <h3 id="cancel-an-outgoing-invitation">Cancel an outgoing invitation</h3>
 
 <p>You may cancel a partnership invitation before it is accepted or rejected, by a given ID.</p>
 
-<p><code class="prettyprint">DELETE /api/v3/network/invitations/outgoing/[invitation_id]</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v3/network/invitations/outgoing/[invitation_id]</code></p>
 
 <p>The endpoint returns a 404 status code if the invitation is not found or if you are not authenticated as the sender of this invitation or if the invitation has already been cancelled.</p>
 
@@ -2184,13 +2190,13 @@ POST /api/v3/network/invitations/outgoing/
 
 <p>Get a single <a href="#outgoing-partnership-invitations">outgoing invitation</a> object sent by your company, by a given ID.</p>
 
-<p><code class="prettyprint">GET /api/v3/network/invitations/outgoing/[invitation_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/invitations/outgoing/[invitation_id]</code></p>
 
 <h3 id="get-a-collection-of-outgoing-invitations">Get a collection of outgoing invitations</h3>
 
 <p>Get a <a href="#paginated-collections">paginated collection</a> of all sent <a href="#outgoing-partnership-invitations">outgoing invitation</a> objects.</p>
 
-<p><code class="prettyprint">GET /api/v3/network/invitations/outgoing/</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/invitations/outgoing/</code></p>
 
 <p>This endpoint accepts the following GET parameters.</p>
 
@@ -2360,14 +2366,15 @@ POST /api/v3/network/invitations/outgoing/
 
 <p>Retrieve a <a href="#incoming-partnership-invitations">incoming invitation</a> resource by its <strong>invitation key</strong>. Incoming invitations are identified by their automatically generated, random key strings, instead of integer IDs.</p>
 
-<p><code class="prettyprint">GET /api/v3/network/invitations/incoming/[invitation_key]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/invitations/incoming/[invitation_key]</code></p>
 
 <h3 id="get-a-collection-of-incoming-invitations">Get a collection of incoming invitations</h3>
 
 <p>Get a <a href="#paginated-collections">paginated collection</a> of all received <a href="#incoming-partnership-invitations">incoming invitation</a> objects. This endpoint returns invitations accepted or rejected by your company. It also returns those invitations that are sent to one of your company&rsquo;s email address. <strong>NOTE</strong> that the company who sends the invitation does not know if this email address actually exists in giosg system.</p>
 
-<p><code class="prettyprint">GET /api/v3/network/invitations/incoming/</code>
-This endpoint accepts the following GET parameters.</p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/invitations/incoming/</code></p>
+
+<p>This endpoint accepts the following GET parameters.</p>
 
 <table><thead>
 <tr>
@@ -2405,11 +2412,11 @@ This endpoint accepts the following GET parameters.</p>
 
 <h3 id="accept-an-incoming-invitation">Accept an incoming invitation</h3>
 
-<p>You need to accept an invitation to become partners with the sender. In order to accept the invitation, you need the invitation key.
-<code class="prettyprint">
-POST /api/v3/network/invitations/incoming/[invitation_key]/accept
-</code>
-As soon as you accept the invitation, the partnership will be created. Also, any shared rooms and teams will become available to your company.</p>
+<p>You need to accept an invitation to become partners with the sender. In order to accept the invitation, you need the invitation key.</p>
+
+<p><code class="prettyprint">POST https://service.giosg.com/api/v3/network/invitations/incoming/[invitation_key]/accept</code></p>
+
+<p>As soon as you accept the invitation, the partnership will be created. Also, any shared rooms and teams will become available to your company.</p>
 
 <p>You should send an object as a payload with the following attributes, matching the attributes on a <a href="#partnerships">partnership</a> resource. They may be omitted, see below.</p>
 
@@ -2447,11 +2454,11 @@ As soon as you accept the invitation, the partnership will be created. Also, any
 
 <h3 id="reject-an-invitation">Reject an invitation</h3>
 
-<p>You may reject an invitation by its invitation key.
-<code class="prettyprint">
-POST /api/v3/network/invitations/incoming/[invitation_key]/reject
-</code>
-No request payload is required. After rejecting an invitation, its status will become <code class="prettyprint">2</code>.</p>
+<p>You may reject an invitation by its invitation key.</p>
+
+<p><code class="prettyprint">POST https://service.giosg.com/api/v3/network/invitations/incoming/[invitation_key]/reject</code></p>
+
+<p>No request payload is required. After rejecting an invitation, its status will become <code class="prettyprint">2</code>.</p>
 
 <p>The request will result in 404 response if the invitation was not found, has been cancelled, or has already been accepted/rejected by some other company. The request will result in 403 response if the invitation has already been accepted or rejected by your company, or if you are not allowed to accept/reject the invitation, e.g. you are the original creator of this invitation.</p>
 
@@ -2547,7 +2554,7 @@ No request payload is required. After rejecting an invitation, its status will b
 
 <p>Get a <a href="#paginated-collections">paginated collection</a> of all the known partnerships.</p>
 
-<p><code class="prettyprint">GET /api/v3/network/partnerships/</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/partnerships/</code></p>
 
 <p>This end-point accepts the following GET parameters.</p>
 
@@ -2583,7 +2590,7 @@ No request payload is required. After rejecting an invitation, its status will b
 
 <p>Retrieve a single <a href="#partnerships">partnership</a> resource by the partnership ID (not partner company&rsquo;s ID).</p>
 
-<p><code class="prettyprint">GET /api/v3/network/partnerships/[partnership_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/partnerships/[partnership_id]</code></p>
 
 <h3 id="remove-a-partnership">Remove a partnership</h3>
 
@@ -2594,15 +2601,15 @@ This will immediately remove the company from your partners and remove your part
 
 <p>Being aware of this, you may remove another company from your partners.</p>
 
-<p><code class="prettyprint">DELETE /api/v3/network/partnerships/[partnership_id]</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v3/network/partnerships/[partnership_id]</code></p>
 
 <h3 id="update-a-partnership">Update a partnership</h3>
 
 <p>You may update the editable attributes of a partnership.</p>
 
-<p><code class="prettyprint">PUT /api/v3/network/partnerships/[partnership_id]</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v3/network/partnerships/[partnership_id]</code></p>
 
-<p><code class="prettyprint">PATCH /api/v3/network/partnerships/[partnership_id]</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v3/network/partnerships/[partnership_id]</code></p>
 
 <p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes of the <a href="#partnerships">partnership</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
 
@@ -2773,7 +2780,7 @@ This will immediately remove the company from your partners and remove your part
 
 <p>You may share a resource to one of your partners by making a <code class="prettyprint">POST</code> request.</p>
 
-<p><code class="prettyprint">POST /api/v3/network/shares/outgoing/[resource_type]/</code></p>
+<p><code class="prettyprint">POST https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/</code></p>
 
 <p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. You may only share resources that you own or are being shared to your company. You need to provide the required attributes of an <a href="#outgoing-room-shares">outgoing room share</a> or an <a href="#outgoing-team-shares">outgoing team share</a> as well as desired optional attributes as a payload.</p>
 
@@ -2783,7 +2790,7 @@ This will immediately remove the company from your partners and remove your part
 
 <p>Returns an <a href="#outgoing-room-shares">outgoing room share</a> or an <a href="#outgoing-team-shares">outgoing team share</a> resource by the given ID.</p>
 
-<p><code class="prettyprint">GET /api/v3/network/shares/outgoing/[resource_type]/[share_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/[share_id]</code></p>
 
 <p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. Results in 404 response if you have no access to the share.</p>
 
@@ -2791,13 +2798,13 @@ This will immediately remove the company from your partners and remove your part
 
 <p>You may decide not to share a resource any more to the specific partner. In this case, you may delete the <a href="#outgoing-shares">outgoing share</a> resource.</p>
 
-<p><code class="prettyprint">DELETE /api/v3/network/shares/outgoing/[resource_type]/[share_id]</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/[share_id]</code></p>
 
 <h3 id="get-a-collection-of-outgoing-shares">Get a collection of outgoing shares</h3>
 
 <p>You may get a <a href="#paginated-collections">paginated collection</a> of all the <a href="#outgoing-room-shares">outgoing room share</a> or <a href="#outgoing-team-shares">outgoing team share</a> resources that your company has created.</p>
 
-<p><code class="prettyprint">GET /api/v3/network/shares/outgoing/[resource_type]/</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/</code></p>
 
 <p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. This endpoint accepts the following GET parameters.</p>
 
@@ -2845,9 +2852,9 @@ This will immediately remove the company from your partners and remove your part
 
 <p>Once a resource share is created, you cannot change its resource, partnership or other relations. If you shared a wrong resource or to a wrong partner, you need to delete the share and create a new one. You may still update a resource share resource, specifically its <code class="prettyprint">share_name</code>, by making a <code class="prettyprint">PUT</code> or <code class="prettyprint">PATCH</code> request:</p>
 
-<p><code class="prettyprint">PUT /api/v3/network/shares/outgoing/[resource_type]/[resourceshare_id]</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/[resourceshare_id]</code></p>
 
-<p><code class="prettyprint">PATCH /api/v3/network/shares/outgoing/[resource_type]/[resourceshare_id]</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/[resourceshare_id]</code></p>
 
 <p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>.</p>
 
@@ -2963,7 +2970,7 @@ This will immediately remove the company from your partners and remove your part
 
 <p>You may get a <a href="#paginated-collections">paginated collection</a> of all the <a href="#incoming-room-shares">incoming room share</a> or <a href="#incoming-team-shares">incoming team share</a> resources that are shared to your company.</p>
 
-<p><code class="prettyprint">GET /api/v3/network/shares/incoming/[resource_type]/</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/incoming/[resource_type]/</code></p>
 
 <p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. This endpoint accepts the following GET parameters.</p>
 
@@ -3011,7 +3018,7 @@ This will immediately remove the company from your partners and remove your part
 
 <p>Returns an <a href="#incoming-room-shares">incoming room share</a> or <a href="#incoming-team-shares">incoming team share</a> resource by the given ID.</p>
 
-<p><code class="prettyprint">GET /api/v3/network/shares/incoming/[resource_type]/[share_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/incoming/[resource_type]/[share_id]</code></p>
 
 <p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>.</p>
 
