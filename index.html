@@ -186,458 +186,6 @@ The string in the end of the header should be replaced with your API key.
 
 <p>Unless stated otherwise, the times are expressed in UTC timezone!</p>
 
-          <h1 id="chat-api">Chat API</h1>
-
-<h2 id="get-a-collection-of-chats">Get a collection of chats</h2>
-
-<p>You can get a list of chats by making a GET request.</p>
-
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/chat/chatsessions</code></p>
-
-<p>By default, the API returns all the available chats paginated, sorted by ascending ID order. You may want to filter the chats or change the order or pagination parameters by providing GET parameters in the URL. Remember to URL-encode any parameter values.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Parameter</th>
-<th style="text-align: left">Format</th>
-<th style="text-align: left">Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">ordering</code></td>
-<td style="text-align: left"><a href="#ordering-collections">ordering</a></td>
-<td style="text-align: left">id</td>
-<td>Order results by either <code class="prettyprint">id</code>, <code class="prettyprint">start_time</code> or <code class="prettyprint">end_time</code>. Use <code class="prettyprint">-</code> prefix to reverse.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">page</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">1</td>
-<td><a href="#paginated-collections">Page</a> to get</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">page_size</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">25</td>
-<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 100</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">since_id</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left"></td>
-<td>Only return chats with IDs larger than the value (exclusive)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">start_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td style="text-align: left"></td>
-<td>Only return chats started after this moment (inclusive)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">end_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td style="text-align: left"></td>
-<td>Only return chats ended before this moment (exclusive)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">has_sales</code></td>
-<td style="text-align: left">true/false</td>
-<td style="text-align: left"></td>
-<td>If <code class="prettyprint">true</code>/<code class="prettyprint">false</code>, only return chats with/without sales</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">real_conversation</code></td>
-<td style="text-align: left">true/false</td>
-<td style="text-align: left"></td>
-<td>If <code class="prettyprint">true</code>/<code class="prettyprint">false</code>, only return real/non-real chats</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">room_gid</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only chats on the room with this Giosg ID string.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">tag</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only chats that have this tag added to them by an operator.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">min_message_count</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left"></td>
-<td>Only chats with at least this number of messages.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">only_ended</code></td>
-<td style="text-align: left">true/none</td>
-<td style="text-align: left"></td>
-<td>If <code class="prettyprint">true</code>, only include chats that have been ended</td>
-</tr>
-</tbody></table>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w"> 
-  </span><span class="nt">"num_pages"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> 
-  </span><span class="nt">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> 
-  </span><span class="nt">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
-  </span><span class="nt">"next_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> 
-  </span><span class="nt">"previous_page"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"next_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v3/chat/chatsessions?page=2"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"previous_page_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T11:31:36.042"</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"end_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:38:36.424"</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:38:36.431"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"private"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"real_conversation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"is_autosuggested"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"parent_room_gid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5lqr3mundme2m2tzwmaafjluzaujzjar4s45w3cabdai37qm"</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"chat_room_gid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uibdbtmk5etolmjaduaafnqpl2ujzkyr4slkq3cabdai37qm"</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"api_data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Milan Indrajit"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"customer_number"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345678"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nt">"operator_message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"visitor_message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"start_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.customerpage.com/settings"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"start_url_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Settings page"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"autosuggest_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.customerpage.com/"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"autosuggest_url_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frontpage of our site"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"logs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"sender_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"sender_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"dt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-15T13:43:28.572"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"How may I help you?"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"visibleName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="w">
-        </span><span class="p">},</span><span class="w"> 
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"sender_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"429569b04f31f1f507236ea7359b50cf"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"sender_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"dt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-15T13:43:23.655"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Could you tell me about whether this product is in stock?"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"visibleName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Milan Indrajit"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nt">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Premium"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nt">"shopping_carts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"opened"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:23:57.331"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"total_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"83.00"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"monthly_total_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"360.00"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:24:57.588"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-              </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apple iPad Air 2"</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chat"</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345"</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"499.90"</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"monthly_price"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"monthly_quantity"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"stock_balance"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"added"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:23:57.341"</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"deleted"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-          </span><span class="p">]</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<p>This API end-point returns a <a href="#paginated-collections">paginated collection</a> of chat objects, having the following attributes.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
-<td>Unique identifier for this chat</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">start_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td>When the chat conversation started</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">end_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td>When the chat conversation ended (or <code class="prettyprint">null</code> if not yet ended)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">modified</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td>When the chat conversation was last time modified</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">private</code></td>
-<td style="text-align: left">boolean</td>
-<td>Whether or not the chat is marked as private for its operators</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">real_conversation</code></td>
-<td style="text-align: left">boolean</td>
-<td>Whether or not the chat is an actual conversation</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">is_autosuggested</code></td>
-<td style="text-align: left">boolean</td>
-<td>Whether or not the chat started with an autosuggestion</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">parent_room_gid</code></td>
-<td style="text-align: left">string</td>
-<td>Encoded Giosg token for the room in which the chat occurred</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">chat_room_gid</code></td>
-<td style="text-align: left">string</td>
-<td>Encoded Giosg token for the chat itself</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">api_data</code></td>
-<td style="text-align: left">array of objects</td>
-<td>A list of any data that has been submitted for the visitor with APIs. Each object has the attributes <code class="prettyprint">name</code> and <code class="prettyprint">value</code>.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">operator_message_count</code></td>
-<td style="text-align: left">integer</td>
-<td>How many messages there were by operator in this chat</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">visitor_message_count</code></td>
-<td style="text-align: left">integer</td>
-<td>How many messages there were by visitor in this chat</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">message_count</code></td>
-<td style="text-align: left">integer</td>
-<td>How many messages there were in total in this chat</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">start_url</code></td>
-<td style="text-align: left">string</td>
-<td>Full URL of the page that the visitor was on when they sent their first message</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">start_url_title</code></td>
-<td style="text-align: left">string</td>
-<td>Title of the page that the visitor was on when they sent their first message</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">autosuggest_url</code></td>
-<td style="text-align: left">string</td>
-<td>Full URL of the page that the visitor was on when they received an autosuggest</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">autosuggest_url_title</code></td>
-<td style="text-align: left">string</td>
-<td>Title of the page that the visitor was on when they received an autosuggest</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">logs</code></td>
-<td style="text-align: left">array of objects</td>
-<td>All the chat messages in this chat, see below.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">tags</code></td>
-<td style="text-align: left">array of objects</td>
-<td>All the tags added by operators to this chat vonersations. Each tag object has the attributes <code class="prettyprint">name</code> and <code class="prettyprint">value</code>, both strings (but value may be <code class="prettyprint">null</code>)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">shopping_carts</code></td>
-<td style="text-align: left">array of objects</td>
-<td>All the shopping carts of the visitor, related to this chat, see below.</td>
-</tr>
-</tbody></table>
-
-<p>Every nested <strong>chat log</strong> object has the following attributes.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">sender_id</code></td>
-<td style="text-align: left">string</td>
-<td>Identifier for the sender</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">sender_type</code></td>
-<td style="text-align: left">integer</td>
-<td>Whether the sender is operator (<code class="prettyprint">1</code>) or visitor (<code class="prettyprint">2</code>)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">dt</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td>When the message was sent</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">type</code></td>
-<td style="text-align: left">integer</td>
-<td>Whether the message is an actual message (<code class="prettyprint">1</code>) or autosuggest (<code class="prettyprint">2</code>)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">msg</code></td>
-<td style="text-align: left">string</td>
-<td>Content text of the message</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">visibleName</code></td>
-<td style="text-align: left">string</td>
-<td>A display name for the sender</td>
-</tr>
-</tbody></table>
-
-<p>Every nested <strong>shopping cart</strong> object has the following attributes.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
-<td>Unique identifier for the shopping cart</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">opened</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td>When the first item was added to the shopping cart</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">total_price</code></td>
-<td style="text-align: left">string</td>
-<td>The total sum of the shopping cart, as a decimal string</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">monthly_total_price</code></td>
-<td style="text-align: left">string</td>
-<td>The total monthly subscription sum of the shopping cart, as a decimal string</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">currency</code></td>
-<td style="text-align: left">string</td>
-<td>The currency in which the shopping cart value is given, e.g. <code class="prettyprint">EUR</code></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">locked</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td>When the cart was purchased, i.e. &ldquo;locked&rdquo;. It is <code class="prettyprint">null</code> if the visitor has not purchased the shopping cart (yet)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">products</code></td>
-<td style="text-align: left">array of objects</td>
-<td>List of products in the shopping cart, see below.</td>
-</tr>
-</tbody></table>
-
-<p>Every nested <strong>shopping cart product</strong> object has the following attributes.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
-<td>Unique identifier for this item</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">name</code></td>
-<td style="text-align: left">string</td>
-<td>Name of the product</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">description</code></td>
-<td style="text-align: left">string</td>
-<td>Description of the product</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">category</code></td>
-<td style="text-align: left">string</td>
-<td>Name of the category to which the product belongs</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">product_number</code></td>
-<td style="text-align: left">string</td>
-<td>The product number or ID in the shop</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">price</code></td>
-<td style="text-align: left">string</td>
-<td>The price of a (single) product as a decimal string</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">quantity</code></td>
-<td style="text-align: left">integer</td>
-<td>How many pieces of this product there are in the shopping cart</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">monthly_price</code></td>
-<td style="text-align: left">string</td>
-<td>The monthly subscription price of a (single) product as a decimal string</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">monthly_quantity</code></td>
-<td style="text-align: left">integer</td>
-<td>How many pieces of a monthly subscriptions there are in the shopping cart</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">stock_balance</code></td>
-<td style="text-align: left">integer</td>
-<td>How many available pieces of product there are in stock</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">added</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td>When the product was added to the shopping cart</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">deleted</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td>When the product was removed from the shopping cart. If <code class="prettyprint">null</code>, then the products actually exists in the shopping cart. Otherwise, it has actually been removed and should not be considered to be in the cart.</td>
-</tr>
-</tbody></table>
-
           <h1 id="customer-api">Customer API</h1>
 
 <aside class="success">
@@ -672,7 +220,7 @@ This is the new, recommended version (v4) of the customer API!
 <td style="text-align: left"><code class="prettyprint">name</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left"><strong>required?</strong></td>
-<td>The name of the company. Required, if your company is using Network features.</td>
+<td>The name of the company. Required, if your company is using Network features, such as <a href="#partnership-api">partnerships</a> or <a href="#sharing-api">sharing</a>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">email</code></td>
@@ -1449,13 +997,15 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/teams/[team_id]/memberships/[person_id]</code></p>
 
-          <h1 id="time-series-reporting-api">Time Series Reporting API</h1>
+          <h1 id="chat-api">Chat API</h1>
 
-<h2 id="general-time-series-usage">General time series usage</h2>
+<h2 id="get-a-collection-of-chats">Get a collection of chats</h2>
 
-<p>All the API endpoints described in this section require some GET parameters defining the time range and stats aggregation interval. You may also define define optional GET parameters to localize and filter the results. The optional GET parameters are described per API endpoint.</p>
+<p>You can get a list of chats by making a GET request.</p>
 
-<p>The following table describes the GET parameters accepted by all of the reporting stats API endpoints.</p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/chat/chatsessions</code></p>
+
+<p>By default, the API returns all the available chats paginated, sorted by ascending ID order. You may want to filter the chats or change the order or pagination parameters by providing GET parameters in the URL. Remember to URL-encode any parameter values.</p>
 
 <table><thead>
 <tr>
@@ -1466,387 +1016,76 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 </thead><tbody>
 <tr>
+<td style="text-align: left"><code class="prettyprint">ordering</code></td>
+<td style="text-align: left"><a href="#ordering-collections">ordering</a></td>
+<td style="text-align: left">id</td>
+<td>Order results by either <code class="prettyprint">id</code>, <code class="prettyprint">start_time</code> or <code class="prettyprint">end_time</code>. Use <code class="prettyprint">-</code> prefix to reverse.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">page</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">1</td>
+<td><a href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">page_size</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">25</td>
+<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 100</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">since_id</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left"></td>
+<td>Only return chats with IDs larger than the value (exclusive)</td>
+</tr>
+<tr>
 <td style="text-align: left"><code class="prettyprint">start_time</code></td>
 <td style="text-align: left"><a href="#datetime-format">date/time</a></td>
 <td style="text-align: left"></td>
-<td><strong>Required.</strong> Only return statistics after this moment (inclusive)</td>
+<td>Only return chats started after this moment (inclusive)</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">end_time</code></td>
 <td style="text-align: left"><a href="#datetime-format">date/time</a></td>
 <td style="text-align: left"></td>
-<td><strong>Required.</strong> Only return statistics before this moment (exclusive)</td>
+<td>Only return chats ended before this moment (exclusive)</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">timezone</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left">UTC</td>
-<td>A <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">timezone</a> in which params and results are expressed.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">utc_offset</code></td>
-<td style="text-align: left">string</td>
+<td style="text-align: left"><code class="prettyprint">has_sales</code></td>
+<td style="text-align: left">true/false</td>
 <td style="text-align: left"></td>
-<td>An alternative to the <code class="prettyprint">timezone</code> parameter: the timezone expressed in static UTC offset, in hours.</td>
+<td>If <code class="prettyprint">true</code>/<code class="prettyprint">false</code>, only return chats with/without sales</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">time_interval</code></td>
-<td style="text-align: left">string</td>
+<td style="text-align: left"><code class="prettyprint">real_conversation</code></td>
+<td style="text-align: left">true/false</td>
 <td style="text-align: left"></td>
-<td><strong>Required.</strong> Get results by selected time interval. Allowed values are <code class="prettyprint">15min</code>, <code class="prettyprint">1h</code>, <code class="prettyprint">1d</code>.</td>
+<td>If <code class="prettyprint">true</code>/<code class="prettyprint">false</code>, only return real/non-real chats</td>
 </tr>
-</tbody></table>
-
-<p>The chosen start and end date/time should be divisible by the chosen time interval. For example, if time interval is <code class="prettyprint">1d</code> then the time part of a start/end date should be exactly <code class="prettyprint">00:00:00</code>. For example: <code class="prettyprint">201502-10T00:00:00</code>. On the other hand, if time interval is <code class="prettyprint">1h</code>, then the hour part can be anything but the minutes and seconds must be <code class="prettyprint">00</code>. Also, if the time interval is <code class="prettyprint">15min</code>, then the minutes part must be either <code class="prettyprint">00</code>, <code class="prettyprint">15</code>, <code class="prettyprint">30</code> or <code class="prettyprint">45</code>.</p>
-
-<p>Please note that end time is exclusive, that is, the time slot that starts exactly on that moment is <strong>not</strong> included in the final results. Therefore, in order to get daily stats for 2015-03-05 and 2015-03-06, you should define the start time as <code class="prettyprint">2015-03-05T00:00:00</code> and end time as <code class="prettyprint">2015-03-07T00:00:00</code> (the beginning of the next day).</p>
-
-<p>The optional <code class="prettyprint">timezone</code> parameter may be provided as one of the <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">tz database timezone names</a>. This timezone describes the &ldquo;local time&rdquo; on which the API operates. For example: <code class="prettyprint">timezone=Europe%2FHelsinki</code> would indicate timezone <code class="prettyprint">Europe/Helsinki</code>.</p>
-
-<p>You may alternatively use <code class="prettyprint">utc_offset</code> parameter which, if provided, must start with either <code class="prettyprint">+</code> or <code class="prettyprint">-</code> and have two digit offset hour (zero-padded). This describes the offset from the UTC time, in full hours. If timezone or UTC offset is omitted, they default to the UTC time. An example parameter would be: <code class="prettyprint">utc_offset=+02</code></p>
-
-<p>If a local time is defined, with either <code class="prettyprint">timezone</code> or <code class="prettyprint">utc_offset</code>, the given <code class="prettyprint">start_time</code> and <code class="prettyprint">end_time</code> are supposed to be expressed in this &ldquo;local time&rdquo;. Otherwise, we assume that times are in UTC.</p>
-
-<p>Defining a local time is especially important if you are aggregating daily statistics, i.e. <code class="prettyprint">time_interval</code> is <code class="prettyprint">1d</code>. The timezone is used to determine when each day starts and ends.</p>
-
-<p>Every time series endpoint returns a JSON object with an item <code class="prettyprint">results</code>, containing an array of aggregated timeslot objects. Each object has the attributes described by the following table. The items are in their time order. There will be a time slot for each time interval in the defined range, even if all the numbers would be zeros.</p>
-
-<p>See the following sections for details.</p>
-
-<h2 id="time-series-range-limitations">Time series range limitations</h2>
-
-<p>The selected time interval defines the maximum time range between the start and end time. Also, the chosen time interval determines how far in the past the start time can be. These restrictions are described in the following table:</p>
-
-<table><thead>
-<tr>
-<th>Time interval</th>
-<th>Max. time range</th>
-<th>Oldest possible start time</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>1d</strong></td>
-<td>100 days</td>
-<td>(No limit)</td>
-</tr>
-<tr>
-<td><strong>1h</strong></td>
-<td>7 days (168h)</td>
-<td>Any of last 140 days</td>
-</tr>
-<tr>
-<td><strong>15min</strong></td>
-<td>3 days (72h)</td>
-<td>Any of last 33 days</td>
-</tr>
-</tbody></table>
-
-<p>If the time range is longer than the maximum allowed range, or starts too early, then the server responds with <code class="prettyprint">400 Bad Request</code> error response.</p>
-
-<h2 id="visitor-statistics-time-series">Visitor statistics time series</h2>
-
-<p>You can get the time-based aggregated visitor statistics by making a GET request:</p>
-
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/visitorstats/timeline</code></p>
-
-<p>You may define define these optional GET parameters to localize and filter the visitor stats aggregation results.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Parameter</th>
-<th style="text-align: left">Format</th>
-<th style="text-align: left">Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">room_gid</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left"></td>
-<td>Only statistics on the room with this Giosg-signed ID string (used in chat).</td>
-</tr>
-</tbody></table>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T15:00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"total_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">135</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"desktop_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">85</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"mobile_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"tablet_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T16:00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"total_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">137</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"desktop_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">84</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"mobile_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"tablet_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">21</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T17:00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"total_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">130</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"desktop_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">82</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"mobile_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"tablet_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">19</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Format</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">start_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td>The starting time of this aggregation. Its duration is equal to the selected time interval, e.g. 1 hour. This time is in the &ldquo;local&rdquo; time if a timezone is defined, otherwise it is in UTC.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">total_visitors</code></td>
-<td style="text-align: left">integer</td>
-<td>Total number of unique visitors on this timeslot</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">desktop_visitors</code></td>
-<td style="text-align: left">integer</td>
-<td>Number of unique desktop computer visitors on this timeslot</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">mobile_visitors</code></td>
-<td style="text-align: left">integer</td>
-<td>Number of unique mobile phone visitors on this timeslot</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">tablet_visitors</code></td>
-<td style="text-align: left">integer</td>
-<td>Number of unique tablet visitors on this timeslot</td>
-</tr>
-</tbody></table>
-
-<h2 id="chat-statistics-time-series">Chat statistics time series</h2>
-
-<p>You can get the time-based aggregated chat statistics by making a GET request:</p>
-
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/chatstats/timeline</code></p>
-
-<p>You may define define these optional GET parameters to localize and filter the chat stats aggregation results.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Parameter</th>
-<th style="text-align: left">Format</th>
-<th style="text-align: left">Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">room_gid</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only statistics on the room with this Giosg-signed ID string (used in chat).</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">personnel_gid</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only statistics for this operator, defined as Giosg-signed ID string used in chats</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">personnel_email</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only statistics for this operator, defined by email address</td>
+<td>Only chats on the room with this Giosg ID string.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">tag</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left"></td>
-<td>Only statistics for chats that has been tagged with the given string. Can be given multiple times, when chat is included if it has any of the tags.</td>
+<td>Only chats that have this tag added to them by an operator.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">min_message_count</code></td>
 <td style="text-align: left">integer</td>
-<td style="text-align: left">0</td>
-<td>Only statistics for chats with at least this number of total messages, by either visitor or operator, excluding autosuggest messages.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">is_ended</code></td>
-<td style="text-align: left">true/false/none</td>
 <td style="text-align: left"></td>
-<td>If <code class="prettyprint">true</code>, then only include chats that have actually ended. If <code class="prettyprint">false</code>, only include chats that have not been ended yet. If omitted or empty string, then do not filter.</td>
-</tr>
-</tbody></table>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T15:00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"real_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"total_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"chats_by_autosuggest"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"total_autosuggests"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"missed_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"average_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">14.45</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"max_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">127.91</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"chats_by_operator"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"chats_by_visitor"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"average_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">193.339</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"average_active_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">98.369</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T16:00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"real_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"total_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"chats_by_autosuggest"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"total_autosuggests"</span><span class="p">:</span><span class="w"> </span><span class="mi">180</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"missed_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"average_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">17.45</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"max_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">100.05</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"chats_by_operator"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"chats_by_visitor"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"average_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">163.084</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"average_active_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">92.863</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Format</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">start_time</code></td>
-<td style="text-align: left">integer</td>
-<td>The starting time of this aggregation. Its duration is equal to the selected time interval, eg. 1 hour. This time is in the &ldquo;local&rdquo; time if a timezone was defined, otherwise it is in UTC.</td>
+<td>Only chats with at least this number of messages.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">real_chats</code></td>
-<td style="text-align: left">integer</td>
-<td>Total number of chats that are real conversations</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">total_chats</code></td>
-<td style="text-align: left">integer</td>
-<td>Total number of chats on this time slot</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">chats_by_autosuggest</code></td>
-<td style="text-align: left">integer</td>
-<td>Number of chats started from autosuggest of this time slot</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">total_autosuggests</code></td>
-<td style="text-align: left">integer</td>
-<td>Total number of sent autosuggests (may or may not have started a chat</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">missed_chats</code></td>
-<td style="text-align: left">integer</td>
-<td>Chats missed by operators</td>
-</tr>
-</tbody></table>
-
-<aside class="warning">
-The following wait time stats are available only for chat sessions started on 2015-03-02 and later! For earlier stats, they are null.
-</aside>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Format</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">average_wait_time</code></td>
-<td style="text-align: left">integer</td>
-<td>Average waiting time in seconds, or null if not available</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">max_wait_time</code></td>
-<td style="text-align: left">integer</td>
-<td>Maximum waiting time in seconds, or null if not available</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">chats_by_operator</code></td>
-<td style="text-align: left">integer</td>
-<td>Number of chats started by operator on this time slot</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">chats_by_visitor</code></td>
-<td style="text-align: left">integer</td>
-<td>Number of chats started by visitor on this time slot</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">average_duration</code></td>
-<td style="text-align: left">integer</td>
-<td>Average duration of chats, in seconds</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">average_active_duration</code></td>
-<td style="text-align: left">integer</td>
-<td>Averate duration of chats excluding any idle time, in seconds</td>
-</tr>
-</tbody></table>
-
-<h2 id="per-room-chat-statistics-time-series">Per-room chat statistics time series</h2>
-
-<p>You can get the time-based aggregated chat statistics per-room by making a GET request:</p>
-
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/chatstats/rooms/timeline</code></p>
-
-<p>You may define define these optional GET parameters to localize and filter the chat stats aggregation results.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Parameter</th>
-<th style="text-align: left">Format</th>
-<th style="text-align: left">Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">room_gid</code></td>
-<td style="text-align: left">string</td>
+<td style="text-align: left"><code class="prettyprint">only_ended</code></td>
+<td style="text-align: left">true/none</td>
 <td style="text-align: left"></td>
-<td>Only statistics on the room with this Giosg-signed ID string (used in chat).</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">personnel_gid</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only statistics for this operator, defined as Giosg-signed ID string used in chats</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">personnel_email</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only statistics for this operator, defined by email address</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">tag</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only statistics for chats that has been tagged with the given string. Can be given multiple times, when chat is included if it has any of the tags.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">min_message_count</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">0</td>
-<td>Only statistics for chats with at least this number of total messages, by either visitor or operator, excluding autosuggest messages.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">is_ended</code></td>
-<td style="text-align: left">true/false/none</td>
-<td style="text-align: left"></td>
-<td>If <code class="prettyprint">true</code>, then only include chats that have actually ended. If <code class="prettyprint">false</code>, only include chats that have not been ended yet. If omitted or empty string, then do not filter.</td>
+<td>If <code class="prettyprint">true</code>, only include chats that have been ended</td>
 </tr>
 </tbody></table>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
@@ -1856,71 +1095,84 @@ The following wait time stats are available only for chat sessions started on 20
   </span><span class="nt">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
   </span><span class="nt">"next_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> 
   </span><span class="nt">"previous_page"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"next_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v3/reporting/chats/rooms/timeline?page=2"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"next_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v3/chat/chatsessions?page=2"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"previous_page_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T15:00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"rooms"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T11:31:36.042"</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"end_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:38:36.424"</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:38:36.431"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"private"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"real_conversation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"is_autosuggested"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"parent_room_gid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5lqr3mundme2m2tzwmaafjluzaujzjar4s45w3cabdai37qm"</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"chat_room_gid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uibdbtmk5etolmjaduaafnqpl2ujzkyr4slkq3cabdai37qm"</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"api_data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"room_gid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6ysdboogj2zc6i34ciaafd33h2tjzkyr4stes3cabdai37qm"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"real_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"total_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"chats_by_autosuggest"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"total_autosuggests"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"missed_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"average_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">14.45</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"max_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">127.91</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"chats_by_operator"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"chats_by_visitor"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"average_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">193.339</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"average_active_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">98.369</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Milan Indrajit"</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"room_gid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ahpalbmjr5y6cel4deaaebdsmbm25lir4sbfg3cabdai37qm"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"real_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"total_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"chats_by_autosuggest"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"total_autosuggests"</span><span class="p">:</span><span class="w"> </span><span class="mi">206</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"missed_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"average_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">16.12</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"max_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">120.04</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"chats_by_operator"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"chats_by_visitor"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"average_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">120.556</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"average_active_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.920</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"customer_number"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345678"</span><span class="w">
         </span><span class="p">}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T16:00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"rooms"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"operator_message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"visitor_message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"start_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.customerpage.com/settings"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"start_url_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Settings page"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"autosuggest_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.customerpage.com/"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"autosuggest_url_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frontpage of our site"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"logs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"real_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"total_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"chats_by_autosuggest"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"total_autosuggests"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"missed_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"average_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">14.45</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"max_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">127.91</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"chats_by_operator"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"chats_by_visitor"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"average_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">193.339</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"average_active_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">98.369</span><span class="w">
-        </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"sender_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"sender_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"dt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-15T13:43:28.572"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"How may I help you?"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"visibleName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="w">
+        </span><span class="p">},</span><span class="w"> 
         </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T16:00:00"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"real_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"total_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"chats_by_autosuggest"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"total_autosuggests"</span><span class="p">:</span><span class="w"> </span><span class="mi">180</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"missed_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"average_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">17.45</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"max_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">100.05</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"chats_by_operator"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"chats_by_visitor"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"average_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">163.084</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"average_active_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">92.863</span><span class="w">
+          </span><span class="nt">"sender_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"429569b04f31f1f507236ea7359b50cf"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"sender_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"dt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-15T13:43:23.655"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Could you tell me about whether this product is in stock?"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"visibleName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Milan Indrajit"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Premium"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"shopping_carts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"opened"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:23:57.331"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"total_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"83.00"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"monthly_total_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"360.00"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:24:57.588"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> 
+              </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apple iPad Air 2"</span><span class="p">,</span><span class="w"> 
+              </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> 
+              </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chat"</span><span class="p">,</span><span class="w"> 
+              </span><span class="nt">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345"</span><span class="p">,</span><span class="w"> 
+              </span><span class="nt">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"499.90"</span><span class="p">,</span><span class="w"> 
+              </span><span class="nt">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"monthly_price"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> 
+              </span><span class="nt">"monthly_quantity"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> 
+              </span><span class="nt">"stock_balance"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> 
+              </span><span class="nt">"added"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:23:57.341"</span><span class="p">,</span><span class="w"> 
+              </span><span class="nt">"deleted"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">]</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
@@ -1928,217 +1180,272 @@ The following wait time stats are available only for chat sessions started on 20
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<aside class="notice">
-This endpoint returns a paginated collection!
-</aside>
-
-<p>Unlike the other time series endpoints, this endpoint returns a <a href="#paginated-collections">paginated collection</a>.</p>
+<p>This API end-point returns a <a href="#paginated-collections">paginated collection</a> of chat objects, having the following attributes.</p>
 
 <table><thead>
 <tr>
 <th style="text-align: left">Attribute</th>
-<th style="text-align: left">Format</th>
+<th style="text-align: left">Type</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left"><code class="prettyprint">start_time</code></td>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
 <td style="text-align: left">integer</td>
-<td>The starting time of this aggregation. Its duration is equal to the selected time interval, eg. 1 hour. This time is in the &ldquo;local&rdquo; time if a timezone was defined, otherwise it is in UTC.</td>
+<td>Unique identifier for this chat</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">rooms</code></td>
+<td style="text-align: left"><code class="prettyprint">start_time</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td>When the chat conversation started</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">end_time</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td>When the chat conversation ended (or <code class="prettyprint">null</code> if not yet ended)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">modified</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td>When the chat conversation was last time modified</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">private</code></td>
+<td style="text-align: left">boolean</td>
+<td>Whether or not the chat is marked as private for its operators</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">real_conversation</code></td>
+<td style="text-align: left">boolean</td>
+<td>Whether or not the chat is an actual conversation</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_autosuggested</code></td>
+<td style="text-align: left">boolean</td>
+<td>Whether or not the chat started with an autosuggestion</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">parent_room_gid</code></td>
+<td style="text-align: left">string</td>
+<td>Encoded Giosg token for the room in which the chat occurred</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">chat_room_gid</code></td>
+<td style="text-align: left">string</td>
+<td>Encoded Giosg token for the chat itself</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">api_data</code></td>
 <td style="text-align: left">array of objects</td>
-<td>Statistics for every room, with same attributes than the chat statistics time series, except the <code class="prettyprint">start_time</code>. Instead, it has the attribute <code class="prettyprint">room_gid</code> containing the Giosg-signed token identifying the room.</td>
+<td>A list of any data that has been submitted for the visitor with APIs. Each object has the attributes <code class="prettyprint">name</code> and <code class="prettyprint">value</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">operator_message_count</code></td>
+<td style="text-align: left">integer</td>
+<td>How many messages there were by operator in this chat</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">visitor_message_count</code></td>
+<td style="text-align: left">integer</td>
+<td>How many messages there were by visitor in this chat</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">message_count</code></td>
+<td style="text-align: left">integer</td>
+<td>How many messages there were in total in this chat</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">start_url</code></td>
+<td style="text-align: left">string</td>
+<td>Full URL of the page that the visitor was on when they sent their first message</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">start_url_title</code></td>
+<td style="text-align: left">string</td>
+<td>Title of the page that the visitor was on when they sent their first message</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">autosuggest_url</code></td>
+<td style="text-align: left">string</td>
+<td>Full URL of the page that the visitor was on when they received an autosuggest</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">autosuggest_url_title</code></td>
+<td style="text-align: left">string</td>
+<td>Title of the page that the visitor was on when they received an autosuggest</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">logs</code></td>
+<td style="text-align: left">array of objects</td>
+<td>All the chat messages in this chat, see below.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">tags</code></td>
+<td style="text-align: left">array of objects</td>
+<td>All the tags added by operators to this chat vonersations. Each tag object has the attributes <code class="prettyprint">name</code> and <code class="prettyprint">value</code>, both strings (but value may be <code class="prettyprint">null</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">shopping_carts</code></td>
+<td style="text-align: left">array of objects</td>
+<td>All the shopping carts of the visitor, related to this chat, see below.</td>
 </tr>
 </tbody></table>
 
-<h2 id="operator-statistics-time-series">Operator statistics time series</h2>
-
-<p>You can get the time-based aggregated operator statistics by making a GET request.</p>
-
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/operatorstats/timeline</code></p>
-
-<aside class="warning">
-<strong>Note</strong> that this API provides data only starting from 2015-05-12!
-</aside>
-
-<p>You may define these optional GET parameters to filter the operator stats aggregation results.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Parameter</th>
-<th style="text-align: left">Format</th>
-<th style="text-align: left">Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">room_gid</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only statistics on the room with this Giosg-signed ID string (used in chat).</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">personnel_gid</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only statistics for this operator, defined as Giosg-signed ID string used in chats</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">personnel_email</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only statistics for this operator, defined by email address</td>
-</tr>
-</tbody></table>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T15:00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"online_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"logged_in_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"chatting_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T16:00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"online_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"logged_in_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"chatting_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T17:00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"online_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"logged_in_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"chatting_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<p>Every nested <strong>chat log</strong> object has the following attributes.</p>
 
 <table><thead>
 <tr>
 <th style="text-align: left">Attribute</th>
-<th style="text-align: left">Format</th>
+<th style="text-align: left">Type</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left"><code class="prettyprint">start_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td>The starting time of this aggregation. Its duration is equal to the selected time interval, e.g. 1 hour. This time is in the &ldquo;local&rdquo; time if a timezone was defined, otherwise it is in UTC.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">online_operators</code></td>
-<td style="text-align: left">integer</td>
-<td>Number of operators online</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">logged_in_operators</code></td>
-<td style="text-align: left">integer</td>
-<td>Number of operators logged in</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">chatting_operators</code></td>
-<td style="text-align: left">integer</td>
-<td>Number of operators chatting</td>
-</tr>
-</tbody></table>
-
-<h2 id="sales-statistics-time-series">Sales statistics time series</h2>
-
-<aside class="notice">
-This endpoint has been updated on August 2015 to a new version <strong>v4</strong>!
-</aside>
-
-<p><strong>Please use this version instead of the <a href="https://docs.giosg.com/doku.php?id=public:technical-documentation:backend-api:reporting-api#get_api_v3_reporting_salesstats_timeline">deprecated version v3</a>, as it will be removed in the future!</strong></p>
-
-<p>You can get the aggregated shopping cart (giosg BASKET) statistics by making a GET request.</p>
-
-<p><code class="prettyprint">GET https://service.giosg.com/api/v4/reporting/salesstats/timeline</code></p>
-
-<p>You may define define these optional GET parameters to localize and filter the sales stats aggregation results.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Parameter</th>
-<th style="text-align: left">Format</th>
-<th style="text-align: left">Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">room_gid</code></td>
+<td style="text-align: left"><code class="prettyprint">sender_id</code></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only statistics on the room with this Giosg-signed ID string (used in chat). If not given, sales stats will be calculated from all company&rsquo;s rooms.</td>
+<td>Identifier for the sender</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">sender_type</code></td>
+<td style="text-align: left">integer</td>
+<td>Whether the sender is operator (<code class="prettyprint">1</code>) or visitor (<code class="prettyprint">2</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">dt</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td>When the message was sent</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">type</code></td>
+<td style="text-align: left">integer</td>
+<td>Whether the message is an actual message (<code class="prettyprint">1</code>) or autosuggest (<code class="prettyprint">2</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">msg</code></td>
+<td style="text-align: left">string</td>
+<td>Content text of the message</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">visibleName</code></td>
+<td style="text-align: left">string</td>
+<td>A display name for the sender</td>
 </tr>
 </tbody></table>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T15:00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"total_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2300.35"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"chat_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1800.20"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"total_monthly_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"94.00"</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"monthly_chat_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"37.50"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"purchased_carts"</span><span class="p">:</span><span class="w"> </span><span class="mi">245</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"purchased_carts_with_chat"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T16:00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"total_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2345.80"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"chat_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1740.99"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"total_monthly_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"45.00"</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"monthly_chat_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13.00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"purchased_carts"</span><span class="p">:</span><span class="w"> </span><span class="mi">239</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"purchased_carts_with_chat"</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+
+<p>Every nested <strong>shopping cart</strong> object has the following attributes.</p>
 
 <table><thead>
 <tr>
 <th style="text-align: left">Attribute</th>
-<th style="text-align: left">Format</th>
+<th style="text-align: left">Type</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left"><code class="prettyprint">start_time</code></td>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">integer</td>
+<td>Unique identifier for the shopping cart</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">opened</code></td>
 <td style="text-align: left"><a href="#datetime-format">date/time</a></td>
-<td>The starting time of this aggregation. Its duration is equal to the selected time interval, e.g. 1 hour. This time is in the &ldquo;local&rdquo; time if the timezone was defined, otherwise it is in UTC.</td>
+<td>When the first item was added to the shopping cart</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">total_sales</code></td>
+<td style="text-align: left"><code class="prettyprint">total_price</code></td>
 <td style="text-align: left">string</td>
-<td>Total sales, as a decimal string</td>
+<td>The total sum of the shopping cart, as a decimal string</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">chat_sales</code></td>
+<td style="text-align: left"><code class="prettyprint">monthly_total_price</code></td>
 <td style="text-align: left">string</td>
-<td>Sales related to a chat conversation that has at least 3 messages, as a decimal string</td>
+<td>The total monthly subscription sum of the shopping cart, as a decimal string</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">total_monthly_sales</code></td>
+<td style="text-align: left"><code class="prettyprint">currency</code></td>
 <td style="text-align: left">string</td>
-<td>Total monthly billable sales, as a decimal string</td>
+<td>The currency in which the shopping cart value is given, e.g. <code class="prettyprint">EUR</code></td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">monthly_chat_sales</code></td>
-<td style="text-align: left">string</td>
-<td>Monthly billable sales related to a chat conversation that has at least 3 messages</td>
+<td style="text-align: left"><code class="prettyprint">locked</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td>When the cart was purchased, i.e. &ldquo;locked&rdquo;. It is <code class="prettyprint">null</code> if the visitor has not purchased the shopping cart (yet)</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">purchased_carts</code></td>
-<td style="text-align: left">string</td>
-<td>Count of carts that have been locked/purchased.</td>
+<td style="text-align: left"><code class="prettyprint">products</code></td>
+<td style="text-align: left">array of objects</td>
+<td>List of products in the shopping cart, see below.</td>
+</tr>
+</tbody></table>
+
+<p>Every nested <strong>shopping cart product</strong> object has the following attributes.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">integer</td>
+<td>Unique identifier for this item</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">purchased_carts_with_chat</code></td>
+<td style="text-align: left"><code class="prettyprint">name</code></td>
 <td style="text-align: left">string</td>
-<td>Count of carts with conversation that have been locked/purchased</td>
+<td>Name of the product</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">description</code></td>
+<td style="text-align: left">string</td>
+<td>Description of the product</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">category</code></td>
+<td style="text-align: left">string</td>
+<td>Name of the category to which the product belongs</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">product_number</code></td>
+<td style="text-align: left">string</td>
+<td>The product number or ID in the shop</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">price</code></td>
+<td style="text-align: left">string</td>
+<td>The price of a (single) product as a decimal string</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">quantity</code></td>
+<td style="text-align: left">integer</td>
+<td>How many pieces of this product there are in the shopping cart</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">monthly_price</code></td>
+<td style="text-align: left">string</td>
+<td>The monthly subscription price of a (single) product as a decimal string</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">monthly_quantity</code></td>
+<td style="text-align: left">integer</td>
+<td>How many pieces of a monthly subscriptions there are in the shopping cart</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">stock_balance</code></td>
+<td style="text-align: left">integer</td>
+<td>How many available pieces of product there are in stock</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">added</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td>When the product was added to the shopping cart</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">deleted</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td>When the product was removed from the shopping cart. If <code class="prettyprint">null</code>, then the products actually exists in the shopping cart. Otherwise, it has actually been removed and should not be considered to be in the cart.</td>
 </tr>
 </tbody></table>
 
@@ -3131,6 +2438,699 @@ This will immediately remove the company from your partners and remove your part
 <p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/incoming/[resource_type]/[share_id]</code></p>
 
 <p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>.</p>
+
+          <h1 id="time-series-reporting-api">Time Series Reporting API</h1>
+
+<h2 id="general-time-series-usage">General time series usage</h2>
+
+<p>All the API endpoints described in this section require some GET parameters defining the time range and stats aggregation interval. You may also define define optional GET parameters to localize and filter the results. The optional GET parameters are described per API endpoint.</p>
+
+<p>The following table describes the GET parameters accepted by all of the reporting stats API endpoints.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Format</th>
+<th style="text-align: left">Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">start_time</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"></td>
+<td><strong>Required.</strong> Only return statistics after this moment (inclusive)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">end_time</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"></td>
+<td><strong>Required.</strong> Only return statistics before this moment (exclusive)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">timezone</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">UTC</td>
+<td>A <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">timezone</a> in which params and results are expressed.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">utc_offset</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>An alternative to the <code class="prettyprint">timezone</code> parameter: the timezone expressed in static UTC offset, in hours.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">time_interval</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td><strong>Required.</strong> Get results by selected time interval. Allowed values are <code class="prettyprint">15min</code>, <code class="prettyprint">1h</code>, <code class="prettyprint">1d</code>.</td>
+</tr>
+</tbody></table>
+
+<p>The chosen start and end date/time should be divisible by the chosen time interval. For example, if time interval is <code class="prettyprint">1d</code> then the time part of a start/end date should be exactly <code class="prettyprint">00:00:00</code>. For example: <code class="prettyprint">201502-10T00:00:00</code>. On the other hand, if time interval is <code class="prettyprint">1h</code>, then the hour part can be anything but the minutes and seconds must be <code class="prettyprint">00</code>. Also, if the time interval is <code class="prettyprint">15min</code>, then the minutes part must be either <code class="prettyprint">00</code>, <code class="prettyprint">15</code>, <code class="prettyprint">30</code> or <code class="prettyprint">45</code>.</p>
+
+<p>Please note that end time is exclusive, that is, the time slot that starts exactly on that moment is <strong>not</strong> included in the final results. Therefore, in order to get daily stats for 2015-03-05 and 2015-03-06, you should define the start time as <code class="prettyprint">2015-03-05T00:00:00</code> and end time as <code class="prettyprint">2015-03-07T00:00:00</code> (the beginning of the next day).</p>
+
+<p>The optional <code class="prettyprint">timezone</code> parameter may be provided as one of the <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">tz database timezone names</a>. This timezone describes the &ldquo;local time&rdquo; on which the API operates. For example: <code class="prettyprint">timezone=Europe%2FHelsinki</code> would indicate timezone <code class="prettyprint">Europe/Helsinki</code>.</p>
+
+<p>You may alternatively use <code class="prettyprint">utc_offset</code> parameter which, if provided, must start with either <code class="prettyprint">+</code> or <code class="prettyprint">-</code> and have two digit offset hour (zero-padded). This describes the offset from the UTC time, in full hours. If timezone or UTC offset is omitted, they default to the UTC time. An example parameter would be: <code class="prettyprint">utc_offset=+02</code></p>
+
+<p>If a local time is defined, with either <code class="prettyprint">timezone</code> or <code class="prettyprint">utc_offset</code>, the given <code class="prettyprint">start_time</code> and <code class="prettyprint">end_time</code> are supposed to be expressed in this &ldquo;local time&rdquo;. Otherwise, we assume that times are in UTC.</p>
+
+<p>Defining a local time is especially important if you are aggregating daily statistics, i.e. <code class="prettyprint">time_interval</code> is <code class="prettyprint">1d</code>. The timezone is used to determine when each day starts and ends.</p>
+
+<p>Every time series endpoint returns a JSON object with an item <code class="prettyprint">results</code>, containing an array of aggregated timeslot objects. Each object has the attributes described by the following table. The items are in their time order. There will be a time slot for each time interval in the defined range, even if all the numbers would be zeros.</p>
+
+<p>See the following sections for details.</p>
+
+<h2 id="time-series-range-limitations">Time series range limitations</h2>
+
+<p>The selected time interval defines the maximum time range between the start and end time. Also, the chosen time interval determines how far in the past the start time can be. These restrictions are described in the following table:</p>
+
+<table><thead>
+<tr>
+<th>Time interval</th>
+<th>Max. time range</th>
+<th>Oldest possible start time</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>1d</strong></td>
+<td>100 days</td>
+<td>(No limit)</td>
+</tr>
+<tr>
+<td><strong>1h</strong></td>
+<td>7 days (168h)</td>
+<td>Any of last 140 days</td>
+</tr>
+<tr>
+<td><strong>15min</strong></td>
+<td>3 days (72h)</td>
+<td>Any of last 33 days</td>
+</tr>
+</tbody></table>
+
+<p>If the time range is longer than the maximum allowed range, or starts too early, then the server responds with <code class="prettyprint">400 Bad Request</code> error response.</p>
+
+<h2 id="visitor-statistics-time-series">Visitor statistics time series</h2>
+
+<p>You can get the time-based aggregated visitor statistics by making a GET request:</p>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/visitorstats/timeline</code></p>
+
+<p>You may define define these optional GET parameters to localize and filter the visitor stats aggregation results.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Format</th>
+<th style="text-align: left">Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">room_gid</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics on the room with this Giosg-signed ID string (used in chat).</td>
+</tr>
+</tbody></table>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T15:00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"total_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">135</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"desktop_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">85</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"mobile_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"tablet_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T16:00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"total_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">137</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"desktop_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">84</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"mobile_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"tablet_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">21</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T17:00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"total_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">130</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"desktop_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">82</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"mobile_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"tablet_visitors"</span><span class="p">:</span><span class="w"> </span><span class="mi">19</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Format</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">start_time</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td>The starting time of this aggregation. Its duration is equal to the selected time interval, e.g. 1 hour. This time is in the &ldquo;local&rdquo; time if a timezone is defined, otherwise it is in UTC.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">total_visitors</code></td>
+<td style="text-align: left">integer</td>
+<td>Total number of unique visitors on this timeslot</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">desktop_visitors</code></td>
+<td style="text-align: left">integer</td>
+<td>Number of unique desktop computer visitors on this timeslot</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">mobile_visitors</code></td>
+<td style="text-align: left">integer</td>
+<td>Number of unique mobile phone visitors on this timeslot</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">tablet_visitors</code></td>
+<td style="text-align: left">integer</td>
+<td>Number of unique tablet visitors on this timeslot</td>
+</tr>
+</tbody></table>
+
+<h2 id="chat-statistics-time-series">Chat statistics time series</h2>
+
+<p>You can get the time-based aggregated chat statistics by making a GET request:</p>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/chatstats/timeline</code></p>
+
+<p>You may define define these optional GET parameters to localize and filter the chat stats aggregation results.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Format</th>
+<th style="text-align: left">Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">room_gid</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics on the room with this Giosg-signed ID string (used in chat).</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">personnel_gid</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics for this operator, defined as Giosg-signed ID string used in chats</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">personnel_email</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics for this operator, defined by email address</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">tag</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics for chats that has been tagged with the given string. Can be given multiple times, when chat is included if it has any of the tags.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">min_message_count</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">0</td>
+<td>Only statistics for chats with at least this number of total messages, by either visitor or operator, excluding autosuggest messages.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_ended</code></td>
+<td style="text-align: left">true/false/none</td>
+<td style="text-align: left"></td>
+<td>If <code class="prettyprint">true</code>, then only include chats that have actually ended. If <code class="prettyprint">false</code>, only include chats that have not been ended yet. If omitted or empty string, then do not filter.</td>
+</tr>
+</tbody></table>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T15:00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"real_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"total_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"chats_by_autosuggest"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"total_autosuggests"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"missed_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"average_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">14.45</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"max_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">127.91</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"chats_by_operator"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"chats_by_visitor"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"average_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">193.339</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"average_active_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">98.369</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T16:00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"real_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"total_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"chats_by_autosuggest"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"total_autosuggests"</span><span class="p">:</span><span class="w"> </span><span class="mi">180</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"missed_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"average_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">17.45</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"max_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">100.05</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"chats_by_operator"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"chats_by_visitor"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"average_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">163.084</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"average_active_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">92.863</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Format</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">start_time</code></td>
+<td style="text-align: left">integer</td>
+<td>The starting time of this aggregation. Its duration is equal to the selected time interval, eg. 1 hour. This time is in the &ldquo;local&rdquo; time if a timezone was defined, otherwise it is in UTC.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">real_chats</code></td>
+<td style="text-align: left">integer</td>
+<td>Total number of chats that are real conversations</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">total_chats</code></td>
+<td style="text-align: left">integer</td>
+<td>Total number of chats on this time slot</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">chats_by_autosuggest</code></td>
+<td style="text-align: left">integer</td>
+<td>Number of chats started from autosuggest of this time slot</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">total_autosuggests</code></td>
+<td style="text-align: left">integer</td>
+<td>Total number of sent autosuggests (may or may not have started a chat</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">missed_chats</code></td>
+<td style="text-align: left">integer</td>
+<td>Chats missed by operators</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+The following wait time stats are available only for chat sessions started on 2015-03-02 and later! For earlier stats, they are null.
+</aside>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Format</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">average_wait_time</code></td>
+<td style="text-align: left">integer</td>
+<td>Average waiting time in seconds, or null if not available</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">max_wait_time</code></td>
+<td style="text-align: left">integer</td>
+<td>Maximum waiting time in seconds, or null if not available</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">chats_by_operator</code></td>
+<td style="text-align: left">integer</td>
+<td>Number of chats started by operator on this time slot</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">chats_by_visitor</code></td>
+<td style="text-align: left">integer</td>
+<td>Number of chats started by visitor on this time slot</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">average_duration</code></td>
+<td style="text-align: left">integer</td>
+<td>Average duration of chats, in seconds</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">average_active_duration</code></td>
+<td style="text-align: left">integer</td>
+<td>Averate duration of chats excluding any idle time, in seconds</td>
+</tr>
+</tbody></table>
+
+<h2 id="per-room-chat-statistics-time-series">Per-room chat statistics time series</h2>
+
+<p>You can get the time-based aggregated chat statistics per-room by making a GET request:</p>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/chatstats/rooms/timeline</code></p>
+
+<p>You may define define these optional GET parameters to localize and filter the chat stats aggregation results.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Format</th>
+<th style="text-align: left">Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">room_gid</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics on the room with this Giosg-signed ID string (used in chat).</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">personnel_gid</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics for this operator, defined as Giosg-signed ID string used in chats</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">personnel_email</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics for this operator, defined by email address</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">tag</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics for chats that has been tagged with the given string. Can be given multiple times, when chat is included if it has any of the tags.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">min_message_count</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">0</td>
+<td>Only statistics for chats with at least this number of total messages, by either visitor or operator, excluding autosuggest messages.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_ended</code></td>
+<td style="text-align: left">true/false/none</td>
+<td style="text-align: left"></td>
+<td>If <code class="prettyprint">true</code>, then only include chats that have actually ended. If <code class="prettyprint">false</code>, only include chats that have not been ended yet. If omitted or empty string, then do not filter.</td>
+</tr>
+</tbody></table>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"num_pages"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"next_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"previous_page"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"next_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v3/reporting/chats/rooms/timeline?page=2"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"previous_page_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T15:00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"rooms"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"room_gid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6ysdboogj2zc6i34ciaafd33h2tjzkyr4stes3cabdai37qm"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"real_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"total_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"chats_by_autosuggest"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"total_autosuggests"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"missed_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"average_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">14.45</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"max_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">127.91</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"chats_by_operator"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"chats_by_visitor"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"average_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">193.339</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"average_active_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">98.369</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"room_gid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ahpalbmjr5y6cel4deaaebdsmbm25lir4sbfg3cabdai37qm"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"real_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"total_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"chats_by_autosuggest"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"total_autosuggests"</span><span class="p">:</span><span class="w"> </span><span class="mi">206</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"missed_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"average_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">16.12</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"max_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">120.04</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"chats_by_operator"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"chats_by_visitor"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"average_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">120.556</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"average_active_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.920</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T16:00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"rooms"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"real_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"total_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"chats_by_autosuggest"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"total_autosuggests"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"missed_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"average_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">14.45</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"max_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">127.91</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"chats_by_operator"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"chats_by_visitor"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"average_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">193.339</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"average_active_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">98.369</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T16:00:00"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"real_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"total_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"chats_by_autosuggest"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"total_autosuggests"</span><span class="p">:</span><span class="w"> </span><span class="mi">180</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"missed_chats"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"average_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">17.45</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"max_wait_time"</span><span class="p">:</span><span class="w"> </span><span class="mf">100.05</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"chats_by_operator"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"chats_by_visitor"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"average_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">163.084</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"average_active_duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">92.863</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<aside class="notice">
+This endpoint returns a paginated collection!
+</aside>
+
+<p>Unlike the other time series endpoints, this endpoint returns a <a href="#paginated-collections">paginated collection</a>.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Format</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">start_time</code></td>
+<td style="text-align: left">integer</td>
+<td>The starting time of this aggregation. Its duration is equal to the selected time interval, eg. 1 hour. This time is in the &ldquo;local&rdquo; time if a timezone was defined, otherwise it is in UTC.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">rooms</code></td>
+<td style="text-align: left">array of objects</td>
+<td>Statistics for every room, with same attributes than the chat statistics time series, except the <code class="prettyprint">start_time</code>. Instead, it has the attribute <code class="prettyprint">room_gid</code> containing the Giosg-signed token identifying the room.</td>
+</tr>
+</tbody></table>
+
+<h2 id="operator-statistics-time-series">Operator statistics time series</h2>
+
+<p>You can get the time-based aggregated operator statistics by making a GET request.</p>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/operatorstats/timeline</code></p>
+
+<aside class="warning">
+<strong>Note</strong> that this API provides data only starting from 2015-05-12!
+</aside>
+
+<p>You may define these optional GET parameters to filter the operator stats aggregation results.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Format</th>
+<th style="text-align: left">Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">room_gid</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics on the room with this Giosg-signed ID string (used in chat).</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">personnel_gid</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics for this operator, defined as Giosg-signed ID string used in chats</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">personnel_email</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics for this operator, defined by email address</td>
+</tr>
+</tbody></table>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T15:00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"online_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"logged_in_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"chatting_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T16:00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"online_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"logged_in_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"chatting_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T17:00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"online_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"logged_in_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"chatting_operators"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Format</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">start_time</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td>The starting time of this aggregation. Its duration is equal to the selected time interval, e.g. 1 hour. This time is in the &ldquo;local&rdquo; time if a timezone was defined, otherwise it is in UTC.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">online_operators</code></td>
+<td style="text-align: left">integer</td>
+<td>Number of operators online</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">logged_in_operators</code></td>
+<td style="text-align: left">integer</td>
+<td>Number of operators logged in</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">chatting_operators</code></td>
+<td style="text-align: left">integer</td>
+<td>Number of operators chatting</td>
+</tr>
+</tbody></table>
+
+<h2 id="sales-statistics-time-series">Sales statistics time series</h2>
+
+<aside class="notice">
+This endpoint has been updated on August 2015 to a new version <strong>v4</strong>!
+</aside>
+
+<p><strong>Please use this version instead of the <a href="https://docs.giosg.com/doku.php?id=public:technical-documentation:backend-api:reporting-api#get_api_v3_reporting_salesstats_timeline">deprecated version v3</a>, as it will be removed in the future!</strong></p>
+
+<p>You can get the aggregated shopping cart (giosg BASKET) statistics by making a GET request.</p>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v4/reporting/salesstats/timeline</code></p>
+
+<p>You may define define these optional GET parameters to localize and filter the sales stats aggregation results.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Format</th>
+<th style="text-align: left">Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">room_gid</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"></td>
+<td>Only statistics on the room with this Giosg-signed ID string (used in chat). If not given, sales stats will be calculated from all company&rsquo;s rooms.</td>
+</tr>
+</tbody></table>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T15:00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"total_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2300.35"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"chat_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1800.20"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"total_monthly_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"94.00"</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"monthly_chat_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"37.50"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"purchased_carts"</span><span class="p">:</span><span class="w"> </span><span class="mi">245</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"purchased_carts_with_chat"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-07T16:00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"total_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2345.80"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"chat_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1740.99"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"total_monthly_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"45.00"</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"monthly_chat_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13.00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"purchased_carts"</span><span class="p">:</span><span class="w"> </span><span class="mi">239</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"purchased_carts_with_chat"</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Format</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">start_time</code></td>
+<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td>The starting time of this aggregation. Its duration is equal to the selected time interval, e.g. 1 hour. This time is in the &ldquo;local&rdquo; time if the timezone was defined, otherwise it is in UTC.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">total_sales</code></td>
+<td style="text-align: left">string</td>
+<td>Total sales, as a decimal string</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">chat_sales</code></td>
+<td style="text-align: left">string</td>
+<td>Sales related to a chat conversation that has at least 3 messages, as a decimal string</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">total_monthly_sales</code></td>
+<td style="text-align: left">string</td>
+<td>Total monthly billable sales, as a decimal string</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">monthly_chat_sales</code></td>
+<td style="text-align: left">string</td>
+<td>Monthly billable sales related to a chat conversation that has at least 3 messages</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">purchased_carts</code></td>
+<td style="text-align: left">string</td>
+<td>Count of carts that have been locked/purchased.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">purchased_carts_with_chat</code></td>
+<td style="text-align: left">string</td>
+<td>Count of carts with conversation that have been locked/purchased</td>
+</tr>
+</tbody></table>
 
       </div>
       <div class="dark-box">
