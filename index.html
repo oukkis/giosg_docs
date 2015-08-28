@@ -174,7 +174,7 @@ The string in the end of the header should be replaced with your API key.
 
 <h2 id="ordering-collections">Ordering Collections</h2>
 
-<p>A <a href="#paginated-collections">paginated collection</a> can usually be ordered by using an <code class="prettyprint">ordering</code> attribute.</p>
+<p>A <a title="Paginated collections" href="#paginated-collections">paginated collection</a> can usually be ordered by using an <code class="prettyprint">ordering</code> attribute.</p>
 
 <p>The allowed sorting criteria depends on the endpoint, but the basic usage is always the same. You have an allowed set of sorting attributes, e.g. <code class="prettyprint">first_name</code>, <code class="prettyprint">last_name</code> and <code class="prettyprint">created_at</code>. You may then choose the primary sorting key and any secondary sorting keys with a comma-separated string, e.g. <code class="prettyprint">last_name,first_name</code>.</p>
 
@@ -266,13 +266,13 @@ This is the new, recommended version (v4) of the customer API!
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When this company account was created. <strong>Visible only for your own company.</strong></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">modified_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When company details were changed last time. <strong>Visible only for your own company.</strong></td>
 </tr>
@@ -304,7 +304,7 @@ This is the new, recommended version (v4) of the customer API!
 
 <h3 id="retrieve-company-details">Retrieve company details</h3>
 
-<p>Get a single <a href="#companies">company</a> object by its ID.</p>
+<p>Get a single <a title="Companies" href="#companies">company</a> object by its ID.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/companies/[company_id]</code></p>
 
@@ -316,7 +316,7 @@ This is the new, recommended version (v4) of the customer API!
 
 <p><code class="prettyprint">PATCH https://service.giosg.com/api/v4/customer/companies/[company_id]</code></p>
 
-<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes the <a href="#companies">company</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
+<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes the <a title="Companies" href="#companies">company</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
 
 <h2 id="persons">Persons</h2>
 
@@ -352,7 +352,7 @@ This is the new, recommended version (v4) of the customer API!
 <td style="text-align: left"><code class="prettyprint">company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#companies">company</a> resource to which the person belongs to</td>
+<td>The <a title="Companies" href="#companies">company</a> resource to which the person belongs to</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">first_name</code></td>
@@ -386,7 +386,7 @@ This is the new, recommended version (v4) of the customer API!
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">birthday</code></td>
-<td style="text-align: left"><a href="#date-format">date</a></td>
+<td style="text-align: left"><a title="Date format" href="#date-format">date</a></td>
 <td style="text-align: left"><strong>optional</strong></td>
 <td>Date of birth in format <code class="prettyprint">YYYY-MM-DD</code>, e.g. <code class="prettyprint">1980-06-19</code></td>
 </tr>
@@ -404,13 +404,13 @@ This is the new, recommended version (v4) of the customer API!
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When the person resource was created</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">modified_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When the person resource was modified last time</td>
 </tr>
@@ -448,13 +448,13 @@ This is the new, recommended version (v4) of the customer API!
 <td style="text-align: left"><code class="prettyprint">team_memberships</code></td>
 <td style="text-align: left">array of objects</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#team-memberships">team membership</a> resources, listing the teams this person belongs to. Each object in the array has the attributes <code class="prettyprint">id</code>, <code class="prettyprint">team_id</code>, <code class="prettyprint">team</code>, <code class="prettyprint">is_admin</code></td>
+<td>The <a title="Team membershipss" href="#team-memberships">team membership</a> resources, listing the teams this person belongs to. Each object in the array has the attributes <code class="prettyprint">id</code>, <code class="prettyprint">team_id</code>, <code class="prettyprint">team</code>, <code class="prettyprint">is_admin</code></td>
 </tr>
 </tbody></table>
 
 <h3 id="retrieve-person-details">Retrieve person details</h3>
 
-<p>Get a single <a href="#persons">person</a> object by its ID.</p>
+<p>Get a single <a title="Persons" href="#persons">person</a> object by its ID.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/persons/[person_id]</code>
 Alternatively, you may get <strong>your own</strong> user account details by replacing the ID with the word <code class="prettyprint">me</code>.</p>
@@ -491,11 +491,11 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 
 <p>Once again, you may replace the person ID with word <code class="prettyprint">me</code> in order to update your own account details.</p>
 
-<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains all the changed attributes of the <a href="#persons">person</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
+<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains all the changed attributes of the <a title="Persons" href="#persons">person</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
 
 <h3 id="get-a-collection-of-persons">Get a collection of persons</h3>
 
-<p>Get a <a href="#paginated-collections">paginated collection</a> of persons that you are allowed to list.</p>
+<p>Get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of persons that you are allowed to list.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/persons/</code></p>
 
@@ -509,7 +509,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 </thead><tbody>
 <tr>
 <td><code class="prettyprint">ordering</code></td>
-<td><a href="#ordering-collections">ordering</a></td>
+<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
 <td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">last_name</code>, <code class="prettyprint">first_name</code>, <code class="prettyprint">email</code>, <code class="prettyprint">alias</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">modified_at</code></td>
 </tr>
@@ -529,13 +529,13 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 <td><code class="prettyprint">page</code></td>
 <td>integer</td>
 <td>1</td>
-<td><a href="#paginated-collections">Page</a> to get</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page_size</code></td>
 <td>integer</td>
 <td>50</td>
-<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
 </tr>
 </tbody></table>
 
@@ -573,7 +573,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 <td style="text-align: left"><code class="prettyprint">company</code></td>
 <td style="text-align: left">object</td>
 <td>read-only</td>
-<td>The <a href="#companies">company</a> who owns this room.</td>
+<td>The <a title="Companies" href="#companies">company</a> who owns this room.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">domain</code></td>
@@ -591,7 +591,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 <td style="text-align: left"><code class="prettyprint">display_name</code></td>
 <td style="text-align: left">string</td>
 <td>read-only</td>
-<td>Display name of the room. It may equal to the <code class="prettyprint">name</code> attribute, unless this room is <a href="#outgoing-room-shares">shared</a> to your company with a custom <code class="prettyprint">share_name</code>.</td>
+<td>Display name of the room. It may equal to the <code class="prettyprint">name</code> attribute, unless this room is <a title="Outgoing room shares" href="#outgoing-room-shares">shared</a> to your company with a custom <code class="prettyprint">share_name</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_shared</code></td>
@@ -613,13 +613,13 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>read-only</td>
 <td>When this room was created. <strong>Visible only to your own company.</strong></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">modified_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>read-only</td>
 <td>When this room was modified last time. <strong>Visible only to your own company.</strong></td>
 </tr>
@@ -673,7 +673,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 
 <h3 id="get-a-collection-of-rooms">Get a collection of rooms</h3>
 
-<p>Return a <a href="#paginated-collections">paginated collection</a> of all the <a href="#rooms-and-domains">room</a> resources you have access to, including any shared rooms:</p>
+<p>Return a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Rooms and domains" href="#rooms-and-domains">room</a> resources you have access to, including any shared rooms:</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/rooms</code></p>
 
@@ -687,7 +687,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 </thead><tbody>
 <tr>
 <td><code class="prettyprint">ordering</code></td>
-<td><a href="#ordering-collections">ordering</a></td>
+<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
 <td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">domain</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">modified_at</code>, <code class="prettyprint">company_id</code></td>
 </tr>
@@ -713,19 +713,19 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 <td><code class="prettyprint">page</code></td>
 <td>integer</td>
 <td>1</td>
-<td><a href="#paginated-collections">Page</a> to get</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page_size</code></td>
 <td>integer</td>
 <td>50</td>
-<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
 </tr>
 </tbody></table>
 
 <h3 id="creating-a-room">Creating a room</h3>
 
-<p>Create a new custom room or a domain room by making a <code class="prettyprint">POST</code> request, providing the <a href="#rooms-and-domains">room object</a> as a payload. By providing the <code class="prettyprint">domain</code> attribute with non-null value will create a new domain room.</p>
+<p>Create a new custom room or a domain room by making a <code class="prettyprint">POST</code> request, providing the <a title="Rooms and domains" href="#rooms-and-domains">room object</a> as a payload. By providing the <code class="prettyprint">domain</code> attribute with non-null value will create a new domain room.</p>
 
 <p><code class="prettyprint">POST https://service.giosg.com/api/v4/customer/rooms</code></p>
 
@@ -775,7 +775,7 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 <td style="text-align: left"><code class="prettyprint">company</code></td>
 <td style="text-align: left">object</td>
 <td>read-only</td>
-<td>The <a href="#companies">company</a> who owns this team.</td>
+<td>The <a title="Companies" href="#companies">company</a> who owns this team.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">name</code></td>
@@ -787,7 +787,7 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 <td style="text-align: left"><code class="prettyprint">display_name</code></td>
 <td style="text-align: left">string</td>
 <td>read-only</td>
-<td>Display name of the team. It may equal to the <code class="prettyprint">name</code> attribute, unless this team is <a href="#outgoing-team-shares">shared</a> to your company with a custom <code class="prettyprint">share_name</code>.</td>
+<td>Display name of the team. It may equal to the <code class="prettyprint">name</code> attribute, unless this team is <a title="Outgoing team shares" href="#outgoing-team-shares">shared</a> to your company with a custom <code class="prettyprint">share_name</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_shared</code></td>
@@ -799,13 +799,13 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 <td style="text-align: left"><code class="prettyprint">member_count</code></td>
 <td style="text-align: left">integer</td>
 <td>read-only</td>
-<td>Number of <a href="#team-memberships">members</a> in this team, including both admins and non-admins. <strong>Visible only to your own company.</strong></td>
+<td>Number of <a title="Team membershipss" href="#team-memberships">members</a> in this team, including both admins and non-admins. <strong>Visible only to your own company.</strong></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">admin_count</code></td>
 <td style="text-align: left">integer</td>
 <td>read-only</td>
-<td>Number of <a href="#team-memberships">admins</a> in this team. <strong>Visible only to your own company.</strong></td>
+<td>Number of <a title="Team membershipss" href="#team-memberships">admins</a> in this team. <strong>Visible only to your own company.</strong></td>
 </tr>
 </tbody></table>
 
@@ -817,7 +817,7 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 
 <h3 id="get-a-collection-of-teams">Get a collection of teams</h3>
 
-<p>Return a <a href="#paginated-collections">paginated collection</a> of all the <a href="#teams">team</a> resources you have access to, including any shared teams:</p>
+<p>Return a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Teams" href="#teams">team</a> resources you have access to, including any shared teams:</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/teams</code></p>
 
@@ -831,7 +831,7 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 </thead><tbody>
 <tr>
 <td><code class="prettyprint">ordering</code></td>
-<td><a href="#ordering-collections">ordering</a></td>
+<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
 <td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">company_id</code></td>
 </tr>
@@ -851,13 +851,13 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 <td><code class="prettyprint">page</code></td>
 <td>integer</td>
 <td>1</td>
-<td><a href="#paginated-collections">Page</a> to get</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page_size</code></td>
 <td>integer</td>
 <td>50</td>
-<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
 </tr>
 </tbody></table>
 
@@ -909,7 +909,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">team</code></td>
 <td style="text-align: left">object</td>
 <td>read-only</td>
-<td>The <a href="#teams">team</a> to which this member belongs, with attributes <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">display_name</code>, and <code class="prettyprint">company_id</code>.</td>
+<td>The <a title="Teams" href="#teams">team</a> to which this member belongs, with attributes <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">display_name</code>, and <code class="prettyprint">company_id</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">person_id</code></td>
@@ -921,7 +921,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">person</code></td>
 <td style="text-align: left">object</td>
 <td>read-only</td>
-<td>The member <a href="#persons">person</a> resource. Has all other attributes than <code class="prettyprint">company</code></td>
+<td>The member <a title="Persons" href="#persons">person</a> resource. Has all other attributes than <code class="prettyprint">company</code></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_admin</code></td>
@@ -935,7 +935,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <h3 id="get-a-collection-of-team-members">Get a collection of team members</h3>
 
-<p>Return a <a href="#paginated-collections">paginated collection</a> of all the <a href="#team-memberships">team membership</a> resources for a specific <a href="#teams">team</a>.</p>
+<p>Return a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Team membershipss" href="#team-memberships">team membership</a> resources for a specific <a title="Teams" href="#teams">team</a>.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/teams/[team_id]/memberships</code></p>
 
@@ -957,13 +957,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td><code class="prettyprint">page</code></td>
 <td>integer</td>
 <td>1</td>
-<td><a href="#paginated-collections">Page</a> to get</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page_size</code></td>
 <td>integer</td>
 <td>50</td>
-<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
 </tr>
 </tbody></table>
 
@@ -1017,7 +1017,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">ordering</code></td>
-<td style="text-align: left"><a href="#ordering-collections">ordering</a></td>
+<td style="text-align: left"><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td style="text-align: left">id</td>
 <td>Order results by either <code class="prettyprint">id</code>, <code class="prettyprint">start_time</code> or <code class="prettyprint">end_time</code>. Use <code class="prettyprint">-</code> prefix to reverse.</td>
 </tr>
@@ -1025,13 +1025,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">page</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">1</td>
-<td><a href="#paginated-collections">Page</a> to get</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">page_size</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">25</td>
-<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 100</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 100</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">since_id</code></td>
@@ -1041,13 +1041,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">start_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left"></td>
 <td>Only return chats started after this moment (inclusive)</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">end_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left"></td>
 <td>Only return chats ended before this moment (exclusive)</td>
 </tr>
@@ -1180,7 +1180,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>This API end-point returns a <a href="#paginated-collections">paginated collection</a> of chat objects, having the following attributes.</p>
+<p>This API end-point returns a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of chat objects, having the following attributes.</p>
 
 <table><thead>
 <tr>
@@ -1196,17 +1196,17 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">start_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>When the chat conversation started</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">end_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>When the chat conversation ended (or <code class="prettyprint">null</code> if not yet ended)</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">modified</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>When the chat conversation was last time modified</td>
 </tr>
 <tr>
@@ -1312,7 +1312,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">dt</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>When the message was sent</td>
 </tr>
 <tr>
@@ -1348,7 +1348,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">opened</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>When the first item was added to the shopping cart</td>
 </tr>
 <tr>
@@ -1368,7 +1368,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">locked</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>When the cart was purchased, i.e. &ldquo;locked&rdquo;. It is <code class="prettyprint">null</code> if the visitor has not purchased the shopping cart (yet)</td>
 </tr>
 <tr>
@@ -1439,12 +1439,12 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">added</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>When the product was added to the shopping cart</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">deleted</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>When the product was removed from the shopping cart. If <code class="prettyprint">null</code>, then the products actually exists in the shopping cart. Otherwise, it has actually been removed and should not be considered to be in the cart.</td>
 </tr>
 </tbody></table>
@@ -1503,17 +1503,17 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">room_shares</code></td>
 <td style="text-align: left">array of objects</td>
 <td style="text-align: left"><strong>optional</strong></td>
-<td>You may <strong>share rooms</strong> to your partner when they accept your invitation. This should be an array of objects similar to <a href="#outgoing-room-shares">outgoing room share</a> objects. On creation, the objects may contain attributes <code class="prettyprint">room_id</code> and <code class="prettyprint">share_name</code>. In responses these objects contain the attributes <code class="prettyprint">room_id</code>, <code class="prettyprint">room</code>, and <code class="prettyprint">share_name</code>.</td>
+<td>You may <strong>share rooms</strong> to your partner when they accept your invitation. This should be an array of objects similar to <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> objects. On creation, the objects may contain attributes <code class="prettyprint">room_id</code> and <code class="prettyprint">share_name</code>. In responses these objects contain the attributes <code class="prettyprint">room_id</code>, <code class="prettyprint">room</code>, and <code class="prettyprint">share_name</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">team_shares</code></td>
 <td style="text-align: left">array of objects</td>
 <td style="text-align: left"><strong>optional</strong></td>
-<td>You may <strong>share teams</strong> to your partner when they accept your invitation. This should be an array of objects similar to <a href="#outgoing-team-shares">outgoing team share</a> objects. On creation, the objects may contain attributes <code class="prettyprint">team_id</code> and <code class="prettyprint">share_name</code>. In responses these objects contain the attributes <code class="prettyprint">team_id</code>, <code class="prettyprint">team</code>, and <code class="prettyprint">share_name</code>.</td>
+<td>You may <strong>share teams</strong> to your partner when they accept your invitation. This should be an array of objects similar to <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> objects. On creation, the objects may contain attributes <code class="prettyprint">team_id</code> and <code class="prettyprint">share_name</code>. In responses these objects contain the attributes <code class="prettyprint">team_id</code>, <code class="prettyprint">team</code>, and <code class="prettyprint">share_name</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When this invitation was sent</td>
 </tr>
@@ -1527,7 +1527,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">creator_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#companies">company</a> resource who sent this invitation, with all of its attributes.</td>
+<td>The <a title="Companies" href="#companies">company</a> resource who sent this invitation, with all of its attributes.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">creator_person_id</code></td>
@@ -1539,11 +1539,11 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">creator_person</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#persons">person</a> resource who sent this invitation, with all other attributes except <code class="prettyprint">company</code> and <code class="prettyprint">company_id</code></td>
+<td>The <a title="Persons" href="#persons">person</a> resource who sent this invitation, with all other attributes except <code class="prettyprint">company</code> and <code class="prettyprint">company_id</code></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">resolved_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When this invitation was accepted or rejected, <code class="prettyprint">null</code> if still pending</td>
 </tr>
@@ -1557,7 +1557,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">resolver_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#companies">company</a> resource who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+<td>The <a title="Companies" href="#companies">company</a> resource who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">resolver_person_id</code></td>
@@ -1569,13 +1569,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">resolver_person</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#persons">person</a> who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+<td>The <a title="Persons" href="#persons">person</a> who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the <a href="#partnerships">partnership</a> of the partner who accepted this invitation, or <code class="prettyprint">null</code> if not accepted</td>
+<td>ID of the <a title="Partnerships" href="#partnerships">partnership</a> of the partner who accepted this invitation, or <code class="prettyprint">null</code> if not accepted</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_new_partnership</code></td>
@@ -1589,7 +1589,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <h3 id="send-an-invitation">Send an invitation</h3>
 
-<p>You may send an invitation to your partner&rsquo;s email address by creating a new <a href="#outgoing-partnership-invitations">outgoing invitation</a> object.</p>
+<p>You may send an invitation to your partner&rsquo;s email address by creating a new <a title="Outgoing partnership invitations" href="#outgoing-partnership-invitations">outgoing invitation</a> object.</p>
 
 <p><code class="prettyprint">POST https://service.giosg.com/api/v3/network/invitations/outgoing/</code></p>
 
@@ -1605,13 +1605,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <h3 id="retrieve-outgoing-invitation-details">Retrieve outgoing invitation details</h3>
 
-<p>Get a single <a href="#outgoing-partnership-invitations">outgoing invitation</a> object sent by your company, by a given ID.</p>
+<p>Get a single <a title="Outgoing partnership invitations" href="#outgoing-partnership-invitations">outgoing invitation</a> object sent by your company, by a given ID.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/invitations/outgoing/[invitation_id]</code></p>
 
 <h3 id="get-a-collection-of-outgoing-invitations">Get a collection of outgoing invitations</h3>
 
-<p>Get a <a href="#paginated-collections">paginated collection</a> of all sent <a href="#outgoing-partnership-invitations">outgoing invitation</a> objects.</p>
+<p>Get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all sent <a title="Outgoing partnership invitations" href="#outgoing-partnership-invitations">outgoing invitation</a> objects.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/invitations/outgoing/</code></p>
 
@@ -1627,7 +1627,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </thead><tbody>
 <tr>
 <td><code class="prettyprint">ordering</code></td>
-<td><a href="#ordering-collections">ordering</a></td>
+<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
 <td>Ordering of results with options <code class="prettyprint">status</code>, <code class="prettyprint">email</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">resolved_at</code></td>
 </tr>
@@ -1641,13 +1641,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td><code class="prettyprint">page</code></td>
 <td>integer</td>
 <td>1</td>
-<td><a href="#paginated-collections">Page</a> to get</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page_size</code></td>
 <td>integer</td>
 <td>50</td>
-<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
 </tr>
 </tbody></table>
 
@@ -1697,17 +1697,17 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">room_shares</code></td>
 <td style="text-align: left">array of objects</td>
 <td style="text-align: left">read-only</td>
-<td>The rooms that will be shared when the invitation is accepted. An array where each item has the following attributes of an <a href="#incoming-room-shares">incoming room share</a> objects: <code class="prettyprint">room_id</code> and <code class="prettyprint">room</code></td>
+<td>The rooms that will be shared when the invitation is accepted. An array where each item has the following attributes of an <a title="Incoming room shares" href="#incoming-room-shares">incoming room share</a> objects: <code class="prettyprint">room_id</code> and <code class="prettyprint">room</code></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">team_shares</code></td>
 <td style="text-align: left">array of objects</td>
 <td style="text-align: left">read-only</td>
-<td>The teams that will be shared when the invitation is accepted. An array where each item has the following attributes of an <a href="#incoming-team-shares">incoming team share</a> object: <code class="prettyprint">team_id</code> and <code class="prettyprint">team</code></td>
+<td>The teams that will be shared when the invitation is accepted. An array where each item has the following attributes of an <a title="Incoming team shares" href="#incoming-team-shares">incoming team share</a> object: <code class="prettyprint">team_id</code> and <code class="prettyprint">team</code></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When this invitation sent</td>
 </tr>
@@ -1721,7 +1721,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">creator_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#companies">company</a> who sent this invitation, with all of its attributes.</td>
+<td>The <a title="Companies" href="#companies">company</a> who sent this invitation, with all of its attributes.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">creator_person_id</code></td>
@@ -1733,11 +1733,11 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">creator_person</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#persons">person</a> who sent this invitation, with all other attributes except <code class="prettyprint">company</code> and <code class="prettyprint">company_id</code></td>
+<td>The <a title="Persons" href="#persons">person</a> who sent this invitation, with all other attributes except <code class="prettyprint">company</code> and <code class="prettyprint">company_id</code></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">resolved_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When this invitation was accepted or rejected, <code class="prettyprint">null</code> if still pending</td>
 </tr>
@@ -1751,7 +1751,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">resolver_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#companies">company</a> resource who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+<td>The <a title="Companies" href="#companies">company</a> resource who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">resolver_person_id</code></td>
@@ -1763,13 +1763,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">resolver_person</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#persons">person</a> who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+<td>The <a title="Persons" href="#persons">person</a> who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the <a href="#partnerships">partnership</a> of the partner whose invitation was accepted, or <code class="prettyprint">null</code> if not accepted</td>
+<td>ID of the <a title="Partnerships" href="#partnerships">partnership</a> of the partner whose invitation was accepted, or <code class="prettyprint">null</code> if not accepted</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_new_partnership</code></td>
@@ -1781,13 +1781,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <h3 id="retrieve-incoming-invitation-details">Retrieve incoming invitation details</h3>
 
-<p>Retrieve a <a href="#incoming-partnership-invitations">incoming invitation</a> resource by its <strong>invitation key</strong>. Incoming invitations are identified by their automatically generated, random key strings, instead of integer IDs.</p>
+<p>Retrieve a <a title="Incoming partnership invitations" href="#incoming-partnership-invitations">incoming invitation</a> resource by its <strong>invitation key</strong>. Incoming invitations are identified by their automatically generated, random key strings, instead of integer IDs.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/invitations/incoming/[invitation_key]</code></p>
 
 <h3 id="get-a-collection-of-incoming-invitations">Get a collection of incoming invitations</h3>
 
-<p>Get a <a href="#paginated-collections">paginated collection</a> of all received <a href="#incoming-partnership-invitations">incoming invitation</a> objects. This endpoint returns invitations accepted or rejected by your company. It also returns those invitations that are sent to one of your company&rsquo;s email address. <strong>NOTE</strong> that the company who sends the invitation does not know if this email address actually exists in giosg system.</p>
+<p>Get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all received <a title="Incoming partnership invitations" href="#incoming-partnership-invitations">incoming invitation</a> objects. This endpoint returns invitations accepted or rejected by your company. It also returns those invitations that are sent to one of your company&rsquo;s email address. <strong>NOTE</strong> that the company who sends the invitation does not know if this email address actually exists in giosg system.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/invitations/incoming/</code></p>
 
@@ -1803,7 +1803,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </thead><tbody>
 <tr>
 <td><code class="prettyprint">ordering</code></td>
-<td><a href="#ordering-collections">ordering</a></td>
+<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
 <td>Ordering of results with options <code class="prettyprint">status</code>, <code class="prettyprint">email</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">resolved_at</code></td>
 </tr>
@@ -1817,13 +1817,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td><code class="prettyprint">page</code></td>
 <td>integer</td>
 <td>1</td>
-<td><a href="#paginated-collections">Page</a> to get</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page_size</code></td>
 <td>integer</td>
 <td>50</td>
-<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
 </tr>
 </tbody></table>
 
@@ -1835,7 +1835,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>As soon as you accept the invitation, the partnership will be created. Also, any shared rooms and teams will become available to your company.</p>
 
-<p>You should send an object as a payload with the following attributes, matching the attributes on a <a href="#partnerships">partnership</a> resource. They may be omitted, see below.</p>
+<p>You should send an object as a payload with the following attributes, matching the attributes on a <a title="Partnerships" href="#partnerships">partnership</a> resource. They may be omitted, see below.</p>
 
 <table><thead>
 <tr>
@@ -1859,15 +1859,15 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 </tbody></table>
 
-<p>It is possible to accept an invitation from an existing partner. In this case, no new partnership is created. The <code class="prettyprint">display_name</code> and <code class="prettyprint">visible_to_everyone</code> will overwrite the corresponding attributes of the existing <a href="#partnerships">partnership</a> resource, <strong>unless they are omitted</strong>, in which case the old values are preserved.</p>
+<p>It is possible to accept an invitation from an existing partner. In this case, no new partnership is created. The <code class="prettyprint">display_name</code> and <code class="prettyprint">visible_to_everyone</code> will overwrite the corresponding attributes of the existing <a title="Partnerships" href="#partnerships">partnership</a> resource, <strong>unless they are omitted</strong>, in which case the old values are preserved.</p>
 
-<p>If you are accepting the invitation with <a href="#incoming-room-shares">shared rooms</a> or <a href="#incoming-team-shares">teams</a> from an existing partner, then the rooms and teams will become available to you.</p>
+<p>If you are accepting the invitation with <a title="Incoming room shares" href="#incoming-room-shares">shared rooms</a> or <a title="Incoming team shares" href="#incoming-team-shares">teams</a> from an existing partner, then the rooms and teams will become available to you.</p>
 
 <p>After accepting an invitation, its status will become <code class="prettyprint">1</code>.</p>
 
 <p>The request will result in 404 response if the invitation was not found, has been cancelled, or has already been accepted/rejected by some other company. The request will result in 403 response if the invitation has already been accepted or rejected by your company, or if you are not allowed to accept/reject the invitation, e.g. you are the original creator of this invitation.</p>
 
-<p>A successful response will result in the updated <a href="#incoming-partnership-invitations">incoming invitation</a> resource.</p>
+<p>A successful response will result in the updated <a title="Incoming partnership invitations" href="#incoming-partnership-invitations">incoming invitation</a> resource.</p>
 
 <h3 id="reject-an-invitation">Reject an invitation</h3>
 
@@ -1879,11 +1879,11 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>The request will result in 404 response if the invitation was not found, has been cancelled, or has already been accepted/rejected by some other company. The request will result in 403 response if the invitation has already been accepted or rejected by your company, or if you are not allowed to accept/reject the invitation, e.g. you are the original creator of this invitation.</p>
 
-<p>A successful response will result in the updated <a href="#incoming-partnership-invitations">incoming invitation</a> resource.</p>
+<p>A successful response will result in the updated <a title="Incoming partnership invitations" href="#incoming-partnership-invitations">incoming invitation</a> resource.</p>
 
 <h2 id="partnerships">Partnerships</h2>
 
-<p>A partnership object describes a connection between your company and one of your partner companies. Partnerships can only be created with <a href="#outgoing-partnership-invitations">partnership invitation</a> resources.</p>
+<p>A partnership object describes a connection between your company and one of your partner companies. Partnerships can only be created with <a title="Outgoing partnership invitations" href="#outgoing-partnership-invitations">partnership invitation</a> resources.</p>
 
 <table><thead>
 <tr>
@@ -1901,7 +1901,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When you became partners</td>
 </tr>
@@ -1915,7 +1915,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">partner_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The partner <a href="#companies">company</a> resource, with all of its available attributes</td>
+<td>The partner <a title="Companies" href="#companies">company</a> resource, with all of its available attributes</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">company_id</code></td>
@@ -1927,7 +1927,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>Your <a href="#companies">company</a> resource, for convenience</td>
+<td>Your <a title="Companies" href="#companies">company</a> resource, for convenience</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">dislay_name</code></td>
@@ -1951,7 +1951,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">incoming_invitation</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#incoming-partnership-invitations">incoming invitation</a> resource that resulted in creation of this partnership, or <code class="prettyprint">null</code>.</td>
+<td>The <a title="Incoming partnership invitations" href="#incoming-partnership-invitations">incoming invitation</a> resource that resulted in creation of this partnership, or <code class="prettyprint">null</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">outgoing_invitation_id</code></td>
@@ -1963,13 +1963,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">outgoing_invitation</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#outgoing-partnership-invitations">outgoing invitation</a> resource that resulted in creation of this partnership, or <code class="prettyprint">null</code>.</td>
+<td>The <a title="Outgoing partnership invitations" href="#outgoing-partnership-invitations">outgoing invitation</a> resource that resulted in creation of this partnership, or <code class="prettyprint">null</code>.</td>
 </tr>
 </tbody></table>
 
 <h3 id="get-a-collection-of-partnerships">Get a collection of partnerships</h3>
 
-<p>Get a <a href="#paginated-collections">paginated collection</a> of all the known partnerships.</p>
+<p>Get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the known partnerships.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/partnerships/</code></p>
 
@@ -1985,7 +1985,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </thead><tbody>
 <tr>
 <td><code class="prettyprint">ordering</code></td>
-<td><a href="#ordering-collections">ordering</a></td>
+<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
 <td>Ordering of results with options <code class="prettyprint">partner_company_name</code>, <code class="prettyprint">created_at</code></td>
 </tr>
@@ -1993,19 +1993,19 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td><code class="prettyprint">page</code></td>
 <td>integer</td>
 <td>1</td>
-<td><a href="#paginated-collections">Page</a> to get</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page_size</code></td>
 <td>integer</td>
 <td>25</td>
-<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 100</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 100</td>
 </tr>
 </tbody></table>
 
 <h3 id="retrieve-partnership-details">Retrieve partnership details</h3>
 
-<p>Retrieve a single <a href="#partnerships">partnership</a> resource by the partnership ID (not partner company&rsquo;s ID).</p>
+<p>Retrieve a single <a title="Partnerships" href="#partnerships">partnership</a> resource by the partnership ID (not partner company&rsquo;s ID).</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/partnerships/[partnership_id]</code></p>
 
@@ -2028,7 +2028,7 @@ This will immediately remove the company from your partners and remove your part
 
 <p><code class="prettyprint">PATCH https://service.giosg.com/api/v3/network/partnerships/[partnership_id]</code></p>
 
-<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes of the <a href="#partnerships">partnership</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
+<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes of the <a title="Partnerships" href="#partnerships">partnership</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
 
           <h1 id="sharing-api">Sharing API</h1>
 
@@ -2038,14 +2038,14 @@ This will immediately remove the company from your partners and remove your part
 <li><strong>Room shares</strong>
 
 <ul>
-<li><a href="#outgoing-room-shares">Outgoing room share</a></li>
-<li><a href="#incoming-room-shares">Incoming room share</a></li>
+<li><a title="Outgoing room shares" href="#outgoing-room-shares">Outgoing room share</a></li>
+<li><a title="Incoming room shares" href="#incoming-room-shares">Incoming room share</a></li>
 </ul></li>
 <li><strong>Team shares</strong>
 
 <ul>
-<li><a href="#outgoing-team-shares">Outgoing team share</a></li>
-<li><a href="#incoming-team-shares">Incoming team share</a></li>
+<li><a title="Outgoing team shares" href="#outgoing-team-shares">Outgoing team share</a></li>
+<li><a title="Incoming team shares" href="#incoming-team-shares">Incoming team share</a></li>
 </ul></li>
 </ul>
 
@@ -2071,7 +2071,7 @@ This will immediately remove the company from your partners and remove your part
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When the resource was shared</td>
 </tr>
@@ -2085,7 +2085,7 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">creator_person</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#persons">person</a> resource who shared the resource, with all of the available attributes</td>
+<td>The <a title="Persons" href="#persons">person</a> resource who shared the resource, with all of the available attributes</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">share_name</code></td>
@@ -2097,7 +2097,7 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left"><strong>required</strong></td>
-<td>ID of the <a href="#partnerships">partnership</a> of the partner to whom the resource is shared. <strong>Cannot be changed after creation.</strong></td>
+<td>ID of the <a title="Partnerships" href="#partnerships">partnership</a> of the partner to whom the resource is shared. <strong>Cannot be changed after creation.</strong></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">original_share_id</code></td>
@@ -2121,7 +2121,7 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">sharer_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#companies">company</a> object who shared the resource, with all of its attributes.</td>
+<td>The <a title="Companies" href="#companies">company</a> object who shared the resource, with all of its attributes.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">receiver_company_id</code></td>
@@ -2133,17 +2133,17 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">receiver_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#companies">company</a> object to whon the resource was shared</td>
+<td>The <a title="Companies" href="#companies">company</a> object to whon the resource was shared</td>
 </tr>
 </tbody></table>
 
-<p>If you are re-sharing a resource that is shared to your company, then you must set the attribute <code class="prettyprint">original_share_id</code> to the ID of the corresponding <a href="#incoming-shares">incoming share</a> resource that shares the resource to <strong>your</strong> company. If you own the shared room, this should always be <code class="prettyprint">null</code>.</p>
+<p>If you are re-sharing a resource that is shared to your company, then you must set the attribute <code class="prettyprint">original_share_id</code> to the ID of the corresponding <a title="Incoming shares" href="#incoming-shares">incoming share</a> resource that shares the resource to <strong>your</strong> company. If you own the shared room, this should always be <code class="prettyprint">null</code>.</p>
 
 <p>By default, resources are shared with their original names. However, these are usually for your company&rsquo;s internal use, and you may want to display the resource with more descriptive name to your partners. In this case, you may want to define the <code class="prettyprint">share_name</code> attribute.</p>
 
 <h3 id="outgoing-room-shares">Outgoing room shares</h3>
 
-<p>Your company may share rooms to their partners by creating outgoing room share resources that extend <a href="#outgoing-shares">outgoing share</a> resources. Additionally, an outgoing room share object has the following attributes.</p>
+<p>Your company may share rooms to their partners by creating outgoing room share resources that extend <a title="Outgoing shares" href="#outgoing-shares">outgoing share</a> resources. Additionally, an outgoing room share object has the following attributes.</p>
 
 <table><thead>
 <tr>
@@ -2163,13 +2163,13 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">room</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#rooms-and-domains">room</a> resource that has been shared</td>
+<td>The <a title="Rooms and domains" href="#rooms-and-domains">room</a> resource that has been shared</td>
 </tr>
 </tbody></table>
 
 <h3 id="outgoing-team-shares">Outgoing team shares</h3>
 
-<p>Your company may share teams to their partners by creating outgoing team share resources that extend <a href="#outgoing-shares">outgoing share</a> resources. Additionally, an outgoing team share object has the following attributes.</p>
+<p>Your company may share teams to their partners by creating outgoing team share resources that extend <a title="Outgoing shares" href="#outgoing-shares">outgoing share</a> resources. Additionally, an outgoing team share object has the following attributes.</p>
 
 <table><thead>
 <tr>
@@ -2189,7 +2189,7 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">team</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#teams">team</a> resource that has been shared</td>
+<td>The <a title="Teams" href="#teams">team</a> resource that has been shared</td>
 </tr>
 </tbody></table>
 
@@ -2199,13 +2199,13 @@ This will immediately remove the company from your partners and remove your part
 
 <p><code class="prettyprint">POST https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/</code></p>
 
-<p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. You may only share resources that you own or are being shared to your company. You need to provide the required attributes of an <a href="#outgoing-room-shares">outgoing room share</a> or an <a href="#outgoing-team-shares">outgoing team share</a> as well as desired optional attributes as a payload.</p>
+<p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. You may only share resources that you own or are being shared to your company. You need to provide the required attributes of an <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or an <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> as well as desired optional attributes as a payload.</p>
 
-<p>The API returns an <a href="#outgoing-room-shares">outgoing room share</a> or an <a href="#outgoing-team-shares">outgoing team share</a> as a response.</p>
+<p>The API returns an <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or an <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> as a response.</p>
 
 <h3 id="retrieve-outgoing-share-details">Retrieve outgoing share details</h3>
 
-<p>Returns an <a href="#outgoing-room-shares">outgoing room share</a> or an <a href="#outgoing-team-shares">outgoing team share</a> resource by the given ID.</p>
+<p>Returns an <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or an <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> resource by the given ID.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/[share_id]</code></p>
 
@@ -2213,13 +2213,13 @@ This will immediately remove the company from your partners and remove your part
 
 <h3 id="unshare-a-resource">Unshare a resource</h3>
 
-<p>You may decide not to share a resource any more to the specific partner. In this case, you may delete the <a href="#outgoing-shares">outgoing share</a> resource.</p>
+<p>You may decide not to share a resource any more to the specific partner. In this case, you may delete the <a title="Outgoing shares" href="#outgoing-shares">outgoing share</a> resource.</p>
 
 <p><code class="prettyprint">DELETE https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/[share_id]</code></p>
 
 <h3 id="get-a-collection-of-outgoing-shares">Get a collection of outgoing shares</h3>
 
-<p>You may get a <a href="#paginated-collections">paginated collection</a> of all the <a href="#outgoing-room-shares">outgoing room share</a> or <a href="#outgoing-team-shares">outgoing team share</a> resources that your company has created.</p>
+<p>You may get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> resources that your company has created.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/</code></p>
 
@@ -2235,7 +2235,7 @@ This will immediately remove the company from your partners and remove your part
 </thead><tbody>
 <tr>
 <td><code class="prettyprint">ordering</code></td>
-<td><a href="#ordering-collections">ordering</a></td>
+<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
 <td>Ordering of results with options <code class="prettyprint">created_at</code>, <code class="prettyprint">partnership_id</code></td>
 </tr>
@@ -2255,13 +2255,13 @@ This will immediately remove the company from your partners and remove your part
 <td><code class="prettyprint">page</code></td>
 <td>integer</td>
 <td>1</td>
-<td><a href="#paginated-collections">Page</a> to get</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page_size</code></td>
 <td>integer</td>
 <td>25</td>
-<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
 </tr>
 </tbody></table>
 
@@ -2295,7 +2295,7 @@ This will immediately remove the company from your partners and remove your part
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When the resource was shared</td>
 </tr>
@@ -2303,7 +2303,7 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the <a href="#partnerships">partnership</a> of the partner to whom the resource is shared.</td>
+<td>ID of the <a title="Partnerships" href="#partnerships">partnership</a> of the partner to whom the resource is shared.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">sharer_company_id</code></td>
@@ -2315,7 +2315,7 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">sharer_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#companies">company</a> object who shared the resource, with all of its attributes.</td>
+<td>The <a title="Companies" href="#companies">company</a> object who shared the resource, with all of its attributes.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">receiver_company_id</code></td>
@@ -2327,13 +2327,13 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">receiver_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#companies">company</a> object to whon the resource was shared</td>
+<td>The <a title="Companies" href="#companies">company</a> object to whon the resource was shared</td>
 </tr>
 </tbody></table>
 
 <h2 id="incoming-room-shares">Incoming room shares</h2>
 
-<p>If you are a receiving party of a shared room, then you use the room share objects as <strong>incoming room shares</strong> that extend the <a href="#incoming-shares">incoming share</a> resource. Additionally, an incoming room share has the following attributes.</p>
+<p>If you are a receiving party of a shared room, then you use the room share objects as <strong>incoming room shares</strong> that extend the <a title="Incoming shares" href="#incoming-shares">incoming share</a> resource. Additionally, an incoming room share has the following attributes.</p>
 
 <table><thead>
 <tr>
@@ -2353,13 +2353,13 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">room</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#rooms-and-domains">room</a> resource that has been shared</td>
+<td>The <a title="Rooms and domains" href="#rooms-and-domains">room</a> resource that has been shared</td>
 </tr>
 </tbody></table>
 
 <h2 id="incoming-team-shares">Incoming team shares</h2>
 
-<p>If you are a receiving party of a shared team, then you use the team share objects as <strong>incoming team shares</strong> that extend the <a href="#incoming-shares">incoming share</a> resource. Additionally, an incoming team share has the following attributes.</p>
+<p>If you are a receiving party of a shared team, then you use the team share objects as <strong>incoming team shares</strong> that extend the <a title="Incoming shares" href="#incoming-shares">incoming share</a> resource. Additionally, an incoming team share has the following attributes.</p>
 
 <table><thead>
 <tr>
@@ -2379,13 +2379,13 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">team</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a href="#teams">team</a> resource that has been shared</td>
+<td>The <a title="Teams" href="#teams">team</a> resource that has been shared</td>
 </tr>
 </tbody></table>
 
 <h3 id="get-a-collection-of-incoming-shares">Get a collection of incoming shares</h3>
 
-<p>You may get a <a href="#paginated-collections">paginated collection</a> of all the <a href="#incoming-room-shares">incoming room share</a> or <a href="#incoming-team-shares">incoming team share</a> resources that are shared to your company.</p>
+<p>You may get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Incoming room shares" href="#incoming-room-shares">incoming room share</a> or <a title="Incoming team shares" href="#incoming-team-shares">incoming team share</a> resources that are shared to your company.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/incoming/[resource_type]/</code></p>
 
@@ -2401,7 +2401,7 @@ This will immediately remove the company from your partners and remove your part
 </thead><tbody>
 <tr>
 <td><code class="prettyprint">ordering</code></td>
-<td><a href="#ordering-collections">ordering</a></td>
+<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
 <td>Ordering of results with options <code class="prettyprint">created_at</code>, <code class="prettyprint">partnership_id</code></td>
 </tr>
@@ -2421,23 +2421,285 @@ This will immediately remove the company from your partners and remove your part
 <td><code class="prettyprint">page</code></td>
 <td>integer</td>
 <td>1</td>
-<td><a href="#paginated-collections">Page</a> to get</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page_size</code></td>
 <td>integer</td>
 <td>25</td>
-<td><a href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
 </tr>
 </tbody></table>
 
 <h3 id="retrieve-incoming-share-details">Retrieve incoming share details</h3>
 
-<p>Returns an <a href="#incoming-room-shares">incoming room share</a> or <a href="#incoming-team-shares">incoming team share</a> resource by the given ID.</p>
+<p>Returns an <a title="Incoming room shares" href="#incoming-room-shares">incoming room share</a> or <a title="Incoming team shares" href="#incoming-team-shares">incoming team share</a> resource by the given ID.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/incoming/[resource_type]/[share_id]</code></p>
 
 <p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>.</p>
+
+          <h1 id="assets-api">Assets API</h1>
+
+<aside class="info">
+This API is available only if your account has the <strong>Assets</strong> feature.
+</aside>
+
+<h2 id="assets">Assets</h2>
+
+<p>Assets are files that you can upload to giosg system and that are publicly available. They are useful to hosts resources for you custom customized giosg products or your website components!</p>
+
+<p>Even though asset contents are publicly available, they can only be accessed with an URL. In other words, only your company members are able to see the list of your company assets. When the asset is used somewhere, e.g. on your custom chat dialog or your website, anyone is (and need to be) able to download its contents and see its public attributes.</p>
+
+<p>An asset resource has the following attributes.</p>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">id</code></td>
+<td>string</td>
+<td>read-only</td>
+<td><a title="Universally Unique Identifier" href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a> string identifier</td>
+</tr>
+<tr>
+<td><code class="prettyprint">name</code></td>
+<td>string</td>
+<td><strong>required</strong></td>
+<td>Short, human-readable name.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">description</code></td>
+<td>string</td>
+<td><strong>optional</strong></td>
+<td>Human-readable description</td>
+</tr>
+<tr>
+<td><code class="prettyprint">company_id</code></td>
+<td>integer</td>
+<td>read-only</td>
+<td>The ID of the owner company</td>
+</tr>
+<tr>
+<td><code class="prettyprint">company</code></td>
+<td>object</td>
+<td>read-only</td>
+<td>The owner company resource</td>
+</tr>
+<tr>
+<td><code class="prettyprint">file_name</code></td>
+<td>string</td>
+<td>read-only</td>
+<td>The original file name of the uploaded file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">url</code></td>
+<td>string</td>
+<td>read-only</td>
+<td>The full URL for original, uploaded file. <strong>Use this URL to link to your asset!</strong></td>
+</tr>
+<tr>
+<td><code class="prettyprint">size</code></td>
+<td>integer</td>
+<td>read-only</td>
+<td>Size of the uploaded file in bytes</td>
+</tr>
+<tr>
+<td><code class="prettyprint">content_type</code></td>
+<td>string</td>
+<td>read-only</td>
+<td><a title="Internet Media Type" href="https://en.wikipedia.org/wiki/Internet_media_type">Content type</a> of the uploaded file, e.g. <code class="prettyprint">image/jpeg</code> (or <code class="prettyprint">null</code> if unknown)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">kind</code></td>
+<td>string</td>
+<td>read-only</td>
+<td>What kind of file the asset is: <code class="prettyprint">&quot;image&quot;</code>, <code class="prettyprint">&quot;css&quot;</code>, <code class="prettyprint">&quot;javascript&quot;</code>, <code class="prettyprint">&quot;font&quot;</code> or <code class="prettyprint">null</code> (unknown)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">charset</code></td>
+<td>string</td>
+<td>read-only</td>
+<td>Character encoding for a text file, e.g. <code class="prettyprint">UTF-8</code> (or <code class="prettyprint">null</code> if binary or unknown)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">created_at</code></td>
+<td>date/time</td>
+<td>read-only</td>
+<td>When the asset was created</td>
+</tr>
+<tr>
+<td><code class="prettyprint">modified_at</code></td>
+<td>date/time</td>
+<td>read-only</td>
+<td>When the asset name or description was last time modified</td>
+</tr>
+<tr>
+<td><code class="prettyprint">creator_id</code></td>
+<td>integer</td>
+<td>read-only</td>
+<td>The ID of the person who created this asset</td>
+</tr>
+<tr>
+<td><code class="prettyprint">creator</code></td>
+<td>object</td>
+<td>read-only</td>
+<td>The person resource who created this asset</td>
+</tr>
+<tr>
+<td><code class="prettyprint">modifier_id</code></td>
+<td>integer</td>
+<td>read-only</td>
+<td>The ID of the person who last time modified this asset</td>
+</tr>
+<tr>
+<td><code class="prettyprint">modifier</code></td>
+<td>object</td>
+<td>read-only</td>
+<td>The person resource who last time modified this asset</td>
+</tr>
+<tr>
+<td><code class="prettyprint">width</code></td>
+<td>integer</td>
+<td>read-only</td>
+<td>The width of an image in pixels. Available for images only. It is <code class="prettyprint">null</code> for other assets.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">height</code></td>
+<td>integer</td>
+<td>read-only</td>
+<td>The height of an image in pixels. Available for images only. It is <code class="prettyprint">null</code> for other assets.</td>
+</tr>
+</tbody></table>
+
+<h3 id="upload-a-new-asset">Upload a new asset</h3>
+
+<p>Upload a file creating a new asset for a company.</p>
+
+<p><code class="prettyprint">POST /api/v3/customer/assets</code></p>
+
+<p><strong>IMPORTANT!</strong> In contrast to the all other API endpoints, this only accepts <code class="prettyprint">multipart/form-data</code> requests, because you need to upload a file with the request. The request payload takes the following attributes.</p>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">upload</code></td>
+<td>file</td>
+<td><strong>required</strong></td>
+<td>The asset file to be uploaded. File name is required.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">name</code></td>
+<td>string</td>
+<td><strong>optional</strong></td>
+<td>Name for the newly created asset. If omitted, defaults to the file name. Otherwise, it must be a non-empty string value.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">description</code></td>
+<td>string</td>
+<td><strong>optional</strong></td>
+<td>Description for this asset.</td>
+</tr>
+</tbody></table>
+
+<p>This endpoint returns an <a title="Assets" href="#assets">asset</a> resource. It results in a 400 response if the upload would exceed your company&rsquo;s free asset storage space.</p>
+
+<h3 id="list-assets">List assets</h3>
+
+<p>Get a paginated collection of all the assets of your company:</p>
+
+<p><code class="prettyprint">GET /api/v3/customer/assets</code></p>
+
+<p>The endpoint accepts the following GET parameters.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ordering</code></td>
+<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
+<td><code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">created_at</code>, <code class="prettyprint">modified_at</code>, <code class="prettyprint">name</code>, <code class="prettyprint">kind</code>, <code class="prettyprint">content_type</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">page</code></td>
+<td>integer</td>
+<td>1</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page_size</code></td>
+<td>integer</td>
+<td>50</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 100</td>
+</tr>
+</tbody></table>
+
+<h3 id="retrieve-a-single-asset">Retrieve a single asset</h3>
+
+<p><code class="prettyprint">GET /api/v3/customer/assets/[asset_id]</code></p>
+
+<h3 id="update-an-asset">Update an asset</h3>
+
+<p>You may update the <code class="prettyprint">name</code> and/or <code class="prettyprint">description</code> attributes of an asset.</p>
+
+<p><code class="prettyprint">PUT /api/v3/customer/assets/[asset_id]</code></p>
+
+<p><code class="prettyprint">PATCH /api/v3/customer/assets/[asset_id]</code></p>
+
+<h3 id="delete-an-asset">Delete an asset</h3>
+
+<p>You may delete your assets. Their size is freed for new asset uploads.</p>
+
+<p><code class="prettyprint">DELETE /api/v3/customer/assets/[asset_id]</code></p>
+
+<h3 id="retrieve-company-39-s-storage-information">Retrieve company&rsquo;s storage information</h3>
+
+<p>You may check your company&rsquo;s current asset storage space usage:</p>
+
+<p><code class="prettyprint">GET /api/v3/customer/quota</code></p>
+
+<p>This returns an object with the following attributes:</p>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">free_space</code></td>
+<td>integer</td>
+<td>Total free space for new assets, in bytes</td>
+</tr>
+<tr>
+<td><code class="prettyprint">usage</code></td>
+<td>integer</td>
+<td>Sum of all your company asset sizes, in bytes</td>
+</tr>
+<tr>
+<td><code class="prettyprint">limit</code></td>
+<td>The maximun allowed sum of your company asset sizes, in bytes</td>
+<td></td>
+</tr>
+</tbody></table>
 
           <h1 id="time-series-reporting-api">Time Series Reporting API</h1>
 
@@ -2457,13 +2719,13 @@ This will immediately remove the company from your partners and remove your part
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">start_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left"></td>
 <td><strong>Required.</strong> Only return statistics after this moment (inclusive)</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">end_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left"></td>
 <td><strong>Required.</strong> Only return statistics before this moment (exclusive)</td>
 </tr>
@@ -2471,7 +2733,7 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">timezone</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left">UTC</td>
-<td>A <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">timezone</a> in which params and results are expressed.</td>
+<td>A <a title="List of timezones" href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">timezone</a> in which params and results are expressed.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">utc_offset</code></td>
@@ -2491,7 +2753,7 @@ This will immediately remove the company from your partners and remove your part
 
 <p>Please note that end time is exclusive, that is, the time slot that starts exactly on that moment is <strong>not</strong> included in the final results. Therefore, in order to get daily stats for 2015-03-05 and 2015-03-06, you should define the start time as <code class="prettyprint">2015-03-05T00:00:00</code> and end time as <code class="prettyprint">2015-03-07T00:00:00</code> (the beginning of the next day).</p>
 
-<p>The optional <code class="prettyprint">timezone</code> parameter may be provided as one of the <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">tz database timezone names</a>. This timezone describes the &ldquo;local time&rdquo; on which the API operates. For example: <code class="prettyprint">timezone=Europe%2FHelsinki</code> would indicate timezone <code class="prettyprint">Europe/Helsinki</code>.</p>
+<p>The optional <code class="prettyprint">timezone</code> parameter may be provided as one of the <a title="List of timezones" href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">tz database timezone names</a>. This timezone describes the &ldquo;local time&rdquo; on which the API operates. For example: <code class="prettyprint">timezone=Europe%2FHelsinki</code> would indicate timezone <code class="prettyprint">Europe/Helsinki</code>.</p>
 
 <p>You may alternatively use <code class="prettyprint">utc_offset</code> parameter which, if provided, must start with either <code class="prettyprint">+</code> or <code class="prettyprint">-</code> and have two digit offset hour (zero-padded). This describes the offset from the UTC time, in full hours. If timezone or UTC offset is omitted, they default to the UTC time. An example parameter would be: <code class="prettyprint">utc_offset=+02</code></p>
 
@@ -2592,7 +2854,7 @@ This will immediately remove the company from your partners and remove your part
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">start_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>The starting time of this aggregation. Its duration is equal to the selected time interval, e.g. 1 hour. This time is in the &ldquo;local&rdquo; time if a timezone is defined, otherwise it is in UTC.</td>
 </tr>
 <tr>
@@ -2922,7 +3184,7 @@ The following wait time stats are available only for chat sessions started on 20
 This endpoint returns a paginated collection!
 </aside>
 
-<p>Unlike the other time series endpoints, this endpoint returns a <a href="#paginated-collections">paginated collection</a>.</p>
+<p>Unlike the other time series endpoints, this endpoint returns a <a title="Paginated collections" href="#paginated-collections">paginated collection</a>.</p>
 
 <table><thead>
 <tr>
@@ -3015,7 +3277,7 @@ This endpoint returns a paginated collection!
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">start_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>The starting time of this aggregation. Its duration is equal to the selected time interval, e.g. 1 hour. This time is in the &ldquo;local&rdquo; time if a timezone was defined, otherwise it is in UTC.</td>
 </tr>
 <tr>
@@ -3097,7 +3359,7 @@ This endpoint has been updated on August 2015 to a new version <strong>v4</stron
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">start_time</code></td>
-<td style="text-align: left"><a href="#datetime-format">date/time</a></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>The starting time of this aggregation. Its duration is equal to the selected time interval, e.g. 1 hour. This time is in the &ldquo;local&rdquo; time if the timezone was defined, otherwise it is in UTC.</td>
 </tr>
 <tr>
