@@ -1535,16 +1535,16 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>The <a title="Organizations" href="#organizations">organization</a> resource who sent this invitation, with all of its attributes.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">created_by_person_id</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_user_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the person who sent this invitation</td>
+<td>ID of the user who sent this invitation</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">created_by_person</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_user</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The [person][] resource who sent this invitation, with all other attributes except <code class="prettyprint">organization</code> and <code class="prettyprint">organization_id</code></td>
+<td>The <a title="Users" href="#users">user</a> resource who sent this invitation, with all other attributes except <code class="prettyprint">organization</code> and <code class="prettyprint">organization_id</code></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">resolved_at</code></td>
@@ -1565,16 +1565,16 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>The <a title="Organizations" href="#organizations">organization</a> resource who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">resolved_by_person_id</code></td>
+<td style="text-align: left"><code class="prettyprint">resolved_by_user_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the person who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
+<td>ID of the user who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">resolved_by_person</code></td>
+<td style="text-align: left"><code class="prettyprint">resolved_by_user</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The [person][] who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
+<td>The <a title="Users" href="#users">user</a> who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
@@ -1729,16 +1729,16 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>The <a title="Organizations" href="#organizations">organization</a> who sent this invitation, with all of its attributes.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">created_by_person_id</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_user_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the person who sent this invitation</td>
+<td>ID of the user who sent this invitation</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">created_by_person</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_user</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The [person][] who sent this invitation, with all other attributes except <code class="prettyprint">organization</code> and <code class="prettyprint">organization_id</code></td>
+<td>The <a title="Users" href="#users">user</a> who sent this invitation, with all other attributes except <code class="prettyprint">organization</code> and <code class="prettyprint">organization_id</code></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">resolved_at</code></td>
@@ -1759,16 +1759,16 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>The <a title="Organizations" href="#organizations">organization</a> resource who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">resolved_by_person_id</code></td>
+<td style="text-align: left"><code class="prettyprint">resolved_by_user_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the person who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
+<td>ID of the user who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">resolved_by_person</code></td>
+<td style="text-align: left"><code class="prettyprint">resolved_by_user</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The [person][] who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
+<td>The <a title="Users" href="#users">user</a> who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
@@ -2069,16 +2069,16 @@ This will immediately remove the organization from your partners and remove your
 <td>When the resource was shared</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">creator_person_id</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_user_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the person who shared the resource</td>
+<td>ID of the user who shared the resource</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">creator_person</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_user</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The [person][] resource who shared the resource, with all of the available attributes</td>
+<td>The <a title="Users" href="#users">user</a> resource who shared the resource, with all of the available attributes</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">share_name</code></td>
