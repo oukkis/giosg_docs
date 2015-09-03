@@ -44,6 +44,10 @@
 This documentation is a <strong>draft</strong>!
 </aside>
 
+<aside class="success">
+<strong>This is the new, recommended version of giosg API, preferred over the <a href="https://docs.giosg.com/doku.php?id=public:technical-documentation:backend-api">old deprecated API</a>!</strong>
+</aside>
+
 <h2 id="authentication">Authentication</h2>
 
 <p>You need to provide a valid API key in order access the API. You can create an API key from <a href="https://service.giosg.com/en/settings/#/live/company/tokens">&ldquo;API keys&rdquo; section in your company settings</a>:</p>
@@ -104,7 +108,7 @@ The string in the end of the header should be replaced with your API key.
   </span><span class="nt">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nt">"next_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
   </span><span class="nt">"previous_page"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"next_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v3/examples?page=2"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"next_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v5/examples?page=2"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"previous_page_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Example Resource 1"</span><span class="p">},</span><span class="w">
@@ -192,15 +196,15 @@ The string in the end of the header should be replaced with your API key.
 This is the new, recommended version (v4) of the customer API!
 </aside>
 
-<p><strong>You should use this new v4 API instead of the <a href="https://docs.giosg.com/doku.php?id=public:technical-documentation:backend-api:customer-api">deprecated v3 version</a>.</strong></p>
+<p><strong>You should use this new API instead of the <a href="https://docs.giosg.com/doku.php?id=public:technical-documentation:backend-api:customer-api">deprecated v3 version</a>.</strong></p>
 
-<h2 id="companies">Companies</h2>
+<h2 id="organizations">Organizations</h2>
 
-<p>A company represents any organization account on giosg system. A company consists of a number of users with their own user accounts. A user always belongs to exactly one company.</p>
+<p>An organization represents any organization account on giosg system. An organization consists of a number of users with their own user accounts. A user always belongs to exactly one organization.</p>
 
-<p>Please note that despite its name a &ldquo;company&rdquo; in this context means any organization or group. It can even consists of only one person.</p>
+<p>Please note that despite its name a &ldquo;organization&rdquo; in this context means any organization or group. It can even consists of only one user.</p>
 
-<p>A company object contains the following attributes. Note that the contact information is public.</p>
+<p>An organization object contains the following attributes. Note that the contact information is public.</p>
 
 <table><thead>
 <tr>
@@ -214,13 +218,13 @@ This is the new, recommended version (v4) of the customer API!
 <td style="text-align: left"><code class="prettyprint">id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>Unique identifier for this company</td>
+<td>Unique identifier for this organization</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">name</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left"><strong>required?</strong></td>
-<td>The name of the company. Required, if your company is using Network features, such as <a href="#partnership-api">partnerships</a> or <a href="#sharing-api">sharing</a>.</td>
+<td>The name of the organization. Required, if your organization is using Network features, such as <a href="#partnership-api">partnerships</a> or <a href="#sharing-api">sharing</a>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">email</code></td>
@@ -262,65 +266,65 @@ This is the new, recommended version (v4) of the customer API!
 <td style="text-align: left"><code class="prettyprint">business_id</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left"><strong>optional</strong></td>
-<td>Business ID of the company, if any, or <code class="prettyprint">null</code></td>
+<td>Business ID of the organization, if any, or <code class="prettyprint">null</code></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
-<td>When this company account was created. <strong>Visible only for your own company.</strong></td>
+<td>When this organization account was created. <strong>Available only for your own organization.</strong></td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">modified_at</code></td>
+<td style="text-align: left"><code class="prettyprint">updated_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
-<td>When company details were changed last time. <strong>Visible only for your own company.</strong></td>
+<td>When organization details were changed last time. <strong>Available only for your own organization.</strong></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">billing_street</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left"><strong>optional</strong></td>
-<td>Billing street address, or <code class="prettyprint">null</code>. <strong>Visible only for your own company</strong></td>
+<td>Billing street address, or <code class="prettyprint">null</code>. <strong>Available only for your own organization</strong></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">billing_postal_code</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left"><strong>optional</strong></td>
-<td>Billing postal code, or <code class="prettyprint">null</code>. <strong>Visible only for your own company</strong></td>
+<td>Billing postal code, or <code class="prettyprint">null</code>. <strong>Available only for your own organization</strong></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">billing_city</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left"><strong>optional</strong></td>
-<td>Billing city, or <code class="prettyprint">null</code>. <strong>Visible only for your own company</strong></td>
+<td>Billing city, or <code class="prettyprint">null</code>. <strong>Available only for your own organization</strong></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">billing_country</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left"><strong>optional</strong></td>
-<td>Billing country as a two-letter ISO 3166-1 code, or <code class="prettyprint">null</code>. <strong>Visible only for your own company</strong></td>
+<td>Billing country as a two-letter ISO 3166-1 code, or <code class="prettyprint">null</code>. <strong>Available only for your own organization</strong></td>
 </tr>
 </tbody></table>
 
-<h3 id="retrieve-company-details">Retrieve company details</h3>
+<h3 id="retrieve-organization-details">Retrieve organization details</h3>
 
-<p>Get a single <a title="Companies" href="#companies">company</a> object by its ID.</p>
+<p>Get a single <a title="Organizations" href="#organizations">organization</a> object by its ID.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/companies/[company_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;</code></p>
 
-<h3 id="update-company-details">Update company details</h3>
+<h3 id="update-organization-details">Update organization details</h3>
 
-<p>You may update some of the attributes a company, if you have permissions to do so.</p>
+<p>You may update some of the attributes a organization, if you have permissions to do so.</p>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v4/customer/companies/[company_id]</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;</code></p>
 
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v4/customer/companies/[company_id]</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;</code></p>
 
-<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes the <a title="Companies" href="#companies">company</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
+<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes the <a title="Organizations" href="#organizations">organization</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
 
-<h2 id="persons">Persons</h2>
+<h2 id="users">Users</h2>
 
-<p>A person represents a giosg user account. A person resource has the following attributes.</p>
+<p>A user represents a giosg user account. A user resource has the following attributes.</p>
 
 <table><thead>
 <tr>
@@ -343,16 +347,16 @@ This is the new, recommended version (v4) of the customer API!
 <td>Email address</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">company_id</code></td>
+<td style="text-align: left"><code class="prettyprint">organization_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the company to which the person belongs to</td>
+<td>ID of the organization to which the user belongs to</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">company</code></td>
+<td style="text-align: left"><code class="prettyprint">organization</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Companies" href="#companies">company</a> resource to which the person belongs to</td>
+<td>The <a title="Organizations" href="#organizations">organization</a> resource to which the user belongs to</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">first_name</code></td>
@@ -370,7 +374,7 @@ This is the new, recommended version (v4) of the customer API!
 <td style="text-align: left"><code class="prettyprint">is_manager</code></td>
 <td style="text-align: left">boolean</td>
 <td style="text-align: left"><strong>required</strong></td>
-<td>Whether the person is a manager. You cannot change this for yourself. You may change the value for the other members of your company, if you are a manager.</td>
+<td>Whether the user is a manager. You cannot change this for yourself. You may change the value for the other members of your organization, if you are a manager.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">alias</code></td>
@@ -400,66 +404,67 @@ This is the new, recommended version (v4) of the customer API!
 <td style="text-align: left"><code class="prettyprint">title</code></td>
 <td style="text-align: left">title</td>
 <td style="text-align: left"><strong>optional</strong></td>
-<td>Title of the person</td>
+<td>Title of the user</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
-<td>When the person resource was created</td>
+<td>When the user resource was created</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">modified_at</code></td>
+<td style="text-align: left"><code class="prettyprint">updated_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
-<td>When the person resource was modified last time</td>
+<td>When the user resource was updated last time</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">avatar</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The avatar of the person as an object. It contains attributes <code class="prettyprint">id</code>and <code class="prettyprint">url</code>. This is <code class="prettyprint">null</code> if the person has no avatar.</td>
+<td>The avatar of the user as an object. It contains attributes <code class="prettyprint">id</code>and <code class="prettyprint">url</code>. This is <code class="prettyprint">null</code> if the user has no avatar.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_online</code></td>
 <td style="text-align: left">boolean</td>
 <td style="text-align: left">read-only</td>
-<td>Whether the person is currently in online status as an operator, based on the most recent information about the user.</td>
+<td>Whether the user is currently in online status as an operator, based on the most recent information about the user.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_signed_in</code></td>
 <td style="text-align: left">boolean</td>
 <td style="text-align: left">read-only</td>
-<td>Whether the person is currenlty logged in to the service, based on the most recent information about the user.</td>
+<td>Whether the user is currenlty logged in to the service, based on the most recent information about the user.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">current_chat_count</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>The number of chats the person has currently, based on the most recent information about the user.</td>
+<td>The number of chats the user has currently, based on the most recent information about the user.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_deleted</code></td>
 <td style="text-align: left">boolean</td>
 <td style="text-align: left">read-only</td>
-<td>Whether this person exists no more. If <code class="prettyprint">true</code>, the resource exists only for historical purposes and cannot be used in any other context!</td>
+<td>Whether this user exists no more. If <code class="prettyprint">true</code>, the resource exists only for historical purposes and cannot be used in any other context!</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">team_memberships</code></td>
 <td style="text-align: left">array of objects</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Team membershipss" href="#team-memberships">team membership</a> resources, listing the teams this person belongs to. Each object in the array has the attributes <code class="prettyprint">id</code>, <code class="prettyprint">team_id</code>, <code class="prettyprint">team</code>, <code class="prettyprint">is_admin</code></td>
+<td>The <a title="Team membershipss" href="#team-memberships">team membership</a> resources, listing the teams this user belongs to. Each object in the array has the attributes <code class="prettyprint">id</code>, <code class="prettyprint">team_id</code>, <code class="prettyprint">team</code>, <code class="prettyprint">is_admin</code></td>
 </tr>
 </tbody></table>
 
-<h3 id="retrieve-person-details">Retrieve person details</h3>
+<h3 id="retrieve-user-details">Retrieve user details</h3>
 
-<p>Get a single <a title="Persons" href="#persons">person</a> object by its ID.</p>
+<p>Get a single <a title="Users" href="#users">user</a> object by its ID.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/persons/[person_id]</code>
-Alternatively, you may get <strong>your own</strong> user account details by replacing the ID with the word <code class="prettyprint">me</code>.</p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/users/&lt;user_id&gt;</code></p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/persons/me</code></p>
+<p>Alternatively, you may get <strong>your own</strong> user account details by replacing the ID with the word <code class="prettyprint">me</code>.</p>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/users/me</code></p>
 
 <p>This endpoint accepts the following GET parameters.</p>
 
@@ -479,25 +484,25 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 </tr>
 </tbody></table>
 
-<p>If you try to get a person that has been deleted, the endpoint results in 404 response by default. You may access the removed persons of your company for historical purposes by adding <code class="prettyprint">include_deleted=true</code> to the GET parameters.</p>
+<p>If you try to get a user that has been deleted, the endpoint results in 404 response by default. You may access the removed users of your organization for historical purposes by adding <code class="prettyprint">include_deleted=true</code> to the GET parameters.</p>
 
-<h3 id="update-person-details">Update person details</h3>
+<h3 id="update-user-details">Update user details</h3>
 
 <p>You may update some of the attributes of a user account.</p>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v4/customer/persons/[person_id]</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/users/&lt;user_id&gt;</code></p>
 
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v4/customer/persons/[person_id]</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/users/&lt;user_id&gt;</code></p>
 
-<p>Once again, you may replace the person ID with word <code class="prettyprint">me</code> in order to update your own account details.</p>
+<p>Once again, you may replace the user ID with word <code class="prettyprint">me</code> in order to update your own account details.</p>
 
-<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains all the changed attributes of the <a title="Persons" href="#persons">person</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
+<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains all the changed attributes of the <a title="Users" href="#users">user</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
 
-<h3 id="get-a-collection-of-persons">Get a collection of persons</h3>
+<h3 id="get-a-collection-of-users">Get a collection of users</h3>
 
-<p>Get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of persons that you are allowed to list.</p>
+<p>Get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of users that you are allowed to list.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/persons/</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/users/</code></p>
 
 <table><thead>
 <tr>
@@ -511,7 +516,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 <td><code class="prettyprint">ordering</code></td>
 <td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
-<td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">last_name</code>, <code class="prettyprint">first_name</code>, <code class="prettyprint">email</code>, <code class="prettyprint">alias</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">modified_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">last_name</code>, <code class="prettyprint">first_name</code>, <code class="prettyprint">email</code>, <code class="prettyprint">alias</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">updated_at</code></td>
 </tr>
 <tr>
 <td><code class="prettyprint">include_deleted</code></td>
@@ -564,16 +569,16 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 <td>A signed Giosg token, used as a public identifier of this room</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">company_id</code></td>
+<td style="text-align: left"><code class="prettyprint">organization_id</code></td>
 <td style="text-align: left">integer</td>
 <td>read-only</td>
-<td>ID of the company who owns this room.</td>
+<td>ID of the organization who owns this room.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">company</code></td>
+<td style="text-align: left"><code class="prettyprint">organization</code></td>
 <td style="text-align: left">object</td>
 <td>read-only</td>
-<td>The <a title="Companies" href="#companies">company</a> who owns this room.</td>
+<td>The <a title="Organizations" href="#organizations">organization</a> who owns this room.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">domain</code></td>
@@ -591,13 +596,13 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 <td style="text-align: left"><code class="prettyprint">display_name</code></td>
 <td style="text-align: left">string</td>
 <td>read-only</td>
-<td>Display name of the room. It may equal to the <code class="prettyprint">name</code> attribute, unless this room is <a title="Outgoing room shares" href="#outgoing-room-shares">shared</a> to your company with a custom <code class="prettyprint">share_name</code>.</td>
+<td>Display name of the room. It may equal to the <code class="prettyprint">name</code> attribute, unless this room is <a title="Outgoing room shares" href="#outgoing-room-shares">shared</a> to your organization with a custom <code class="prettyprint">share_name</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_shared</code></td>
 <td style="text-align: left">boolean</td>
 <td>read-only</td>
-<td><code class="prettyprint">true</code> if the room is shared to your company, <code class="prettyprint">false</code> if your company owns the room</td>
+<td><code class="prettyprint">true</code> if the room is shared to your organization, <code class="prettyprint">false</code> if your organization owns the room</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">allowed_domains</code></td>
@@ -615,25 +620,25 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>read-only</td>
-<td>When this room was created. <strong>Visible only to your own company.</strong></td>
+<td>When this room was created. <strong>Available only to your own organization.</strong></td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">modified_at</code></td>
+<td style="text-align: left"><code class="prettyprint">updated_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>read-only</td>
-<td>When this room was modified last time. <strong>Visible only to your own company.</strong></td>
+<td>When this room was updated last time. <strong>Available only to your own organization.</strong></td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">last_modifier_id</code></td>
+<td style="text-align: left"><code class="prettyprint">updated_by_user_id</code></td>
 <td style="text-align: left">integer</td>
-<td>read-only</td>
-<td>ID of the person who last modified this room, or <code class="prettyprint">null</code> if unknown. <strong>Visible only to your own company.</strong></td>
+<td>string</td>
+<td>ID of the user who last updated this room, or <code class="prettyprint">null</code> if unknown. <strong>Available only to your own organization.</strong></td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">last_modifier</code></td>
+<td style="text-align: left"><code class="prettyprint">updated_by_user</code></td>
 <td style="text-align: left">object</td>
 <td>read-only</td>
-<td>Details of the person who last modified this room, or <code class="prettyprint">null</code> if unknown. <strong>Visible only to your own company.</strong></td>
+<td>Details of the user who last updated this room, or <code class="prettyprint">null</code> if unknown. <strong>Available only to your own organization.</strong></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_deleted</code></td>
@@ -647,9 +652,9 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 
 <h3 id="retrieve-room-details">Retrieve room details</h3>
 
-<p>Get a single room object that your company has access to, by its ID. This may be a shared room.</p>
+<p>Get a single room object that your organization has access to, by its ID. This may be a shared room.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/rooms/[room_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
 
 <p>This endpoint accepts the following GET parameters.</p>
 
@@ -669,13 +674,13 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 </tr>
 </tbody></table>
 
-<p>If you try to get a room that has been deleted, the endpoint results in 404 response by default. You may access the removed rooms of your company for historical purposes by adding <code class="prettyprint">include_deleted=true</code> to the GET parameters.</p>
+<p>If you try to get a room that has been deleted, the endpoint results in 404 response by default. You may access the removed rooms of your organization for historical purposes by adding <code class="prettyprint">include_deleted=true</code> to the GET parameters.</p>
 
 <h3 id="get-a-collection-of-rooms">Get a collection of rooms</h3>
 
 <p>Return a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Rooms and domains" href="#rooms-and-domains">room</a> resources you have access to, including any shared rooms:</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/rooms</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/rooms</code></p>
 
 <table><thead>
 <tr>
@@ -689,7 +694,7 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 <td><code class="prettyprint">ordering</code></td>
 <td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
-<td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">domain</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">modified_at</code>, <code class="prettyprint">company_id</code></td>
+<td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">domain</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">updated_at</code>, <code class="prettyprint">organization_id</code></td>
 </tr>
 <tr>
 <td><code class="prettyprint">include_deleted</code></td>
@@ -701,13 +706,13 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 <td><code class="prettyprint">is_shared</code></td>
 <td>boolean</td>
 <td>(none)</td>
-<td>If <code class="prettyprint">true</code>, return only rooms shared to your company. If <code class="prettyprint">false</code>, return only your own company&rsquo;s rooms.</td>
+<td>If <code class="prettyprint">true</code>, return only rooms shared to your organization. If <code class="prettyprint">false</code>, return only your own organization&rsquo;s rooms.</td>
 </tr>
 <tr>
-<td><code class="prettyprint">company_id</code></td>
+<td><code class="prettyprint">organization_id</code></td>
 <td>integer</td>
 <td>(none)</td>
-<td>Return only rooms owned by this company ID</td>
+<td>Return only rooms owned by this organization ID</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page</code></td>
@@ -727,15 +732,15 @@ Alternatively, you may get <strong>your own</strong> user account details by rep
 
 <p>Create a new custom room or a domain room by making a <code class="prettyprint">POST</code> request, providing the <a title="Rooms and domains" href="#rooms-and-domains">room object</a> as a payload. By providing the <code class="prettyprint">domain</code> attribute with non-null value will create a new domain room.</p>
 
-<p><code class="prettyprint">POST https://service.giosg.com/api/v4/customer/rooms</code></p>
+<p><code class="prettyprint">POST https://service.giosg.com/api/v5/rooms</code></p>
 
 <h3 id="update-a-room">Update a room</h3>
 
 <p>You may update the editable attributes of your own room by making either a <code class="prettyprint">PATCH</code> (update a subset of attributes) or <code class="prettyprint">POST</code> request (update all the attributes).</p>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v4/customer/rooms/[room_id]</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
 
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v4/customer/rooms/[room_id]</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
 
 <h3 id="delete-a-room">Delete a room</h3>
 
@@ -745,7 +750,7 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 
 <p>You may delete one of your own rooms by making a <code class="prettyprint">DELETE</code> request.</p>
 
-<p><code class="prettyprint">DELETE https://service.giosg.com/api/v4/customer/rooms/[room_id]</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
 
 <h2 id="teams">Teams</h2>
 
@@ -766,16 +771,16 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 <td>The unique identifier of this team</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">company_id</code></td>
+<td style="text-align: left"><code class="prettyprint">organization_id</code></td>
 <td style="text-align: left">integer</td>
 <td>read-only</td>
-<td>ID of the company who owns this team.</td>
+<td>ID of the organization who owns this team.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">company</code></td>
+<td style="text-align: left"><code class="prettyprint">organization</code></td>
 <td style="text-align: left">object</td>
 <td>read-only</td>
-<td>The <a title="Companies" href="#companies">company</a> who owns this team.</td>
+<td>The <a title="Organizations" href="#organizations">organization</a> who owns this team.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">name</code></td>
@@ -787,39 +792,39 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 <td style="text-align: left"><code class="prettyprint">display_name</code></td>
 <td style="text-align: left">string</td>
 <td>read-only</td>
-<td>Display name of the team. It may equal to the <code class="prettyprint">name</code> attribute, unless this team is <a title="Outgoing team shares" href="#outgoing-team-shares">shared</a> to your company with a custom <code class="prettyprint">share_name</code>.</td>
+<td>Display name of the team. It may equal to the <code class="prettyprint">name</code> attribute, unless this team is <a title="Outgoing team shares" href="#outgoing-team-shares">shared</a> to your organization with a custom <code class="prettyprint">share_name</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_shared</code></td>
 <td style="text-align: left">boolean</td>
 <td>read-only</td>
-<td><code class="prettyprint">true</code> if the team is shared to your company, <code class="prettyprint">false</code> if your company owns the team</td>
+<td><code class="prettyprint">true</code> if the team is shared to your organization, <code class="prettyprint">false</code> if your organization owns the team</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">member_count</code></td>
 <td style="text-align: left">integer</td>
 <td>read-only</td>
-<td>Number of <a title="Team membershipss" href="#team-memberships">members</a> in this team, including both admins and non-admins. <strong>Visible only to your own company.</strong></td>
+<td>Number of <a title="Team membershipss" href="#team-memberships">members</a> in this team, including both admins and non-admins. <strong>Available only to your own organization.</strong></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">admin_count</code></td>
 <td style="text-align: left">integer</td>
 <td>read-only</td>
-<td>Number of <a title="Team membershipss" href="#team-memberships">admins</a> in this team. <strong>Visible only to your own company.</strong></td>
+<td>Number of <a title="Team membershipss" href="#team-memberships">admins</a> in this team. <strong>Available only to your own organization.</strong></td>
 </tr>
 </tbody></table>
 
 <h3 id="retrieve-team-details">Retrieve team details</h3>
 
-<p>Get a single team object that your company has access to, by its ID. This may be a shared team.</p>
+<p>Get a single team object that your organization has access to, by its ID. This may be a shared team.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/teams/[team_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/teams/&lt;team_id&gt;</code></p>
 
 <h3 id="get-a-collection-of-teams">Get a collection of teams</h3>
 
 <p>Return a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Teams" href="#teams">team</a> resources you have access to, including any shared teams:</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/teams</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/teams</code></p>
 
 <table><thead>
 <tr>
@@ -833,19 +838,19 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 <td><code class="prettyprint">ordering</code></td>
 <td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
-<td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">company_id</code></td>
+<td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">organization_id</code></td>
 </tr>
 <tr>
 <td><code class="prettyprint">is_shared</code></td>
 <td>boolean</td>
 <td>(none)</td>
-<td>If <code class="prettyprint">true</code>, return only teams shared to your company. If <code class="prettyprint">false</code>, return only your own company&rsquo;s teams.</td>
+<td>If <code class="prettyprint">true</code>, return only teams shared to your organization. If <code class="prettyprint">false</code>, return only your own organization&rsquo;s teams.</td>
 </tr>
 <tr>
-<td><code class="prettyprint">company_id</code></td>
+<td><code class="prettyprint">organization_id</code></td>
 <td>integer</td>
 <td>(none)</td>
-<td>Return only rooms owned by this company ID</td>
+<td>Return only rooms owned by this organization ID</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page</code></td>
@@ -861,21 +866,21 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 </tr>
 </tbody></table>
 
-<p>Teams are readable by anyone in the same company. However, they can be created, updated or deleted only by company managers.</p>
+<p>Teams are readable by anyone in the same organization. However, they can be created, updated or deleted only by organization managers.</p>
 
 <h3 id="creating-a-team">Creating a team</h3>
 
-<p>Create a team to your own company:</p>
+<p>Create a team to your own organization:</p>
 
-<p><code class="prettyprint">POST https://service.giosg.com/api/v4/customer/teams</code></p>
+<p><code class="prettyprint">POST https://service.giosg.com/api/v5/teams</code></p>
 
 <h3 id="update-a-team">Update a team</h3>
 
 <p>You may update the editable attributes of your own team by making either a <code class="prettyprint">PATCH</code> (update a subset of attributes) or <code class="prettyprint">POST</code> request (update all the attributes).</p>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v4/customer/team/[team_id]</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/team/&lt;team_id&gt;</code></p>
 
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v4/customer/team/[team_id]</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/team/&lt;team_id&gt;</code></p>
 
 <h3 id="delete-a-team">Delete a team</h3>
 
@@ -885,11 +890,11 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>You may delete one of your own teams by making a <code class="prettyprint">DELETE</code> request.</p>
 
-<p><code class="prettyprint">DELETE https://service.giosg.com/api/v4/customer/teams/[team_id]</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/teams/&lt;team_id&gt;</code></p>
 
 <h2 id="team-memberships">Team memberships</h2>
 
-<p>A <strong>team membership</strong> represents a person belonging to a specific team. Team memberships are only visible for teams of your own company. A team membership resource has the following attributes.</p>
+<p>A <strong>team membership</strong> represents a user belonging to a specific team. Team memberships are only visible for teams of your own organization. A team membership resource has the following attributes.</p>
 
 <table><thead>
 <tr>
@@ -909,19 +914,19 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">team</code></td>
 <td style="text-align: left">object</td>
 <td>read-only</td>
-<td>The <a title="Teams" href="#teams">team</a> to which this member belongs, with attributes <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">display_name</code>, and <code class="prettyprint">company_id</code>.</td>
+<td>The <a title="Teams" href="#teams">team</a> to which this member belongs, with attributes <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">display_name</code>, and <code class="prettyprint">organization_id</code>.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">person_id</code></td>
+<td style="text-align: left"><code class="prettyprint">user_id</code></td>
 <td style="text-align: left">integer</td>
 <td>read-only</td>
-<td>ID of the member person.</td>
+<td>ID of the member user.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">person</code></td>
+<td style="text-align: left"><code class="prettyprint">user</code></td>
 <td style="text-align: left">object</td>
 <td>read-only</td>
-<td>The member <a title="Persons" href="#persons">person</a> resource. Has all other attributes than <code class="prettyprint">company</code></td>
+<td>The member <a title="Users" href="#users">user</a> resource. Has all other attributes than <code class="prettyprint">organization</code></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_admin</code></td>
@@ -931,13 +936,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 </tbody></table>
 
-<p>Team memberships are readable by any member of the same company. However, they can be created, updated or deleted only by either company managers or by team admins. Otherwise, the endpoints will return a <code class="prettyprint">403 Forbidden</code> response.</p>
+<p>Team memberships are readable by any member of the same organization. However, they can be created, updated or deleted only by either organization managers or by team admins. Otherwise, the endpoints will return a <code class="prettyprint">403 Forbidden</code> response.</p>
 
 <h3 id="get-a-collection-of-team-members">Get a collection of team members</h3>
 
 <p>Return a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Team membershipss" href="#team-memberships">team membership</a> resources for a specific <a title="Teams" href="#teams">team</a>.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/teams/[team_id]/memberships</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/teams/&lt;team_id&gt;/memberships</code></p>
 
 <table><thead>
 <tr>
@@ -969,41 +974,41 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <h3 id="add-a-member-to-a-team">Add a member to a team</h3>
 
-<p>You may add a person of your own company to one of your teams by creating a team membership object.</p>
+<p>You may add a user of your own organization to one of your teams by creating a team membership object.</p>
 
-<p><code class="prettyprint">POST https://service.giosg.com/api/v4/customer/teams/[team_id]/memberships/[person_id]</code></p>
+<p><code class="prettyprint">POST https://service.giosg.com/api/v5/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
 
-<p>This returns a <code class="prettyprint">201 Created</code> response if the person with the given ID was successfully added to the team. If the person was already in the team, this updates the <code class="prettyprint">is_admin</code> attribute and returns <code class="prettyprint">200 OK</code> response with the existing membership resource.</p>
+<p>This returns a <code class="prettyprint">201 Created</code> response if the user with the given ID was successfully added to the team. If the user was already in the team, this updates the <code class="prettyprint">is_admin</code> attribute and returns <code class="prettyprint">200 OK</code> response with the existing membership resource.</p>
 
 <h3 id="update-a-team-membership">Update a team membership</h3>
 
 <p>You may update a team membership, i.e. change the admin status of a member either by attempting to create a new membership with <code class="prettyprint">POST</code> or updating with <code class="prettyprint">PUT</code>.</p>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v4/customer/teams/[team_id]/memberships/[person_id]</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
 
-<p>This returns a <code class="prettyprint">201 Created</code> response if the person did not belong to team previously but was now added. If the person was already in the team, this updates the attributes and returns <code class="prettyprint">200 OK</code> response with the existing membership resource.</p>
+<p>This returns a <code class="prettyprint">201 Created</code> response if the user did not belong to team previously but was now added. If the user was already in the team, this updates the attributes and returns <code class="prettyprint">200 OK</code> response with the existing membership resource.</p>
 
 <p>You may also update a membership with a <code class="prettyprint">PATCH</code> request, but this will return <code class="prettyprint">404 Not Found</code> in case the membership did not exist.</p>
 
 <h3 id="remove-a-member-from-a-team">Remove a member from a team</h3>
 
-<p>You may remove a person from a team by deleting his/her membership.</p>
+<p>You may remove a user from a team by deleting his/her membership.</p>
 
-<p><code class="prettyprint">DELETE https://service.giosg.com/api/v4/customer/teams/[team_id]/memberships/[person_id]</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
 
 <h3 id="retrieve-team-membership-details">Retrieve team membership details</h3>
 
-<p>You may get the a person membership resource in a team:</p>
+<p>You may get the a user membership resource in a team:</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v4/customer/teams/[team_id]/memberships/[person_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
 
           <h1 id="chat-api">Chat API</h1>
 
 <h2 id="get-a-collection-of-chats">Get a collection of chats</h2>
 
-<p>You can get a list of chats by making a GET request.</p>
+<p>You can get a list of your organization&rsquo;s chats by making a GET request.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/chat/chatsessions</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/chats</code></p>
 
 <p>By default, the API returns all the available chats paginated, sorted by ascending ID order. You may want to filter the chats or change the order or pagination parameters by providing GET parameters in the URL. Remember to URL-encode any parameter values.</p>
 
@@ -1019,7 +1024,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">ordering</code></td>
 <td style="text-align: left"><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td style="text-align: left">id</td>
-<td>Order results by either <code class="prettyprint">id</code>, <code class="prettyprint">start_time</code> or <code class="prettyprint">end_time</code>. Use <code class="prettyprint">-</code> prefix to reverse.</td>
+<td>Order results by either <code class="prettyprint">id</code>, <code class="prettyprint">start_time</code> or <code class="prettyprint">end_time</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">page</code></td>
@@ -1095,14 +1100,14 @@ Deleting a team will immediately clear all the memberships from the team. It wil
   </span><span class="nt">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
   </span><span class="nt">"next_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> 
   </span><span class="nt">"previous_page"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"next_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v3/chat/chatsessions?page=2"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"next_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v5/orgs/7f9e9580-095b-42c7-838c-c04e667b26f7/chats?page=2"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"previous_page_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
       </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T11:31:36.042"</span><span class="p">,</span><span class="w"> 
       </span><span class="nt">"end_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:38:36.424"</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:38:36.431"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:38:36.431"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"private"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
       </span><span class="nt">"real_conversation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="nt">"is_autosuggested"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
@@ -1205,9 +1210,9 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>When the chat conversation ended (or <code class="prettyprint">null</code> if not yet ended)</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">modified</code></td>
+<td style="text-align: left"><code class="prettyprint">updated_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
-<td>When the chat conversation was last time modified</td>
+<td>When the chat conversation was last time updated</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">private</code></td>
@@ -1453,7 +1458,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <h2 id="outgoing-partnership-invitations">Outgoing partnership invitations</h2>
 
-<p>You may build your giosg NETWORK by inviting them. This is done with invitation objects. When sending and managing invitations from your company account to your partners, we use <strong>outgoing invitations</strong>. An outgoing invitation object has the following attributes:</p>
+<p>You may build your giosg NETWORK by inviting them. This is done with invitation objects. When sending and managing invitations from your organization account to your partners, we use <strong>outgoing invitations</strong>. An outgoing invitation object has the following attributes:</p>
 
 <table><thead>
 <tr>
@@ -1497,7 +1502,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">partner_visible_to_everyone</code></td>
 <td style="text-align: left">boolean</td>
 <td style="text-align: left"><strong>required</strong></td>
-<td>If <code class="prettyprint">true</code>, the new partner will become visible to your company members. If <code class="prettyprint">false</code>, it will be shown only on company management.</td>
+<td>If <code class="prettyprint">true</code>, the new partner will become visible to your organization members. If <code class="prettyprint">false</code>, it will be shown only on organization management.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">room_shares</code></td>
@@ -1518,28 +1523,28 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>When this invitation was sent</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">creator_company_id</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_organization_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the company who sent this invitation</td>
+<td>ID of the organization who sent this invitation</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">creator_company</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_organization</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Companies" href="#companies">company</a> resource who sent this invitation, with all of its attributes.</td>
+<td>The <a title="Organizations" href="#organizations">organization</a> resource who sent this invitation, with all of its attributes.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">creator_person_id</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_person_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
 <td>ID of the person who sent this invitation</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">creator_person</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_person</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Persons" href="#persons">person</a> resource who sent this invitation, with all other attributes except <code class="prettyprint">company</code> and <code class="prettyprint">company_id</code></td>
+<td>The [person][] resource who sent this invitation, with all other attributes except <code class="prettyprint">organization</code> and <code class="prettyprint">organization_id</code></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">resolved_at</code></td>
@@ -1548,28 +1553,28 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>When this invitation was accepted or rejected, <code class="prettyprint">null</code> if still pending</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">resolver_company_id</code></td>
+<td style="text-align: left"><code class="prettyprint">resolved_by_organization_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the company who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+<td>ID of the organization who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">resolver_company</code></td>
+<td style="text-align: left"><code class="prettyprint">resolved_by_organization</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Companies" href="#companies">company</a> resource who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+<td>The <a title="Organizations" href="#organizations">organization</a> resource who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">resolver_person_id</code></td>
+<td style="text-align: left"><code class="prettyprint">resolved_by_person_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the person who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+<td>ID of the person who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">resolver_person</code></td>
+<td style="text-align: left"><code class="prettyprint">resolved_by_person</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Persons" href="#persons">person</a> who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+<td>The [person][] who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
@@ -1591,13 +1596,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>You may send an invitation to your partner&rsquo;s email address by creating a new <a title="Outgoing partnership invitations" href="#outgoing-partnership-invitations">outgoing invitation</a> object.</p>
 
-<p><code class="prettyprint">POST https://service.giosg.com/api/v3/network/invitations/outgoing/</code></p>
+<p><code class="prettyprint">POST https://service.giosg.com/api/v5/outgoing_invitations</code></p>
 
 <h3 id="cancel-an-outgoing-invitation">Cancel an outgoing invitation</h3>
 
 <p>You may cancel a partnership invitation before it is accepted or rejected, by a given ID.</p>
 
-<p><code class="prettyprint">DELETE https://service.giosg.com/api/v3/network/invitations/outgoing/[invitation_id]</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/outgoing_invitations/&lt;invitation_id&gt;</code></p>
 
 <p>The endpoint returns a 404 status code if the invitation is not found or if you are not authenticated as the sender of this invitation or if the invitation has already been cancelled.</p>
 
@@ -1605,15 +1610,15 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <h3 id="retrieve-outgoing-invitation-details">Retrieve outgoing invitation details</h3>
 
-<p>Get a single <a title="Outgoing partnership invitations" href="#outgoing-partnership-invitations">outgoing invitation</a> object sent by your company, by a given ID.</p>
+<p>Get a single <a title="Outgoing partnership invitations" href="#outgoing-partnership-invitations">outgoing invitation</a> object sent by your organization, by a given ID.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/invitations/outgoing/[invitation_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/outgoing_invitations/&lt;invitation_id&gt;</code></p>
 
 <h3 id="get-a-collection-of-outgoing-invitations">Get a collection of outgoing invitations</h3>
 
 <p>Get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all sent <a title="Outgoing partnership invitations" href="#outgoing-partnership-invitations">outgoing invitation</a> objects.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/invitations/outgoing/</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/outgoing_invitations</code></p>
 
 <p>This endpoint accepts the following GET parameters.</p>
 
@@ -1712,28 +1717,28 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>When this invitation sent</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">creator_company_id</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_organization_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the company who sent this invitation</td>
+<td>ID of the organization who sent this invitation</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">creator_company</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_organization</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Companies" href="#companies">company</a> who sent this invitation, with all of its attributes.</td>
+<td>The <a title="Organizations" href="#organizations">organization</a> who sent this invitation, with all of its attributes.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">creator_person_id</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_person_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
 <td>ID of the person who sent this invitation</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">creator_person</code></td>
+<td style="text-align: left"><code class="prettyprint">created_by_person</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Persons" href="#persons">person</a> who sent this invitation, with all other attributes except <code class="prettyprint">company</code> and <code class="prettyprint">company_id</code></td>
+<td>The [person][] who sent this invitation, with all other attributes except <code class="prettyprint">organization</code> and <code class="prettyprint">organization_id</code></td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">resolved_at</code></td>
@@ -1742,28 +1747,28 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>When this invitation was accepted or rejected, <code class="prettyprint">null</code> if still pending</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">resolver_company_id</code></td>
+<td style="text-align: left"><code class="prettyprint">resolved_by_organization_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the company who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+<td>ID of the organization who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">resolver_company</code></td>
+<td style="text-align: left"><code class="prettyprint">resolved_by_organization</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Companies" href="#companies">company</a> resource who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+<td>The <a title="Organizations" href="#organizations">organization</a> resource who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">resolver_person_id</code></td>
+<td style="text-align: left"><code class="prettyprint">resolved_by_person_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the person who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+<td>ID of the person who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">resolver_person</code></td>
+<td style="text-align: left"><code class="prettyprint">resolved_by_person</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Persons" href="#persons">person</a> who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending</td>
+<td>The [person][] who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
@@ -1783,13 +1788,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>Retrieve a <a title="Incoming partnership invitations" href="#incoming-partnership-invitations">incoming invitation</a> resource by its <strong>invitation key</strong>. Incoming invitations are identified by their automatically generated, random key strings, instead of integer IDs.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/invitations/incoming/[invitation_key]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/incoming_invitations/&lt;invitation_key&gt;</code></p>
 
 <h3 id="get-a-collection-of-incoming-invitations">Get a collection of incoming invitations</h3>
 
-<p>Get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all received <a title="Incoming partnership invitations" href="#incoming-partnership-invitations">incoming invitation</a> objects. This endpoint returns invitations accepted or rejected by your company. It also returns those invitations that are sent to one of your company&rsquo;s email address. <strong>NOTE</strong> that the company who sends the invitation does not know if this email address actually exists in giosg system.</p>
+<p>Get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all received <a title="Incoming partnership invitations" href="#incoming-partnership-invitations">incoming invitation</a> objects. This endpoint returns invitations accepted or rejected by your organization. It also returns those invitations that are sent to one of your organization&rsquo;s email address. <strong>NOTE</strong> that the organization who sends the invitation does not know if this email address actually exists in giosg system.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/invitations/incoming/</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/incoming_invitations</code></p>
 
 <p>This endpoint accepts the following GET parameters.</p>
 
@@ -1831,9 +1836,9 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>You need to accept an invitation to become partners with the sender. In order to accept the invitation, you need the invitation key.</p>
 
-<p><code class="prettyprint">POST https://service.giosg.com/api/v3/network/invitations/incoming/[invitation_key]/accept</code></p>
+<p><code class="prettyprint">POST https://service.giosg.com/api/v5/incoming_invitations/&lt;invitation_key&gt;/accept</code></p>
 
-<p>As soon as you accept the invitation, the partnership will be created. Also, any shared rooms and teams will become available to your company.</p>
+<p>As soon as you accept the invitation, the partnership will be created. Also, any shared rooms and teams will become available to your organization.</p>
 
 <p>You should send an object as a payload with the following attributes, matching the attributes on a <a title="Partnerships" href="#partnerships">partnership</a> resource. They may be omitted, see below.</p>
 
@@ -1855,7 +1860,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td><code class="prettyprint">visible_to_everyone</code></td>
 <td>boolean</td>
 <td><strong>required</strong></td>
-<td>If <code class="prettyprint">true</code>, the new partner will become visible to your company members. If <code class="prettyprint">false</code>, it will be shown only on company management.</td>
+<td>If <code class="prettyprint">true</code>, the new partner will become visible to your organization members. If <code class="prettyprint">false</code>, it will be shown only on organization management.</td>
 </tr>
 </tbody></table>
 
@@ -1865,7 +1870,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>After accepting an invitation, its status will become <code class="prettyprint">1</code>.</p>
 
-<p>The request will result in 404 response if the invitation was not found, has been cancelled, or has already been accepted/rejected by some other company. The request will result in 403 response if the invitation has already been accepted or rejected by your company, or if you are not allowed to accept/reject the invitation, e.g. you are the original creator of this invitation.</p>
+<p>The request will result in 404 response if the invitation was not found, has been cancelled, or has already been accepted/rejected by some other organization. The request will result in 403 response if the invitation has already been accepted or rejected by your organization, or if you are not allowed to accept/reject the invitation, e.g. you are the original creator of this invitation.</p>
 
 <p>A successful response will result in the updated <a title="Incoming partnership invitations" href="#incoming-partnership-invitations">incoming invitation</a> resource.</p>
 
@@ -1873,17 +1878,17 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>You may reject an invitation by its invitation key.</p>
 
-<p><code class="prettyprint">POST https://service.giosg.com/api/v3/network/invitations/incoming/[invitation_key]/reject</code></p>
+<p><code class="prettyprint">POST https://service.giosg.com/api/v5/incoming_invitations/&lt;invitation_key&gt;/reject</code></p>
 
 <p>No request payload is required. After rejecting an invitation, its status will become <code class="prettyprint">2</code>.</p>
 
-<p>The request will result in 404 response if the invitation was not found, has been cancelled, or has already been accepted/rejected by some other company. The request will result in 403 response if the invitation has already been accepted or rejected by your company, or if you are not allowed to accept/reject the invitation, e.g. you are the original creator of this invitation.</p>
+<p>The request will result in 404 response if the invitation was not found, has been cancelled, or has already been accepted/rejected by some other organization. The request will result in 403 response if the invitation has already been accepted or rejected by your organization, or if you are not allowed to accept/reject the invitation, e.g. you are the original creator of this invitation.</p>
 
 <p>A successful response will result in the updated <a title="Incoming partnership invitations" href="#incoming-partnership-invitations">incoming invitation</a> resource.</p>
 
 <h2 id="partnerships">Partnerships</h2>
 
-<p>A partnership object describes a connection between your company and one of your partner companies. Partnerships can only be created with <a title="Outgoing partnership invitations" href="#outgoing-partnership-invitations">partnership invitation</a> resources.</p>
+<p>A partnership object describes a connection between your organization and one of your partner organizations. Partnerships can only be created with <a title="Outgoing partnership invitations" href="#outgoing-partnership-invitations">partnership invitation</a> resources.</p>
 
 <table><thead>
 <tr>
@@ -1894,52 +1899,40 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">read-only</td>
-<td>Unique identifier for this partnership. <strong>Note</strong> that your partner will see the partnership with a different identifier.</td>
-</tr>
-<tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When you became partners</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">partner_company_id</code></td>
+<td style="text-align: left"><code class="prettyprint">partner_organization_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the partner company</td>
+<td>ID of the partner organization</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">partner_company</code></td>
+<td style="text-align: left"><code class="prettyprint">partner_organization</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The partner <a title="Companies" href="#companies">company</a> resource, with all of its available attributes</td>
+<td>The partner <a title="Organizations" href="#organizations">organization</a> resource, with all of its available attributes</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">company_id</code></td>
+<td style="text-align: left"><code class="prettyprint">organization_id</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">read-only</td>
-<td>ID of your company, for convenience</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">company</code></td>
-<td style="text-align: left">object</td>
-<td style="text-align: left">read-only</td>
-<td>Your <a title="Companies" href="#companies">company</a> resource, for convenience</td>
+<td>ID of your organization, for convenience</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">dislay_name</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left"><strong>optional</strong></td>
-<td>Name that is shown to your company members for this partner. May be <code class="prettyprint">null</code>, in which case the original name is shown</td>
+<td>Name that is shown to your organization members for this partner. May be <code class="prettyprint">null</code>, in which case the original name is shown</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">visible_to_everyone</code></td>
 <td style="text-align: left">boolean</td>
 <td style="text-align: left"><strong>required</strong></td>
-<td>If <code class="prettyprint">true</code>, the new partner will become visible to your company members. If <code class="prettyprint">false</code>, it will be shown only on company management.</td>
+<td>If <code class="prettyprint">true</code>, the new partner will become visible to your organization members. If <code class="prettyprint">false</code>, it will be shown only on organization management.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">incoming_invitation_id</code></td>
@@ -1971,7 +1964,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>Get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the known partnerships.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/partnerships/</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships</code></p>
 
 <p>This end-point accepts the following GET parameters.</p>
 
@@ -1987,7 +1980,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td><code class="prettyprint">ordering</code></td>
 <td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
-<td>Ordering of results with options <code class="prettyprint">partner_company_name</code>, <code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">partner_organization_name</code>, <code class="prettyprint">created_at</code></td>
 </tr>
 <tr>
 <td><code class="prettyprint">page</code></td>
@@ -2005,28 +1998,28 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <h3 id="retrieve-partnership-details">Retrieve partnership details</h3>
 
-<p>Retrieve a single <a title="Partnerships" href="#partnerships">partnership</a> resource by the partnership ID (not partner company&rsquo;s ID).</p>
+<p>Retrieve a single <a title="Partnerships" href="#partnerships">partnership</a> resource for your organization (<code class="prettyprint">&lt;organization_id&gt;</code>) by the partner organization&rsquo;s ID (<code class="prettyprint">&lt;partner_id&gt;</code>).</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/partnerships/[partnership_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships/&lt;partner_id&gt;</code></p>
 
 <h3 id="remove-a-partnership">Remove a partnership</h3>
 
 <aside class="warning">
 <strong>WARNING!</strong>
-This will immediately remove the company from your partners and remove your partner&rsquo;s access to your shared resources. You cannot undo this action! You need to invite your partner again and re-share all your rooms/teams and re-set any permissions.
+This will immediately remove the organization from your partners and remove your partner&rsquo;s access to your shared resources. You cannot undo this action! You need to invite your partner again and re-share all your rooms/teams and re-set any permissions.
 </aside>
 
-<p>Being aware of this, you may remove another company from your partners.</p>
+<p>Being aware of this, you may remove another organization (<code class="prettyprint">&lt;partner_id&gt;</code>) from your organization&rsquo;s (<code class="prettyprint">&lt;organization_id&gt;</code>) partners.</p>
 
-<p><code class="prettyprint">DELETE https://service.giosg.com/api/v3/network/partnerships/[partnership_id]</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships/&lt;partner_id&gt;</code></p>
 
 <h3 id="update-a-partnership">Update a partnership</h3>
 
-<p>You may update the editable attributes of a partnership.</p>
+<p>You may update the editable attributes of a partnership for your organization (<code class="prettyprint">&lt;organization_id&gt;</code>) by the given partner organization&rsquo;s ID (<code class="prettyprint">&lt;partner_id&gt;</code>).</p>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v3/network/partnerships/[partnership_id]</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships/&lt;partner_id&gt;</code></p>
 
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v3/network/partnerships/[partnership_id]</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships/&lt;partner_id&gt;</code></p>
 
 <p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes of the <a title="Partnerships" href="#partnerships">partnership</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
 
@@ -2085,7 +2078,7 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">creator_person</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Persons" href="#persons">person</a> resource who shared the resource, with all of the available attributes</td>
+<td>The [person][] resource who shared the resource, with all of the available attributes</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">share_name</code></td>
@@ -2121,7 +2114,7 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">sharer_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Companies" href="#companies">company</a> object who shared the resource, with all of its attributes.</td>
+<td>The [company][] object who shared the resource, with all of its attributes.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">receiver_company_id</code></td>
@@ -2133,7 +2126,7 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">receiver_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Companies" href="#companies">company</a> object to whon the resource was shared</td>
+<td>The [company][] object to whon the resource was shared</td>
 </tr>
 </tbody></table>
 
@@ -2197,9 +2190,9 @@ This will immediately remove the company from your partners and remove your part
 
 <p>You may share a resource to one of your partners by making a <code class="prettyprint">POST</code> request.</p>
 
-<p><code class="prettyprint">POST https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/</code></p>
+<p><code class="prettyprint">POST https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/outgoing_shares/&lt;resource_type&gt;</code></p>
 
-<p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. You may only share resources that you own or are being shared to your company. You need to provide the required attributes of an <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or an <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> as well as desired optional attributes as a payload.</p>
+<p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. You may only share resources that you own or are being shared to your company. You need to provide the required attributes of an <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or an <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> as well as desired optional attributes as a payload.</p>
 
 <p>The API returns an <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or an <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> as a response.</p>
 
@@ -2207,23 +2200,23 @@ This will immediately remove the company from your partners and remove your part
 
 <p>Returns an <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or an <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> resource by the given ID.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/[share_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/outgoing_shares/&lt;resource_type&gt;/&lt;share_id&gt;</code></p>
 
-<p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. Results in 404 response if you have no access to the share.</p>
+<p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. Results in 404 response if you have no access to the share.</p>
 
 <h3 id="unshare-a-resource">Unshare a resource</h3>
 
 <p>You may decide not to share a resource any more to the specific partner. In this case, you may delete the <a title="Outgoing shares" href="#outgoing-shares">outgoing share</a> resource.</p>
 
-<p><code class="prettyprint">DELETE https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/[share_id]</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/outgoing_shares/&lt;resource_type&gt;/&lt;share_id&gt;</code></p>
 
 <h3 id="get-a-collection-of-outgoing-shares">Get a collection of outgoing shares</h3>
 
 <p>You may get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> resources that your company has created.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/outgoing_shares/&lt;resource_type&gt;</code></p>
 
-<p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. This endpoint accepts the following GET parameters.</p>
+<p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. This endpoint accepts the following GET parameters.</p>
 
 <table><thead>
 <tr>
@@ -2269,11 +2262,11 @@ This will immediately remove the company from your partners and remove your part
 
 <p>Once a resource share is created, you cannot change its resource, partnership or other relations. If you shared a wrong resource or to a wrong partner, you need to delete the share and create a new one. You may still update a resource share resource, specifically its <code class="prettyprint">share_name</code>, by making a <code class="prettyprint">PUT</code> or <code class="prettyprint">PATCH</code> request:</p>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/[resourceshare_id]</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/outgoing_shares/&lt;resource_type&gt;/[resourceshare_id]</code></p>
 
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v3/network/shares/outgoing/[resource_type]/[resourceshare_id]</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/outgoing_shares/&lt;resource_type&gt;/[resourceshare_id]</code></p>
 
-<p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>.</p>
+<p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>.</p>
 
 <h2 id="incoming-shares">Incoming shares</h2>
 
@@ -2315,7 +2308,7 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">sharer_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Companies" href="#companies">company</a> object who shared the resource, with all of its attributes.</td>
+<td>The [company][] object who shared the resource, with all of its attributes.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">receiver_company_id</code></td>
@@ -2327,7 +2320,7 @@ This will immediately remove the company from your partners and remove your part
 <td style="text-align: left"><code class="prettyprint">receiver_company</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The <a title="Companies" href="#companies">company</a> object to whon the resource was shared</td>
+<td>The [company][] object to whon the resource was shared</td>
 </tr>
 </tbody></table>
 
@@ -2387,9 +2380,9 @@ This will immediately remove the company from your partners and remove your part
 
 <p>You may get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Incoming room shares" href="#incoming-room-shares">incoming room share</a> or <a title="Incoming team shares" href="#incoming-team-shares">incoming team share</a> resources that are shared to your company.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/incoming/[resource_type]/</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/incoming_shares/&lt;resource_type&gt;</code></p>
 
-<p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. This endpoint accepts the following GET parameters.</p>
+<p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. This endpoint accepts the following GET parameters.</p>
 
 <table><thead>
 <tr>
@@ -2435,9 +2428,9 @@ This will immediately remove the company from your partners and remove your part
 
 <p>Returns an <a title="Incoming room shares" href="#incoming-room-shares">incoming room share</a> or <a title="Incoming team shares" href="#incoming-team-shares">incoming team share</a> resource by the given ID.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/network/shares/incoming/[resource_type]/[share_id]</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/incoming_shares/&lt;resource_type&gt;/&lt;share_id&gt;</code></p>
 
-<p>The <code class="prettyprint">[resource_type]</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>.</p>
+<p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>.</p>
 
           <h1 id="assets-api">Assets API</h1>
 
@@ -2449,7 +2442,7 @@ This API is available only if your account has the <strong>Assets</strong> featu
 
 <p>Assets are files that you can upload to giosg system and that are publicly available. They are useful to hosts resources for you custom customized giosg products or your website components!</p>
 
-<p>Even though asset contents are publicly available, they can only be accessed with an URL. In other words, only your company members are able to see the list of your company assets. When the asset is used somewhere, e.g. on your custom chat dialog or your website, anyone is (and need to be) able to download its contents and see its public attributes.</p>
+<p>Even though asset contents are publicly available, they can only be accessed with an URL. In other words, only your organization members are able to see the list of your organization assets. When the asset is used somewhere, e.g. on your custom chat dialog or your website, anyone is (and need to be) able to download its contents and see its public attributes.</p>
 
 <p>An asset resource has the following attributes.</p>
 
@@ -2480,16 +2473,16 @@ This API is available only if your account has the <strong>Assets</strong> featu
 <td>Human-readable description</td>
 </tr>
 <tr>
-<td><code class="prettyprint">company_id</code></td>
+<td><code class="prettyprint">organization_id</code></td>
 <td>integer</td>
 <td>read-only</td>
-<td>The ID of the owner company</td>
+<td>The ID of the owner organization</td>
 </tr>
 <tr>
-<td><code class="prettyprint">company</code></td>
+<td><code class="prettyprint">organization</code></td>
 <td>object</td>
 <td>read-only</td>
-<td>The owner company resource</td>
+<td>The owner organization resource</td>
 </tr>
 <tr>
 <td><code class="prettyprint">file_name</code></td>
@@ -2579,9 +2572,9 @@ This API is available only if your account has the <strong>Assets</strong> featu
 
 <h3 id="upload-a-new-asset">Upload a new asset</h3>
 
-<p>Upload a file creating a new asset for a company.</p>
+<p>Upload a file creating a new asset for a organization.</p>
 
-<p><code class="prettyprint">POST /api/v3/customer/assets</code></p>
+<p><code class="prettyprint">POST /api/v5/orgs/&lt;organization_id&gt;/assets</code></p>
 
 <p><strong>IMPORTANT!</strong> In contrast to the all other API endpoints, this only accepts <code class="prettyprint">multipart/form-data</code> requests, because you need to upload a file with the request. The request payload takes the following attributes.</p>
 
@@ -2613,13 +2606,13 @@ This API is available only if your account has the <strong>Assets</strong> featu
 </tr>
 </tbody></table>
 
-<p>This endpoint returns an <a title="Assets" href="#assets">asset</a> resource. It results in a 400 response if the upload would exceed your company&rsquo;s free asset storage space.</p>
+<p>This endpoint returns an <a title="Assets" href="#assets">asset</a> resource. It results in a 400 response if the upload would exceed your organization&rsquo;s free asset storage space.</p>
 
 <h3 id="list-assets">List assets</h3>
 
-<p>Get a paginated collection of all the assets of your company:</p>
+<p>Get a paginated collection of all the assets of your organization:</p>
 
-<p><code class="prettyprint">GET /api/v3/customer/assets</code></p>
+<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/assets</code></p>
 
 <p>The endpoint accepts the following GET parameters.</p>
 
@@ -2653,27 +2646,27 @@ This API is available only if your account has the <strong>Assets</strong> featu
 
 <h3 id="retrieve-a-single-asset">Retrieve a single asset</h3>
 
-<p><code class="prettyprint">GET /api/v3/customer/assets/[asset_id]</code></p>
+<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/assets/&lt;asset_id&gt;</code></p>
 
 <h3 id="update-an-asset">Update an asset</h3>
 
 <p>You may update the <code class="prettyprint">name</code> and/or <code class="prettyprint">description</code> attributes of an asset.</p>
 
-<p><code class="prettyprint">PUT /api/v3/customer/assets/[asset_id]</code></p>
+<p><code class="prettyprint">PUT /api/v5/orgs/&lt;organization_id&gt;/assets/&lt;asset_id&gt;</code></p>
 
-<p><code class="prettyprint">PATCH /api/v3/customer/assets/[asset_id]</code></p>
+<p><code class="prettyprint">PATCH /api/v5/orgs/&lt;organization_id&gt;/assets/&lt;asset_id&gt;</code></p>
 
 <h3 id="delete-an-asset">Delete an asset</h3>
 
 <p>You may delete your assets. Their size is freed for new asset uploads.</p>
 
-<p><code class="prettyprint">DELETE /api/v3/customer/assets/[asset_id]</code></p>
+<p><code class="prettyprint">DELETE /api/v5/orgs/&lt;organization_id&gt;/assets/&lt;asset_id&gt;</code></p>
 
-<h3 id="retrieve-company-39-s-storage-information">Retrieve company&rsquo;s storage information</h3>
+<h3 id="retrieve-organization-39-s-storage-information">Retrieve organization&rsquo;s storage information</h3>
 
-<p>You may check your company&rsquo;s current asset storage space usage:</p>
+<p>You may check your organization&rsquo;s current asset storage space usage:</p>
 
-<p><code class="prettyprint">GET /api/v3/customer/quota</code></p>
+<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/quota</code></p>
 
 <p>This returns an object with the following attributes:</p>
 
@@ -2692,11 +2685,11 @@ This API is available only if your account has the <strong>Assets</strong> featu
 <tr>
 <td><code class="prettyprint">usage</code></td>
 <td>integer</td>
-<td>Sum of all your company asset sizes, in bytes</td>
+<td>Sum of all your organization asset sizes, in bytes</td>
 </tr>
 <tr>
 <td><code class="prettyprint">limit</code></td>
-<td>The maximun allowed sum of your company asset sizes, in bytes</td>
+<td>The maximun allowed sum of your organization asset sizes, in bytes</td>
 <td></td>
 </tr>
 </tbody></table>
@@ -2799,7 +2792,7 @@ This API is available only if your account has the <strong>Assets</strong> featu
 
 <p>You can get the time-based aggregated visitor statistics by making a GET request:</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/visitorstats/timeline</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/reports/visitorstats/timeseries</code></p>
 
 <p>You may define define these optional GET parameters to localize and filter the visitor stats aggregation results.</p>
 
@@ -2883,7 +2876,7 @@ This API is available only if your account has the <strong>Assets</strong> featu
 
 <p>You can get the time-based aggregated chat statistics by making a GET request:</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/chatstats/timeline</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/reports/chatstats/timeseries</code></p>
 
 <p>You may define define these optional GET parameters to localize and filter the chat stats aggregation results.</p>
 
@@ -3052,7 +3045,7 @@ The following wait time stats are available only for chat sessions started on 20
 
 <p>You can get the time-based aggregated chat statistics per-room by making a GET request:</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/chatstats/rooms/timeline</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/reports/chatstats/rooms/timeseries</code></p>
 
 <p>You may define define these optional GET parameters to localize and filter the chat stats aggregation results.</p>
 
@@ -3108,7 +3101,7 @@ The following wait time stats are available only for chat sessions started on 20
   </span><span class="nt">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
   </span><span class="nt">"next_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> 
   </span><span class="nt">"previous_page"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"next_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v3/reporting/chats/rooms/timeline?page=2"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"next_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/reports/chatstats/rooms/timeseries?page=2"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"previous_page_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -3209,7 +3202,7 @@ This endpoint returns a paginated collection!
 
 <p>You can get the time-based aggregated operator statistics by making a GET request.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v3/reporting/operatorstats/timeline</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/reports/operatorstats/timeseries</code></p>
 
 <aside class="warning">
 <strong>Note</strong> that this API provides data only starting from 2015-05-12!
@@ -3307,7 +3300,7 @@ This endpoint has been updated on August 2015 to a new version <strong>v4</stron
 
 <p>You can get the aggregated shopping cart (giosg BASKET) statistics by making a GET request.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v4/reporting/salesstats/timeline</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/reports/salesstats/timeseries</code></p>
 
 <p>You may define define these optional GET parameters to localize and filter the sales stats aggregation results.</p>
 
