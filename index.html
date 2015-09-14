@@ -72,6 +72,12 @@ The string in the end of the header should be replaced with your API key.
 
 <p>Alternatively, if you are unable to customize headers, you may add <code class="prettyprint">format=json</code> GET parameter.</p>
 
+<h2 id="resource-identifiers">Resource identifiers</h2>
+
+<p>Unless stated otherwise, all the resources in the system are identified with a <a title="Universally Unique Identifier" href="https://en.wikipedia.org/wiki/Universally_unique_identifier">Universally Unique Identifier (UUID)</a>. It is always represented as a string ID, in lower case and including dashes.</p>
+
+<p>For example: <code class="prettyprint">9ae65e7d-56c5-11e5-af8d-6c4008c08dfe</code></p>
+
 <h2 id="paginated-collections">Paginated Collections</h2>
 
 <p>Some of the API endpoints return paginated collections. Unless stated otherwise, all these endpoints accept the following optional GET parameters.</p>
@@ -193,7 +199,7 @@ The string in the end of the header should be replaced with your API key.
           <h1 id="customer-api">Customer API</h1>
 
 <aside class="success">
-This is the new, recommended version (v4) of the customer API!
+This is the new, recommended version (v5) of the customer API!
 </aside>
 
 <p><strong>You should use this new API instead of the <a href="https://docs.giosg.com/doku.php?id=public:technical-documentation:backend-api:customer-api">deprecated v3 version</a>.</strong></p>
@@ -216,7 +222,7 @@ This is the new, recommended version (v4) of the customer API!
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>Unique identifier for this organization</td>
 </tr>
@@ -336,7 +342,7 @@ This is the new, recommended version (v4) of the customer API!
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>Unique identifier</td>
 </tr>
@@ -348,7 +354,7 @@ This is the new, recommended version (v4) of the customer API!
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">organization_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the organization to which the user belongs to</td>
 </tr>
@@ -516,7 +522,7 @@ This is the new, recommended version (v4) of the customer API!
 <td><code class="prettyprint">ordering</code></td>
 <td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
-<td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">last_name</code>, <code class="prettyprint">first_name</code>, <code class="prettyprint">email</code>, <code class="prettyprint">alias</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">updated_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">last_name</code>, <code class="prettyprint">first_name</code>, <code class="prettyprint">email</code>, <code class="prettyprint">alias</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">updated_at</code></td>
 </tr>
 <tr>
 <td><code class="prettyprint">include_deleted</code></td>
@@ -544,214 +550,6 @@ This is the new, recommended version (v4) of the customer API!
 </tr>
 </tbody></table>
 
-<h2 id="rooms-and-domains">Rooms and domains</h2>
-
-<p>A room object contains the following attributes.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Type</th>
-<th>Editable</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
-<td>read-only</td>
-<td>The unique identifier of this room</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">token</code></td>
-<td style="text-align: left">string</td>
-<td>read-only</td>
-<td>A signed Giosg token, used as a public identifier of this room</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">organization_id</code></td>
-<td style="text-align: left">integer</td>
-<td>read-only</td>
-<td>ID of the organization who owns this room.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">organization</code></td>
-<td style="text-align: left">object</td>
-<td>read-only</td>
-<td>The <a title="Organizations" href="#organizations">organization</a> who owns this room.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">domain</code></td>
-<td style="text-align: left">string</td>
-<td><strong>optional</strong></td>
-<td>A domain hostname if this room is a <strong>domain room</strong>, otherwise <code class="prettyprint">null</code> if this is a custom room. <strong>Cannot be changed after creation.</strong> You cannot have multiple domain rooms with the same <code class="prettyprint">domain</code> attribute!</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">name</code></td>
-<td style="text-align: left">string</td>
-<td><strong>required</strong></td>
-<td>Name of the room, set by the owner. Must be a non-empty string.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">display_name</code></td>
-<td style="text-align: left">string</td>
-<td>read-only</td>
-<td>Display name of the room. It may equal to the <code class="prettyprint">name</code> attribute, unless this room is <a title="Outgoing room shares" href="#outgoing-room-shares">shared</a> to your organization with a custom <code class="prettyprint">share_name</code>.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">is_shared</code></td>
-<td style="text-align: left">boolean</td>
-<td>read-only</td>
-<td><code class="prettyprint">true</code> if the room is shared to your organization, <code class="prettyprint">false</code> if your organization owns the room</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">allowed_domains</code></td>
-<td style="text-align: left">array of objects</td>
-<td>read-only</td>
-<td>List of domain rooms on which this room may be used. Each object in the array contains <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">display_name</code> and <code class="prettyprint">domain</code> attributes.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">language_code</code></td>
-<td style="text-align: left">string</td>
-<td><strong>optional</strong></td>
-<td>Language of this room in ISO 639-1 code, or <code class="prettyprint">null</code> if undefined.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
-<td>read-only</td>
-<td>When this room was created. <strong>Available only to your own organization.</strong></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">updated_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
-<td>read-only</td>
-<td>When this room was updated last time. <strong>Available only to your own organization.</strong></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">updated_by_user_id</code></td>
-<td style="text-align: left">integer</td>
-<td>string</td>
-<td>ID of the user who last updated this room, or <code class="prettyprint">null</code> if unknown. <strong>Available only to your own organization.</strong></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">updated_by_user</code></td>
-<td style="text-align: left">object</td>
-<td>read-only</td>
-<td>Details of the user who last updated this room, or <code class="prettyprint">null</code> if unknown. <strong>Available only to your own organization.</strong></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">is_deleted</code></td>
-<td style="text-align: left">boolean</td>
-<td>read-only</td>
-<td>read-only</td>
-</tr>
-</tbody></table>
-
-<p>Domain rooms are like any other rooms except that they are linked to exactly one domain (website). You need a domain room in order to use a Giosg services on your website.</p>
-
-<h3 id="retrieve-room-details">Retrieve room details</h3>
-
-<p>Get a single room object that your organization has access to, by its ID. This may be a shared room.</p>
-
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
-
-<p>This endpoint accepts the following GET parameters.</p>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">include_deleted</code></td>
-<td>boolean</td>
-<td>false</td>
-<td>If <code class="prettyprint">true</code>, does not return 404 for deleted resources.</td>
-</tr>
-</tbody></table>
-
-<p>If you try to get a room that has been deleted, the endpoint results in 404 response by default. You may access the removed rooms of your organization for historical purposes by adding <code class="prettyprint">include_deleted=true</code> to the GET parameters.</p>
-
-<h3 id="get-a-collection-of-rooms">Get a collection of rooms</h3>
-
-<p>Return a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Rooms and domains" href="#rooms-and-domains">room</a> resources you have access to, including any shared rooms:</p>
-
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/rooms</code></p>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">ordering</code></td>
-<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
-<td><code class="prettyprint">created_at</code></td>
-<td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">domain</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">updated_at</code>, <code class="prettyprint">organization_id</code></td>
-</tr>
-<tr>
-<td><code class="prettyprint">include_deleted</code></td>
-<td>boolean</td>
-<td><code class="prettyprint">false</code></td>
-<td>If <code class="prettyprint">true</code>, include deleted resources to results. If <code class="prettyprint">false</code> (default), excludes any deleted resources.</td>
-</tr>
-<tr>
-<td><code class="prettyprint">is_shared</code></td>
-<td>boolean</td>
-<td>(none)</td>
-<td>If <code class="prettyprint">true</code>, return only rooms shared to your organization. If <code class="prettyprint">false</code>, return only your own organization&rsquo;s rooms.</td>
-</tr>
-<tr>
-<td><code class="prettyprint">organization_id</code></td>
-<td>integer</td>
-<td>(none)</td>
-<td>Return only rooms owned by this organization ID</td>
-</tr>
-<tr>
-<td><code class="prettyprint">page</code></td>
-<td>integer</td>
-<td>1</td>
-<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
-</tr>
-<tr>
-<td><code class="prettyprint">page_size</code></td>
-<td>integer</td>
-<td>50</td>
-<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
-</tr>
-</tbody></table>
-
-<h3 id="creating-a-room">Creating a room</h3>
-
-<p>Create a new custom room or a domain room by making a <code class="prettyprint">POST</code> request, providing the <a title="Rooms and domains" href="#rooms-and-domains">room object</a> as a payload. By providing the <code class="prettyprint">domain</code> attribute with non-null value will create a new domain room.</p>
-
-<p><code class="prettyprint">POST https://service.giosg.com/api/v5/rooms</code></p>
-
-<h3 id="update-a-room">Update a room</h3>
-
-<p>You may update the editable attributes of your own room by making either a <code class="prettyprint">PATCH</code> (update a subset of attributes) or <code class="prettyprint">POST</code> request (update all the attributes).</p>
-
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
-
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
-
-<h3 id="delete-a-room">Delete a room</h3>
-
-<aside class="warning">
-Deleting a room will immediately unshare it from your partners! You cannot undo this action, but you can re-create and re-share the room again.
-</aside>
-
-<p>You may delete one of your own rooms by making a <code class="prettyprint">DELETE</code> request.</p>
-
-<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
-
 <h2 id="teams">Teams</h2>
 
 <p>A team object contains the following attributes.</p>
@@ -766,13 +564,13 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>read-only</td>
 <td>The unique identifier of this team</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">organization_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>read-only</td>
 <td>ID of the organization who owns this team.</td>
 </tr>
@@ -848,7 +646,7 @@ Deleting a room will immediately unshare it from your partners! You cannot undo 
 </tr>
 <tr>
 <td><code class="prettyprint">organization_id</code></td>
-<td>integer</td>
+<td><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>(none)</td>
 <td>Return only rooms owned by this organization ID</td>
 </tr>
@@ -906,7 +704,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">team_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>read-only</td>
 <td>ID of the team to which this member belongs.</td>
 </tr>
@@ -918,7 +716,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">user_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>read-only</td>
 <td>ID of the member user.</td>
 </tr>
@@ -1002,6 +800,216 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v5/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
 
+          <h1 id="rooms-api">Rooms API</h1>
+
+<h2 id="rooms-and-domains">Rooms and domains</h2>
+
+<p>The room resource has the following attributes.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th>Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td>read-only</td>
+<td>The unique identifier of this room</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">token</code></td>
+<td style="text-align: left">string</td>
+<td>read-only</td>
+<td>A signed Giosg token, used as a public identifier of this room</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">organization_id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td>read-only</td>
+<td>ID of the organization who owns this room.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">organization</code></td>
+<td style="text-align: left">object</td>
+<td>read-only</td>
+<td>The <a title="Organizations" href="#organizations">organization</a> who owns this room.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">domain</code></td>
+<td style="text-align: left">string</td>
+<td><strong>optional</strong></td>
+<td>A domain hostname if this room is a <strong>domain room</strong>, otherwise <code class="prettyprint">null</code> if this is a custom room. <strong>Cannot be changed after creation.</strong> You cannot have multiple domain rooms with the same <code class="prettyprint">domain</code> attribute!</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">name</code></td>
+<td style="text-align: left">string</td>
+<td><strong>required</strong></td>
+<td>Name of the room, set by the owner. Must be a non-empty string.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">display_name</code></td>
+<td style="text-align: left">string</td>
+<td>read-only</td>
+<td>Display name of the room. It may equal to the <code class="prettyprint">name</code> attribute, unless this room is <a title="Outgoing room shares" href="#outgoing-room-shares">shared</a> to your organization with a custom <code class="prettyprint">share_name</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_shared</code></td>
+<td style="text-align: left">boolean</td>
+<td>read-only</td>
+<td><code class="prettyprint">true</code> if the room is shared to your organization, <code class="prettyprint">false</code> if your organization owns the room</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">allowed_domains</code></td>
+<td style="text-align: left">array of objects</td>
+<td>read-only</td>
+<td>List of domain rooms on which this room may be used. Each object in the array contains <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">display_name</code> and <code class="prettyprint">domain</code> attributes.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">language_code</code></td>
+<td style="text-align: left">string</td>
+<td><strong>optional</strong></td>
+<td>Language of this room in ISO 639-1 code, or <code class="prettyprint">null</code> if undefined.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
+<td>read-only</td>
+<td>When this room was created. <strong>Available only to your own organization.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">updated_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
+<td>read-only</td>
+<td>When this room was updated last time. <strong>Available only to your own organization.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">updated_by_user_id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td>string</td>
+<td>ID of the user who last updated this room, or <code class="prettyprint">null</code> if unknown. <strong>Available only to your own organization.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">updated_by_user</code></td>
+<td style="text-align: left">object</td>
+<td>read-only</td>
+<td>Details of the user who last updated this room, or <code class="prettyprint">null</code> if unknown. <strong>Available only to your own organization.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_deleted</code></td>
+<td style="text-align: left">boolean</td>
+<td>read-only</td>
+<td>read-only</td>
+</tr>
+</tbody></table>
+
+<p>Domain rooms are like any other rooms except that they are linked to exactly one domain (website). You need a domain room in order to use a Giosg services on your website.</p>
+
+<h3 id="retrieve-room-details">Retrieve room details</h3>
+
+<p>Get a single room object that your organization has access to, by its ID. This may be a shared room.</p>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
+
+<p>This endpoint accepts the following GET parameters.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">include_deleted</code></td>
+<td>boolean</td>
+<td>false</td>
+<td>If <code class="prettyprint">true</code>, does not return 404 for deleted resources.</td>
+</tr>
+</tbody></table>
+
+<p>If you try to get a room that has been deleted, the endpoint results in 404 response by default. You may access the removed rooms of your organization for historical purposes by adding <code class="prettyprint">include_deleted=true</code> to the GET parameters.</p>
+
+<h3 id="get-a-collection-of-rooms">Get a collection of rooms</h3>
+
+<p>Return a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Rooms and domains" href="#rooms-and-domains">room</a> resources you have access to, including any shared rooms:</p>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/rooms</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ordering</code></td>
+<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
+<td><code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">name</code>, <code class="prettyprint">domain</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">updated_at</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">include_deleted</code></td>
+<td>boolean</td>
+<td><code class="prettyprint">false</code></td>
+<td>If <code class="prettyprint">true</code>, include deleted resources to results. If <code class="prettyprint">false</code> (default), excludes any deleted resources.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">is_shared</code></td>
+<td>boolean</td>
+<td>(none)</td>
+<td>If <code class="prettyprint">true</code>, return only rooms shared to your organization. If <code class="prettyprint">false</code>, return only your own organization&rsquo;s rooms.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">organization_id</code></td>
+<td><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td>(none)</td>
+<td>Return only rooms owned by this organization ID</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page</code></td>
+<td>integer</td>
+<td>1</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page_size</code></td>
+<td>integer</td>
+<td>50</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+</tr>
+</tbody></table>
+
+<h3 id="creating-a-room">Creating a room</h3>
+
+<p>Create a new custom room or a domain room by making a <code class="prettyprint">POST</code> request, providing the <a title="Rooms and domains" href="#rooms-and-domains">room object</a> as a payload. By providing the <code class="prettyprint">domain</code> attribute with non-null value will create a new domain room.</p>
+
+<p><code class="prettyprint">POST https://service.giosg.com/api/v5/rooms</code></p>
+
+<h3 id="update-a-room">Update a room</h3>
+
+<p>You may update the editable attributes of your own room by making either a <code class="prettyprint">PATCH</code> (update a subset of attributes) or <code class="prettyprint">POST</code> request (update all the attributes).</p>
+
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
+
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
+
+<h3 id="delete-a-room">Delete a room</h3>
+
+<aside class="warning">
+Deleting a room will immediately unshare it from your partners! You cannot undo this action, but you can re-create and re-share the room again.
+</aside>
+
+<p>You may delete one of your own rooms by making a <code class="prettyprint">DELETE</code> request.</p>
+
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
+
           <h1 id="chat-api">Chat API</h1>
 
 <h2 id="get-a-collection-of-chats">Get a collection of chats</h2>
@@ -1023,8 +1031,8 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <tr>
 <td style="text-align: left"><code class="prettyprint">ordering</code></td>
 <td style="text-align: left"><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
-<td style="text-align: left">id</td>
-<td>Order results by either <code class="prettyprint">id</code>, <code class="prettyprint">start_time</code> or <code class="prettyprint">end_time</code>.</td>
+<td style="text-align: left"><code class="prettyprint">start_time</code></td>
+<td>Order results by either <code class="prettyprint">start_time</code> or <code class="prettyprint">end_time</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">page</code></td>
@@ -1040,9 +1048,9 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">since_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left"></td>
-<td>Only return chats with IDs larger than the value (exclusive)</td>
+<td>Only return chats after the chat with this ID (exclusive)</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">start_time</code></td>
@@ -1063,16 +1071,16 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>If <code class="prettyprint">true</code>/<code class="prettyprint">false</code>, only return chats with/without sales</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">real_conversation</code></td>
+<td style="text-align: left"><code class="prettyprint">is_real_conversation</code></td>
 <td style="text-align: left">true/false</td>
 <td style="text-align: left"></td>
 <td>If <code class="prettyprint">true</code>/<code class="prettyprint">false</code>, only return real/non-real chats</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">room_gid</code></td>
-<td style="text-align: left">string</td>
+<td style="text-align: left"><code class="prettyprint">room_id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left"></td>
-<td>Only chats on the room with this Giosg ID string.</td>
+<td>Only chats on the <a title="Rooms and domains" href="#rooms-and-domains">room</a> with this ID.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">tag</code></td>
@@ -1094,37 +1102,37 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 </tbody></table>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w"> 
-  </span><span class="nt">"num_pages"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> 
-  </span><span class="nt">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> 
-  </span><span class="nt">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
-  </span><span class="nt">"next_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> 
+  </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"num_pages"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"next_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
   </span><span class="nt">"previous_page"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="nt">"next_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v5/orgs/7f9e9580-095b-42c7-838c-c04e667b26f7/chats?page=2"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"previous_page_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T11:31:36.042"</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"end_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:38:36.424"</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"58f5055c-56e0-11e5-9354-6c4008c08dfe"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uibdbtmk5etolmjaduaafnqpl2ujzkyr4slkq3cabdai37qm"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T11:31:36.042"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"end_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:38:36.424"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:38:36.431"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"private"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"real_conversation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"is_autosuggested"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"parent_room_gid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5lqr3mundme2m2tzwmaafjluzaujzjar4s45w3cabdai37qm"</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"chat_room_gid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uibdbtmk5etolmjaduaafnqpl2ujzkyr4slkq3cabdai37qm"</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"is_private"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"is_real_conversation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"is_autosuggested"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"room_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9926bdfa-56e0-11e5-b98c-6c4008c08dfe"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"api_data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w">
           </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Milan Indrajit"</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"customer_number"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"customer_number"</span><span class="p">,</span><span class="w">
           </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345678"</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nt">"operator_message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> 
-      </span><span class="nt">"visitor_message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> 
+      </span><span class="nt">"operator_message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"visitor_message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="nt">"message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="nt">"start_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.customerpage.com/settings"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"start_url_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Settings page"</span><span class="p">,</span><span class="w">
@@ -1132,50 +1140,49 @@ Deleting a team will immediately clear all the memberships from the team. It wil
       </span><span class="nt">"autosuggest_url_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frontpage of our site"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"logs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"sender_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"sender_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"dt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-15T13:43:28.572"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"How may I help you?"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"visibleName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="w">
-        </span><span class="p">},</span><span class="w"> 
+          </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-15T13:43:28.572"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"sender_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"sender_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"How may I help you?"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"sender_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"429569b04f31f1f507236ea7359b50cf"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"sender_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"dt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-15T13:43:23.655"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Could you tell me about whether this product is in stock?"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"visibleName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Milan Indrajit"</span><span class="w">
+          </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-15T13:43:23.655"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"sender_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"sender_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"429569b04f31f1f507236ea7359b50cf"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Could you tell me about whether this product is in stock?"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Milan Indrajit"</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
       </span><span class="nt">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Premium"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Premium"</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
       </span><span class="nt">"shopping_carts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"opened"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:23:57.331"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"total_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"83.00"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"monthly_total_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"360.00"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w"> 
-          </span><span class="nt">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:24:57.588"</span><span class="p">,</span><span class="w"> 
+          </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca0a324f-56e0-11e5-8d07-6c4008c08dfe"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"opened_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:23:57.331"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"total_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"83.00"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"monthly_total_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"360.00"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"locked_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:24:57.588"</span><span class="p">,</span><span class="w">
           </span><span class="nt">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
             </span><span class="p">{</span><span class="w">
-              </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apple iPad Air 2"</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chat"</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345"</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"499.90"</span><span class="p">,</span><span class="w"> 
+              </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db66a978-56e0-11e5-878d-6c4008c08dfe"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apple iPad Air 2"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Work and play faster, thinner, and lighter with the iPad Air 2 from Apple. Featuring Apple's 64-bit A8X chip and M8 coprocessor, the Air 2 delivers 40% faster CPU performance and 2.5 times the graphics performance when compared to its predecessor."</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chat"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"499.90"</span><span class="p">,</span><span class="w">
               </span><span class="nt">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"monthly_price"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"monthly_quantity"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"stock_balance"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"added"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:23:57.341"</span><span class="p">,</span><span class="w"> 
-              </span><span class="nt">"deleted"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+              </span><span class="nt">"monthly_price"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"monthly_quantity"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"stock_balance"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"added_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:23:57.341"</span><span class="p">,</span><span class="w">
+              </span><span class="nt">"deleted_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
             </span><span class="p">}</span><span class="w">
           </span><span class="p">]</span><span class="w">
         </span><span class="p">}</span><span class="w">
@@ -1196,8 +1203,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>Unique identifier for this chat</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">token</code></td>
+<td style="text-align: left">string</td>
+<td>Encoded Giosg token for the chat itself</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">start_time</code></td>
@@ -1215,12 +1227,12 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>When the chat conversation was last time updated</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">private</code></td>
+<td style="text-align: left"><code class="prettyprint">is_private</code></td>
 <td style="text-align: left">boolean</td>
 <td>Whether or not the chat is marked as private for its operators</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">real_conversation</code></td>
+<td style="text-align: left"><code class="prettyprint">is_real_conversation</code></td>
 <td style="text-align: left">boolean</td>
 <td>Whether or not the chat is an actual conversation</td>
 </tr>
@@ -1230,14 +1242,9 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>Whether or not the chat started with an autosuggestion</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">parent_room_gid</code></td>
-<td style="text-align: left">string</td>
-<td>Encoded Giosg token for the room in which the chat occurred</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">chat_room_gid</code></td>
-<td style="text-align: left">string</td>
-<td>Encoded Giosg token for the chat itself</td>
+<td style="text-align: left"><code class="prettyprint">room_id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td>ID of the <a title="Rooms and domains" href="#rooms-and-domains">room</a> in which the chat occurred</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">api_data</code></td>
@@ -1287,7 +1294,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <tr>
 <td style="text-align: left"><code class="prettyprint">tags</code></td>
 <td style="text-align: left">array of objects</td>
-<td>All the tags added by operators to this chat vonersations. Each tag object has the attributes <code class="prettyprint">name</code> and <code class="prettyprint">value</code>, both strings (but value may be <code class="prettyprint">null</code>)</td>
+<td>All the tags added by operators to the chat. Each tag object has the attribute <code class="prettyprint">name</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">shopping_carts</code></td>
@@ -1306,9 +1313,9 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left"><code class="prettyprint">sender_id</code></td>
-<td style="text-align: left">string</td>
-<td>Identifier for the sender</td>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
+<td>When the message was sent</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">sender_type</code></td>
@@ -1316,9 +1323,9 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>Whether the sender is operator (<code class="prettyprint">1</code>) or visitor (<code class="prettyprint">2</code>)</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">dt</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
-<td>When the message was sent</td>
+<td style="text-align: left"><code class="prettyprint">sender_id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a>/string</td>
+<td>Identifier for the sender. If the sender is an operator, then this is the user&rsquo;s ID. Otherwise this is an unique string for the visitor.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">type</code></td>
@@ -1326,12 +1333,12 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>Whether the message is an actual message (<code class="prettyprint">1</code>) or autosuggest (<code class="prettyprint">2</code>)</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">msg</code></td>
+<td style="text-align: left"><code class="prettyprint">message</code></td>
 <td style="text-align: left">string</td>
 <td>Content text of the message</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">visibleName</code></td>
+<td style="text-align: left"><code class="prettyprint">display_name</code></td>
 <td style="text-align: left">string</td>
 <td>A display name for the sender</td>
 </tr>
@@ -1348,11 +1355,11 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>Unique identifier for the shopping cart</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">opened</code></td>
+<td style="text-align: left"><code class="prettyprint">opened_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>When the first item was added to the shopping cart</td>
 </tr>
@@ -1372,7 +1379,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>The currency in which the shopping cart value is given, e.g. <code class="prettyprint">EUR</code></td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">locked</code></td>
+<td style="text-align: left"><code class="prettyprint">locked_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>When the cart was purchased, i.e. &ldquo;locked&rdquo;. It is <code class="prettyprint">null</code> if the visitor has not purchased the shopping cart (yet)</td>
 </tr>
@@ -1394,7 +1401,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>Unique identifier for this item</td>
 </tr>
 <tr>
@@ -1443,12 +1450,12 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>How many available pieces of product there are in stock</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">added</code></td>
+<td style="text-align: left"><code class="prettyprint">added_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>When the product was added to the shopping cart</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">deleted</code></td>
+<td style="text-align: left"><code class="prettyprint">deleted_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>When the product was removed from the shopping cart. If <code class="prettyprint">null</code>, then the products actually exists in the shopping cart. Otherwise, it has actually been removed and should not be considered to be in the cart.</td>
 </tr>
@@ -1470,7 +1477,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>Unique identifier of this invitation</td>
 </tr>
@@ -1499,10 +1506,10 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>A display name that will be set to the new partner when they accept the invitation and the partnership is created. The display name is visible to your organization members. May be <code class="prettyprint">null</code>, in which case the partner will be shown with their original name.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">partner_visible_to_everyone</code></td>
-<td style="text-align: left">boolean</td>
+<td style="text-align: left"><code class="prettyprint">partner_visibility</code></td>
+<td style="text-align: left">string</td>
 <td style="text-align: left"><strong>required</strong></td>
-<td>If <code class="prettyprint">true</code>, the new partner will become visible to your organization members. If <code class="prettyprint">false</code>, it will be shown only on organization management.</td>
+<td>This must be either <code class="prettyprint">organization</code> (the partner will become visible to all your organization members) or <code class="prettyprint">management</code> (visible only to your organization managers)</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">room_shares</code></td>
@@ -1524,7 +1531,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_by_organization_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the organization who sent this invitation</td>
 </tr>
@@ -1536,7 +1543,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_by_user_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the user who sent this invitation</td>
 </tr>
@@ -1554,7 +1561,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">resolved_by_organization_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the organization who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
@@ -1566,7 +1573,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">resolved_by_user_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the user who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
@@ -1578,7 +1585,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the <a title="Partnerships" href="#partnerships">partnership</a> of the partner who accepted this invitation, or <code class="prettyprint">null</code> if not accepted</td>
 </tr>
@@ -1676,7 +1683,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>Unique identifier of this invitation</td>
 </tr>
@@ -1714,11 +1721,11 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
-<td>When this invitation sent</td>
+<td>When this invitation was sent</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_by_organization_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the organization who sent this invitation</td>
 </tr>
@@ -1730,7 +1737,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_by_user_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the user who sent this invitation</td>
 </tr>
@@ -1748,7 +1755,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">resolved_by_organization_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the organization who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
@@ -1760,7 +1767,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">resolved_by_user_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the user who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
 </tr>
@@ -1769,18 +1776,6 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
 <td>The <a title="Users" href="#users">user</a> who accepted/rejected this invitation, or <code class="prettyprint">null</code> if still pending or unknown</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">read-only</td>
-<td>ID of the <a title="Partnerships" href="#partnerships">partnership</a> of the partner whose invitation was accepted, or <code class="prettyprint">null</code> if not accepted</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">created_new_partnership</code></td>
-<td style="text-align: left">boolean</td>
-<td style="text-align: left">read-only</td>
-<td>This is <code class="prettyprint">true</code> if the invitation was accepted by a new partner, <code class="prettyprint">false</code> if it was accepted by an existing partner, or <code class="prettyprint">null</code> if not yet accepted.</td>
 </tr>
 </tbody></table>
 
@@ -1857,14 +1852,14 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>A display name that will be set to the newly created partner. The display name is visible to your organization members. May be <code class="prettyprint">null</code>, in which case the partner will be shown with their original name.</td>
 </tr>
 <tr>
-<td><code class="prettyprint">visible_to_everyone</code></td>
-<td>boolean</td>
+<td><code class="prettyprint">visibility</code></td>
+<td>string</td>
 <td><strong>required</strong></td>
-<td>If <code class="prettyprint">true</code>, the new partner will become visible to your organization members. If <code class="prettyprint">false</code>, it will be shown only on organization management.</td>
+<td>This must be either <code class="prettyprint">organization</code> (the partner will become visible to all your organization members) or <code class="prettyprint">management</code> (visible only to your organization managers)</td>
 </tr>
 </tbody></table>
 
-<p>It is possible to accept an invitation from an existing partner. In this case, no new partnership is created. The <code class="prettyprint">display_name</code> and <code class="prettyprint">visible_to_everyone</code> will overwrite the corresponding attributes of the existing <a title="Partnerships" href="#partnerships">partnership</a> resource, <strong>unless they are omitted</strong>, in which case the old values are preserved.</p>
+<p>It is possible to accept an invitation from an existing partner. In this case, no new partnership is created. The <code class="prettyprint">display_name</code> and <code class="prettyprint">visibility</code> will overwrite the corresponding attributes of the existing <a title="Partnerships" href="#partnerships">partnership</a> resource, <strong>unless they are omitted</strong>, in which case the old values are preserved.</p>
 
 <p>If you are accepting the invitation with <a title="Incoming room shares" href="#incoming-room-shares">shared rooms</a> or <a title="Incoming team shares" href="#incoming-team-shares">teams</a> from an existing partner, then the rooms and teams will become available to you.</p>
 
@@ -1899,14 +1894,8 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
-<td style="text-align: left">read-only</td>
-<td>When you became partners</td>
-</tr>
-<tr>
 <td style="text-align: left"><code class="prettyprint">partner_organization_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the partner organization</td>
 </tr>
@@ -1918,9 +1907,9 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">organization_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
-<td>ID of your organization, for convenience</td>
+<td>ID of your organization, for convenience (matching the <code class="prettyprint">&lt;organization_id&gt;</code> in the URL)</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">dislay_name</code></td>
@@ -1929,34 +1918,16 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td>Name that is shown to your organization members for this partner. May be <code class="prettyprint">null</code>, in which case the original name is shown</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">visible_to_everyone</code></td>
-<td style="text-align: left">boolean</td>
+<td style="text-align: left"><code class="prettyprint">visibility</code></td>
+<td style="text-align: left">string</td>
 <td style="text-align: left"><strong>required</strong></td>
-<td>If <code class="prettyprint">true</code>, the new partner will become visible to your organization members. If <code class="prettyprint">false</code>, it will be shown only on organization management.</td>
+<td>If <code class="prettyprint">organization</code> then the partner is visible to all your organization members. If <code class="prettyprint">management</code>, it is visible only to your organization managers</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">incoming_invitation_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
-<td>ID of the incoming invitation that resulted in creation of this partnership, or <code class="prettyprint">null</code>.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">incoming_invitation</code></td>
-<td style="text-align: left">object</td>
-<td style="text-align: left">read-only</td>
-<td>The <a title="Incoming partnership invitations" href="#incoming-partnership-invitations">incoming invitation</a> resource that resulted in creation of this partnership, or <code class="prettyprint">null</code>.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">outgoing_invitation_id</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">read-only</td>
-<td>ID of the outgoing invitation that resulted in creation of this partnership, or <code class="prettyprint">null</code>.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">outgoing_invitation</code></td>
-<td style="text-align: left">object</td>
-<td style="text-align: left">read-only</td>
-<td>The <a title="Outgoing partnership invitations" href="#outgoing-partnership-invitations">outgoing invitation</a> resource that resulted in creation of this partnership, or <code class="prettyprint">null</code>.</td>
+<td>When you became partners</td>
 </tr>
 </tbody></table>
 
@@ -1980,7 +1951,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td><code class="prettyprint">ordering</code></td>
 <td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
-<td>Ordering of results with options <code class="prettyprint">partner_organization_name</code>, <code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">partner_organization_name</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">display_name</code></td>
 </tr>
 <tr>
 <td><code class="prettyprint">page</code></td>
@@ -1998,9 +1969,9 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <h3 id="retrieve-partnership-details">Retrieve partnership details</h3>
 
-<p>Retrieve a single <a title="Partnerships" href="#partnerships">partnership</a> resource for your organization (<code class="prettyprint">&lt;organization_id&gt;</code>) by the partner organization&rsquo;s ID (<code class="prettyprint">&lt;partner_id&gt;</code>).</p>
+<p>Retrieve a single <a title="Partnerships" href="#partnerships">partnership</a> resource for your organization (<code class="prettyprint">&lt;organization_id&gt;</code>) by the partner organization&rsquo;s ID (<code class="prettyprint">&lt;partner_organization_id&gt;</code>).</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships/&lt;partner_id&gt;</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships/&lt;partner_organization_id&gt;</code></p>
 
 <h3 id="remove-a-partnership">Remove a partnership</h3>
 
@@ -2009,23 +1980,23 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 This will immediately remove the organization from your partners and remove your partner&rsquo;s access to your shared resources. You cannot undo this action! You need to invite your partner again and re-share all your rooms/teams and re-set any permissions.
 </aside>
 
-<p>Being aware of this, you may remove another organization (<code class="prettyprint">&lt;partner_id&gt;</code>) from your organization&rsquo;s (<code class="prettyprint">&lt;organization_id&gt;</code>) partners.</p>
+<p>Being aware of this, you may remove another organization (<code class="prettyprint">&lt;partner_organization_id&gt;</code>) from your organization&rsquo;s (<code class="prettyprint">&lt;organization_id&gt;</code>) partners.</p>
 
-<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships/&lt;partner_id&gt;</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships/&lt;partner_organization_id&gt;</code></p>
 
 <h3 id="update-a-partnership">Update a partnership</h3>
 
-<p>You may update the editable attributes of a partnership for your organization (<code class="prettyprint">&lt;organization_id&gt;</code>) by the given partner organization&rsquo;s ID (<code class="prettyprint">&lt;partner_id&gt;</code>).</p>
+<p>You may update the editable attributes of a partnership for your organization (<code class="prettyprint">&lt;organization_id&gt;</code>) by the given partner organization&rsquo;s ID (<code class="prettyprint">&lt;partner_organization_id&gt;</code>).</p>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships/&lt;partner_id&gt;</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships/&lt;partner_organization_id&gt;</code></p>
 
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships/&lt;partner_id&gt;</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/partnerships/&lt;partner_organization_id&gt;</code></p>
 
 <p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes of the <a title="Partnerships" href="#partnerships">partnership</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
 
           <h1 id="sharing-api">Sharing API</h1>
 
-<p>Once you have become partners, you may share resources to your partner company. Shared resources are represented by <strong>share resources</strong>. Currently there are two types of shares:</p>
+<p>Once you have become partners, you may share resources to your partner organization. Shared resources are represented by <strong>share resources</strong>. Currently there are two types of shares:</p>
 
 <ul>
 <li><strong>Room shares</strong>
@@ -2057,10 +2028,34 @@ This will immediately remove the organization from your partners and remove your
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><code class="prettyprint">receiver_organization_id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>ID of the partner organization to whom the resource is shared. <strong>Must be an existing partner. Cannot be changed after creation.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">receiver_organization</code></td>
+<td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>Unique identifier for the share</td>
+<td>The <a title="Organizations" href="#organizations">organization</a> object to whom the resource was shared</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">share_name</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Name that is shown to the receiver as a display name for this resource. If <code class="prettyprint">null</code>, the original name is displayed. This may be updated later.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">sharer_organization_id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td style="text-align: left">read-only</td>
+<td>ID of the organization who shared the resource</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">sharer_organization</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>The <a title="Organizations" href="#organizations">organization</a> object who shared the resource, with all of its attributes.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
@@ -2070,7 +2065,7 @@ This will immediately remove the organization from your partners and remove your
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_by_user_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the user who shared the resource</td>
 </tr>
@@ -2080,63 +2075,13 @@ This will immediately remove the organization from your partners and remove your
 <td style="text-align: left">read-only</td>
 <td>The <a title="Users" href="#users">user</a> resource who shared the resource, with all of the available attributes</td>
 </tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">share_name</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><strong>optional</strong></td>
-<td>Name that is shown to the receiver as a display name for this resource. If <code class="prettyprint">null</code>, the original name is displayed. This may be updated later.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left"><strong>required</strong></td>
-<td>ID of the <a title="Partnerships" href="#partnerships">partnership</a> of the partner to whom the resource is shared. <strong>Cannot be changed after creation.</strong></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">original_share_id</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left"><strong>required (?)</strong></td>
-<td>ID of the incoming share if the resource is being re-shared, or <code class="prettyprint">null</code> otherwise. Required if you are sharing forward a resource that has been shared to you. <strong>Cannot be changed after creation.</strong></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">original_share</code></td>
-<td style="text-align: left">object</td>
-<td style="text-align: left">read-only</td>
-<td>The incoming share resource if the room is being re-shared, or <code class="prettyprint">null</code> otherwise. Its <code class="prettyprint">id</code> equals to <code class="prettyprint">original_share_id</code>.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">sharer_company_id</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">read-only</td>
-<td>ID of the company who shared the resource</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">sharer_company</code></td>
-<td style="text-align: left">object</td>
-<td style="text-align: left">read-only</td>
-<td>The [company][] object who shared the resource, with all of its attributes.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">receiver_company_id</code></td>
-<td style="text-align: left">object</td>
-<td style="text-align: left">read-only</td>
-<td>ID of the company to whom the resource was shared</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">receiver_company</code></td>
-<td style="text-align: left">object</td>
-<td style="text-align: left">read-only</td>
-<td>The [company][] object to whon the resource was shared</td>
-</tr>
 </tbody></table>
 
-<p>If you are re-sharing a resource that is shared to your company, then you must set the attribute <code class="prettyprint">original_share_id</code> to the ID of the corresponding <a title="Incoming shares" href="#incoming-shares">incoming share</a> resource that shares the resource to <strong>your</strong> company. If you own the shared room, this should always be <code class="prettyprint">null</code>.</p>
-
-<p>By default, resources are shared with their original names. However, these are usually for your company&rsquo;s internal use, and you may want to display the resource with more descriptive name to your partners. In this case, you may want to define the <code class="prettyprint">share_name</code> attribute.</p>
+<p>By default, resources are shared with their original names. However, these are usually for your organization&rsquo;s internal use, and you may want to display the resource with more descriptive name to your partners. In this case, you may want to define the <code class="prettyprint">share_name</code> attribute.</p>
 
 <h3 id="outgoing-room-shares">Outgoing room shares</h3>
 
-<p>Your company may share rooms to their partners by creating outgoing room share resources that extend <a title="Outgoing shares" href="#outgoing-shares">outgoing share</a> resources. Additionally, an outgoing room share object has the following attributes.</p>
+<p>Your organization may share rooms to their partners by creating outgoing room share resources that extend <a title="Outgoing shares" href="#outgoing-shares">outgoing share</a> resources. Additionally, an outgoing room share object has the following attributes.</p>
 
 <table><thead>
 <tr>
@@ -2148,7 +2093,7 @@ This will immediately remove the organization from your partners and remove your
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">room_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left"><strong>required</strong></td>
 <td>ID of the room to be shared. <strong>Cannot be changed after creation.</strong></td>
 </tr>
@@ -2162,7 +2107,7 @@ This will immediately remove the organization from your partners and remove your
 
 <h3 id="outgoing-team-shares">Outgoing team shares</h3>
 
-<p>Your company may share teams to their partners by creating outgoing team share resources that extend <a title="Outgoing shares" href="#outgoing-shares">outgoing share</a> resources. Additionally, an outgoing team share object has the following attributes.</p>
+<p>Your organization may share teams to their partners by creating outgoing team share resources that extend <a title="Outgoing shares" href="#outgoing-shares">outgoing share</a> resources. Additionally, an outgoing team share object has the following attributes.</p>
 
 <table><thead>
 <tr>
@@ -2174,7 +2119,7 @@ This will immediately remove the organization from your partners and remove your
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">team_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left"><strong>required</strong></td>
 <td>ID of the team to be shared. <strong>Cannot be changed after creation.</strong></td>
 </tr>
@@ -2190,9 +2135,9 @@ This will immediately remove the organization from your partners and remove your
 
 <p>You may share a resource to one of your partners by making a <code class="prettyprint">POST</code> request.</p>
 
-<p><code class="prettyprint">POST https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/outgoing_shares/&lt;resource_type&gt;</code></p>
+<p><code class="prettyprint">POST https://service.giosg.com/api/v5/orgs/&lt;sharer_organization_id&gt;/outgoing_shares/&lt;resource_type&gt;</code></p>
 
-<p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. You may only share resources that you own or are being shared to your company. You need to provide the required attributes of an <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or an <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> as well as desired optional attributes as a payload.</p>
+<p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. You may only share resources that you own or are being shared to your organization. You need to provide the required attributes of an <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or an <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> as well as desired optional attributes as a payload.</p>
 
 <p>The API returns an <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or an <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> as a response.</p>
 
@@ -2200,7 +2145,7 @@ This will immediately remove the organization from your partners and remove your
 
 <p>Returns an <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or an <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> resource by the given ID.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/outgoing_shares/&lt;resource_type&gt;/&lt;share_id&gt;</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;sharer_organization_id&gt;/outgoing_shares/&lt;resource_type&gt;/&lt;resource_id&gt;</code></p>
 
 <p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. Results in 404 response if you have no access to the share.</p>
 
@@ -2208,13 +2153,13 @@ This will immediately remove the organization from your partners and remove your
 
 <p>You may decide not to share a resource any more to the specific partner. In this case, you may delete the <a title="Outgoing shares" href="#outgoing-shares">outgoing share</a> resource.</p>
 
-<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/outgoing_shares/&lt;resource_type&gt;/&lt;share_id&gt;</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/orgs/&lt;sharer_organization_id&gt;/outgoing_shares/&lt;resource_type&gt;/&lt;resource_id&gt;</code></p>
 
 <h3 id="get-a-collection-of-outgoing-shares">Get a collection of outgoing shares</h3>
 
-<p>You may get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> resources that your company has created.</p>
+<p>You may get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Outgoing room shares" href="#outgoing-room-shares">outgoing room share</a> or <a title="Outgoing team shares" href="#outgoing-team-shares">outgoing team share</a> resources that your organization has created.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/outgoing_shares/&lt;resource_type&gt;</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;sharer_organization_id&gt;/outgoing_shares/&lt;resource_type&gt;</code></p>
 
 <p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. This endpoint accepts the following GET parameters.</p>
 
@@ -2230,19 +2175,13 @@ This will immediately remove the organization from your partners and remove your
 <td><code class="prettyprint">ordering</code></td>
 <td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
-<td>Ordering of results with options <code class="prettyprint">created_at</code>, <code class="prettyprint">partnership_id</code></td>
+<td>Ordering of results with options: <code class="prettyprint">created_at</code></td>
 </tr>
 <tr>
-<td><code class="prettyprint">partnership_id</code></td>
-<td>integer</td>
+<td><code class="prettyprint">receiver_organization_id</code></td>
+<td><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>(none)</td>
-<td>Filter the results by a partnership ID</td>
-</tr>
-<tr>
-<td><code class="prettyprint">receiver_company_id</code></td>
-<td>integer</td>
-<td>(none)</td>
-<td>Filter the results by a receiving partner company ID</td>
+<td>Filter the results by a receiving partner organization ID</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page</code></td>
@@ -2262,9 +2201,9 @@ This will immediately remove the organization from your partners and remove your
 
 <p>Once a resource share is created, you cannot change its resource, partnership or other relations. If you shared a wrong resource or to a wrong partner, you need to delete the share and create a new one. You may still update a resource share resource, specifically its <code class="prettyprint">share_name</code>, by making a <code class="prettyprint">PUT</code> or <code class="prettyprint">PATCH</code> request:</p>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/outgoing_shares/&lt;resource_type&gt;/[resourceshare_id]</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;sharer_organization_id&gt;/outgoing_shares/&lt;resource_type&gt;/&lt;resource_id&gt;</code></p>
 
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/outgoing_shares/&lt;resource_type&gt;/[resourceshare_id]</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;sharer_organization_id&gt;/outgoing_shares/&lt;resource_type&gt;/&lt;resource_id&gt;</code></p>
 
 <p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>.</p>
 
@@ -2281,50 +2220,38 @@ This will immediately remove the organization from your partners and remove your
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">read-only</td>
-<td>Unique identifier for the share</td>
-</tr>
-<tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
 <td>When the resource was shared</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">partnership_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><code class="prettyprint">sharer_organization_id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
-<td>ID of the <a title="Partnerships" href="#partnerships">partnership</a> of the partner to whom the resource is shared.</td>
+<td>ID of the organization who shared the resource</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">sharer_company_id</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">read-only</td>
-<td>ID of the company who shared the resource</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">sharer_company</code></td>
+<td style="text-align: left"><code class="prettyprint">sharer_organization</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The [company][] object who shared the resource, with all of its attributes.</td>
+<td>The <a title="Organizations" href="#organizations">organization</a> object who shared the resource, with all of its attributes.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">receiver_company_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><code class="prettyprint">receiver_organization_id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
-<td>ID of the company to whom the resource was shared</td>
+<td>ID of the organization to whom the resource was shared</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">receiver_company</code></td>
+<td style="text-align: left"><code class="prettyprint">receiver_organization</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
-<td>The [company][] object to whon the resource was shared</td>
+<td>The <a title="Organizations" href="#organizations">organization</a> object to whon the resource was shared</td>
 </tr>
 </tbody></table>
 
-<h2 id="incoming-room-shares">Incoming room shares</h2>
+<h3 id="incoming-room-shares">Incoming room shares</h3>
 
 <p>If you are a receiving party of a shared room, then you use the room share objects as <strong>incoming room shares</strong> that extend the <a title="Incoming shares" href="#incoming-shares">incoming share</a> resource. Additionally, an incoming room share has the following attributes.</p>
 
@@ -2338,7 +2265,7 @@ This will immediately remove the organization from your partners and remove your
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">room_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the shared room</td>
 </tr>
@@ -2350,7 +2277,7 @@ This will immediately remove the organization from your partners and remove your
 </tr>
 </tbody></table>
 
-<h2 id="incoming-team-shares">Incoming team shares</h2>
+<h3 id="incoming-team-shares">Incoming team shares</h3>
 
 <p>If you are a receiving party of a shared team, then you use the team share objects as <strong>incoming team shares</strong> that extend the <a title="Incoming shares" href="#incoming-shares">incoming share</a> resource. Additionally, an incoming team share has the following attributes.</p>
 
@@ -2364,7 +2291,7 @@ This will immediately remove the organization from your partners and remove your
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code class="prettyprint">team_id</code></td>
-<td style="text-align: left">integer</td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">read-only</td>
 <td>ID of the shared team</td>
 </tr>
@@ -2378,9 +2305,9 @@ This will immediately remove the organization from your partners and remove your
 
 <h3 id="get-a-collection-of-incoming-shares">Get a collection of incoming shares</h3>
 
-<p>You may get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Incoming room shares" href="#incoming-room-shares">incoming room share</a> or <a title="Incoming team shares" href="#incoming-team-shares">incoming team share</a> resources that are shared to your company.</p>
+<p>You may get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Incoming room shares" href="#incoming-room-shares">incoming room share</a> or <a title="Incoming team shares" href="#incoming-team-shares">incoming team share</a> resources that are shared to your organization.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/incoming_shares/&lt;resource_type&gt;</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;receiver_organization_id&gt;/incoming_shares/&lt;resource_type&gt;</code></p>
 
 <p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>. This endpoint accepts the following GET parameters.</p>
 
@@ -2396,19 +2323,13 @@ This will immediately remove the organization from your partners and remove your
 <td><code class="prettyprint">ordering</code></td>
 <td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
-<td>Ordering of results with options <code class="prettyprint">created_at</code>, <code class="prettyprint">partnership_id</code></td>
+<td>Ordering of results with options <code class="prettyprint">created_at</code></td>
 </tr>
 <tr>
-<td><code class="prettyprint">partnership_id</code></td>
-<td>integer</td>
+<td><code class="prettyprint">sharer_organization_id</code></td>
+<td><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>(none)</td>
-<td>Filter the results by a partnership ID</td>
-</tr>
-<tr>
-<td><code class="prettyprint">sharer_company_id</code></td>
-<td>integer</td>
-<td>(none)</td>
-<td>Filter the results by a receiving partner company ID</td>
+<td>Filter the results by a receiving partner organization ID</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page</code></td>
@@ -2428,15 +2349,11 @@ This will immediately remove the organization from your partners and remove your
 
 <p>Returns an <a title="Incoming room shares" href="#incoming-room-shares">incoming room share</a> or <a title="Incoming team shares" href="#incoming-team-shares">incoming team share</a> resource by the given ID.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/incoming_shares/&lt;resource_type&gt;/&lt;share_id&gt;</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;receiver_organization_id&gt;/incoming_shares/&lt;resource_type&gt;/&lt;resource_id&gt;</code></p>
 
 <p>The <code class="prettyprint">&lt;resource_type&gt;</code> must be either <code class="prettyprint">rooms</code> or <code class="prettyprint">teams</code>.</p>
 
           <h1 id="assets-api">Assets API</h1>
-
-<aside class="info">
-This API is available only if your account has the <strong>Assets</strong> feature.
-</aside>
 
 <h2 id="assets">Assets</h2>
 
@@ -2456,7 +2373,7 @@ This API is available only if your account has the <strong>Assets</strong> featu
 </thead><tbody>
 <tr>
 <td><code class="prettyprint">id</code></td>
-<td>string</td>
+<td><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>read-only</td>
 <td><a title="Universally Unique Identifier" href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a> string identifier</td>
 </tr>
@@ -2474,7 +2391,7 @@ This API is available only if your account has the <strong>Assets</strong> featu
 </tr>
 <tr>
 <td><code class="prettyprint">organization_id</code></td>
-<td>integer</td>
+<td><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>read-only</td>
 <td>The ID of the owner organization</td>
 </tr>
@@ -2527,34 +2444,34 @@ This API is available only if your account has the <strong>Assets</strong> featu
 <td>When the asset was created</td>
 </tr>
 <tr>
-<td><code class="prettyprint">modified_at</code></td>
-<td>date/time</td>
-<td>read-only</td>
-<td>When the asset name or description was last time modified</td>
-</tr>
-<tr>
-<td><code class="prettyprint">creator_id</code></td>
-<td>integer</td>
+<td><code class="prettyprint">created_by_user_id</code></td>
+<td><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td>read-only</td>
 <td>The ID of the person who created this asset</td>
 </tr>
 <tr>
-<td><code class="prettyprint">creator</code></td>
+<td><code class="prettyprint">created_by_user</code></td>
 <td>object</td>
 <td>read-only</td>
 <td>The person resource who created this asset</td>
 </tr>
 <tr>
-<td><code class="prettyprint">modifier_id</code></td>
-<td>integer</td>
+<td><code class="prettyprint">updated_at</code></td>
+<td>date/time</td>
 <td>read-only</td>
-<td>The ID of the person who last time modified this asset</td>
+<td>When the asset name or description was last time updated</td>
 </tr>
 <tr>
-<td><code class="prettyprint">modifier</code></td>
+<td><code class="prettyprint">updated_by_user_id</code></td>
+<td><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td>read-only</td>
+<td>The ID of the person who last time updated this asset</td>
+</tr>
+<tr>
+<td><code class="prettyprint">updated_by_user</code></td>
 <td>object</td>
 <td>read-only</td>
-<td>The person resource who last time modified this asset</td>
+<td>The person resource who last time updated this asset</td>
 </tr>
 <tr>
 <td><code class="prettyprint">width</code></td>
@@ -2576,7 +2493,9 @@ This API is available only if your account has the <strong>Assets</strong> featu
 
 <p><code class="prettyprint">POST /api/v5/orgs/&lt;organization_id&gt;/assets</code></p>
 
-<p><strong>IMPORTANT!</strong> In contrast to the all other API endpoints, this only accepts <code class="prettyprint">multipart/form-data</code> requests, because you need to upload a file with the request. The request payload takes the following attributes.</p>
+<aside class="warning">
+<strong>IMPORTANT!</strong> In contrast to the all other API endpoints, this only accepts <code>multipart/form-data</code> requests, because you need to upload a file with the request. The request payload takes the following attributes.
+</aside>
 
 <table><thead>
 <tr>
@@ -2628,7 +2547,7 @@ This API is available only if your account has the <strong>Assets</strong> featu
 <td><code class="prettyprint">ordering</code></td>
 <td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
-<td>Ordering of results with options <code class="prettyprint">created_at</code>, <code class="prettyprint">modified_at</code>, <code class="prettyprint">name</code>, <code class="prettyprint">kind</code>, <code class="prettyprint">content_type</code></td>
+<td>Ordering of results with options <code class="prettyprint">created_at</code>, <code class="prettyprint">updated_at</code>, <code class="prettyprint">name</code>, <code class="prettyprint">kind</code>, <code class="prettyprint">content_type</code>, <code class="prettyprint">size</code>, <code class="prettyprint">file_name</code></td>
 </tr>
 <tr>
 <td><code class="prettyprint">page</code></td>
@@ -3291,12 +3210,6 @@ This endpoint returns a paginated collection!
 </tbody></table>
 
 <h2 id="sales-statistics-time-series">Sales statistics time series</h2>
-
-<aside class="notice">
-This endpoint has been updated on August 2015 to a new version <strong>v4</strong>!
-</aside>
-
-<p><strong>Please use this version instead of the <a href="https://docs.giosg.com/doku.php?id=public:technical-documentation:backend-api:reporting-api#get_api_v3_reporting_salesstats_timeline">deprecated version v3</a>, as it will be removed in the future!</strong></p>
 
 <p>You can get the aggregated shopping cart (giosg BASKET) statistics by making a GET request.</p>
 
