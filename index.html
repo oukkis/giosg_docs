@@ -550,6 +550,8 @@ This is the new, recommended version (v5) of the customer API!
 </tr>
 </tbody></table>
 
+          <h1 id="teams-api">Teams API</h1>
+
 <h2 id="teams">Teams</h2>
 
 <p>A team object contains the following attributes.</p>
@@ -593,10 +595,16 @@ This is the new, recommended version (v5) of the customer API!
 <td>Display name of the team. It may equal to the <code class="prettyprint">name</code> attribute, unless this team is <a title="Outgoing team shares" href="#outgoing-team-shares">shared</a> to your organization with a custom <code class="prettyprint">share_name</code>.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">is_shared</code></td>
-<td style="text-align: left">boolean</td>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
 <td>read-only</td>
-<td><code class="prettyprint">true</code> if the team is shared to your organization, <code class="prettyprint">false</code> if your organization owns the team</td>
+<td>When the team resource was created</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">updated_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
+<td>read-only</td>
+<td>When the team resource was updated last time</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">member_count</code></td>
@@ -612,17 +620,11 @@ This is the new, recommended version (v5) of the customer API!
 </tr>
 </tbody></table>
 
-<h3 id="retrieve-team-details">Retrieve team details</h3>
-
-<p>Get a single team object that your organization has access to, by its ID. This may be a shared team.</p>
-
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/teams/&lt;team_id&gt;</code></p>
-
 <h3 id="get-a-collection-of-teams">Get a collection of teams</h3>
 
-<p>Return a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Teams" href="#teams">team</a> resources you have access to, including any shared teams:</p>
+<p>Return a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Teams" href="#teams">team</a> resources of an organization (<code class="prettyprint">&lt;organization_id&gt;</code>). By default, this also includes any [teams shared to your company][incoming team shares]!</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/teams</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/teams</code></p>
 
 <table><thead>
 <tr>
@@ -636,19 +638,13 @@ This is the new, recommended version (v5) of the customer API!
 <td><code class="prettyprint">ordering</code></td>
 <td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
 <td><code class="prettyprint">created_at</code></td>
-<td>Ordering of results with options <code class="prettyprint">id</code>, <code class="prettyprint">name</code>, <code class="prettyprint">organization_id</code></td>
+<td>Ordering of results with options <code class="prettyprint">name</code>, <code class="prettyprint">organization_id</code></td>
 </tr>
 <tr>
 <td><code class="prettyprint">is_shared</code></td>
 <td>boolean</td>
 <td>(none)</td>
-<td>If <code class="prettyprint">true</code>, return only teams shared to your organization. If <code class="prettyprint">false</code>, return only your own organization&rsquo;s teams.</td>
-</tr>
-<tr>
-<td><code class="prettyprint">organization_id</code></td>
-<td><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
-<td>(none)</td>
-<td>Return only rooms owned by this organization ID</td>
+<td>If <code class="prettyprint">true</code>, return only teams that are shared to the organization. If <code class="prettyprint">false</code>, return only the organization&rsquo;s own teams.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">page</code></td>
@@ -666,19 +662,25 @@ This is the new, recommended version (v5) of the customer API!
 
 <p>Teams are readable by anyone in the same organization. However, they can be created, updated or deleted only by organization managers.</p>
 
+<h3 id="retrieve-team-details">Retrieve team details</h3>
+
+<p>Get a single team object (<code class="prettyprint">&lt;team_id&gt;</code>) of an organization (<code class="prettyprint">&lt;organization_id&gt;</code>). This may be a [team shared to the organization][incoming team shares].</p>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/teams/&lt;team_id&gt;</code></p>
+
 <h3 id="creating-a-team">Creating a team</h3>
 
-<p>Create a team to your own organization:</p>
+<p>Create a team for an organization (<code class="prettyprint">&lt;organization_id&gt;</code>)</p>
 
-<p><code class="prettyprint">POST https://service.giosg.com/api/v5/teams</code></p>
+<p><code class="prettyprint">POST https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/teams</code></p>
 
 <h3 id="update-a-team">Update a team</h3>
 
-<p>You may update the editable attributes of your own team by making either a <code class="prettyprint">PATCH</code> (update a subset of attributes) or <code class="prettyprint">POST</code> request (update all the attributes).</p>
+<p>You may update the editable attributes of a team (<code class="prettyprint">&lt;team_id&gt;</code>) that belongs to an organization (<code class="prettyprint">&lt;organization_id&gt;</code>). You can make either a <code class="prettyprint">PATCH</code> request (update a subset of attributes) or <code class="prettyprint">POST</code> request (update all the attributes).</p>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/team/&lt;team_id&gt;</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/teams/&lt;team_id&gt;</code></p>
 
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/team/&lt;team_id&gt;</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/teams/&lt;team_id&gt;</code></p>
 
 <h3 id="delete-a-team">Delete a team</h3>
 
@@ -688,7 +690,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>You may delete one of your own teams by making a <code class="prettyprint">DELETE</code> request.</p>
 
-<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/teams/&lt;team_id&gt;</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/teams/&lt;team_id&gt;</code></p>
 
 <h2 id="team-memberships">Team memberships</h2>
 
@@ -732,6 +734,18 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td><strong>required</strong></td>
 <td>Whether or not the member is an admin of the team.</td>
 </tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
+<td>read-only</td>
+<td>When the membership resource was created</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">updated_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#datetime-format">date/time</a></td>
+<td>read-only</td>
+<td>When the membership resource was updated last time</td>
+</tr>
 </tbody></table>
 
 <p>Team memberships are readable by any member of the same organization. However, they can be created, updated or deleted only by either organization managers or by team admins. Otherwise, the endpoints will return a <code class="prettyprint">403 Forbidden</code> response.</p>
@@ -740,7 +754,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>Return a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Team membershipss" href="#team-memberships">team membership</a> resources for a specific <a title="Teams" href="#teams">team</a>.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/teams/&lt;team_id&gt;/memberships</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/teams/&lt;team_id&gt;/memberships</code></p>
 
 <table><thead>
 <tr>
@@ -774,7 +788,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>You may add a user of your own organization to one of your teams by creating a team membership object.</p>
 
-<p><code class="prettyprint">POST https://service.giosg.com/api/v5/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
+<p><code class="prettyprint">POST https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
 
 <p>This returns a <code class="prettyprint">201 Created</code> response if the user with the given ID was successfully added to the team. If the user was already in the team, this updates the <code class="prettyprint">is_admin</code> attribute and returns <code class="prettyprint">200 OK</code> response with the existing membership resource.</p>
 
@@ -782,7 +796,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>You may update a team membership, i.e. change the admin status of a member either by attempting to create a new membership with <code class="prettyprint">POST</code> or updating with <code class="prettyprint">PUT</code>.</p>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
 
 <p>This returns a <code class="prettyprint">201 Created</code> response if the user did not belong to team previously but was now added. If the user was already in the team, this updates the attributes and returns <code class="prettyprint">200 OK</code> response with the existing membership resource.</p>
 
@@ -792,13 +806,13 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>You may remove a user from a team by deleting his/her membership.</p>
 
-<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
 
 <h3 id="retrieve-team-membership-details">Retrieve team membership details</h3>
 
 <p>You may get the a user membership resource in a team:</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/teams/&lt;team_id&gt;/memberships/&lt;user_id&gt;</code></p>
 
           <h1 id="rooms-api">Rooms API</h1>
 
@@ -902,7 +916,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <td style="text-align: left"><code class="prettyprint">is_deleted</code></td>
 <td style="text-align: left">boolean</td>
 <td>read-only</td>
-<td>read-only</td>
+<td>Whether this room exists no more. The resource exists only for historical purposes and cannot be used in any other context.</td>
 </tr>
 </tbody></table>
 
@@ -1003,7 +1017,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 <h3 id="delete-a-room">Delete a room</h3>
 
 <aside class="warning">
-Deleting a room will immediately unshare it from your partners! You cannot undo this action, but you can re-create and re-share the room again.
+Deleting a room will immediately unshare it from your partners! Even though your statistics for this room are preserved, you cannot gather any more data for this room. You cannot undo this action, but you need to re-create and re-share the room again.
 </aside>
 
 <p>You may delete one of your own rooms by making a <code class="prettyprint">DELETE</code> request.</p>
