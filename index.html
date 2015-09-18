@@ -462,15 +462,71 @@ This is the new, recommended version (v5) of the customer API!
 </tr>
 </tbody></table>
 
-<h3 id="retrieve-user-details">Retrieve user details</h3>
+<h3 id="get-your-own-user">Get your own user</h3>
 
-<p>Get a single <a title="Users" href="#users">user</a> object by its ID.</p>
+<aside class="success">
+It is a common use case to first find out your own user or your organization&rsquo;s information, and then perform further actions on it.
+</aside>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/users/&lt;user_id&gt;</code></p>
-
-<p>Alternatively, you may get <strong>your own</strong> user account details by replacing the ID with the word <code class="prettyprint">me</code>.</p>
+<p>There is a special API endpoint that returns the <a title="Users" href="#users">user</a> resource depending on who is <a title="Authentication" href="#authentication">authenticated</a>.</p>
 
 <p><code class="prettyprint">GET https://service.giosg.com/api/v5/users/me</code></p>
+
+<p>To find out your organization&rsquo;s ID, just use the <code class="prettyprint">organization_id</code> attribute of the returned resource. Alternatively you can use the nested <a title="Organizations" href="#organizations">organization</a> resource for more details).</p>
+
+<p>This API endpoint returns a 401 response if you are not being currently authenticated. It returns a 403 response if your authentication token is not directly related to one specific user.</p>
+
+<h3 id="get-a-collection-of-organization-members">Get a collection of organization members</h3>
+
+<p>Get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of users who belong to a given organization (<code class="prettyprint">&lt;organization_id&gt;</code>)</p>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/users</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ordering</code></td>
+<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
+<td><code class="prettyprint">created_at</code></td>
+<td>Ordering of results with options <code class="prettyprint">last_name</code>, <code class="prettyprint">first_name</code>, <code class="prettyprint">email</code>, <code class="prettyprint">alias</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">updated_at</code></td>
+</tr>
+<tr>
+<td><code class="prettyprint">include_deleted</code></td>
+<td>boolean</td>
+<td>false</td>
+<td>If <code class="prettyprint">true</code>, include deleted users to results. If <code class="prettyprint">false</code> (default), excludes any deleted users.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">is_manager</code></td>
+<td>boolean</td>
+<td>(none)</td>
+<td>If <code class="prettyprint">true</code>, only include managers. If <code class="prettyprint">false</code>, exclude all managers.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page</code></td>
+<td>integer</td>
+<td>1</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
+</tr>
+<tr>
+<td><code class="prettyprint">page_size</code></td>
+<td>integer</td>
+<td>50</td>
+<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
+</tr>
+</tbody></table>
+
+<h3 id="retrieve-details-of-an-organization-member">Retrieve details of an organization member</h3>
+
+<p>Get a single <a title="Users" href="#users">user</a> object by its ID (<code class="prettyprint">&lt;user_id&gt;</code>) that belongs to an organization (<code class="prettyprint">&lt;organization_id&gt;</code>)</p>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;</code></p>
 
 <p>This endpoint accepts the following GET parameters.</p>
 
@@ -492,63 +548,21 @@ This is the new, recommended version (v5) of the customer API!
 
 <p>If you try to get a user that has been deleted, the endpoint results in 404 response by default. You may access the removed users of your organization for historical purposes by adding <code class="prettyprint">include_deleted=true</code> to the GET parameters.</p>
 
-<h3 id="update-user-details">Update user details</h3>
+<p>This endpoint returns a 403 response if you do not have permissions for this organization. It returns a 404 response if the user does not exists <strong>or</strong> they doesn&rsquo;t belong to the organization.</p>
 
-<p>You may update some of the attributes of a user account.</p>
+<h3 id="update-details-of-an-organization-member">Update details of an organization member</h3>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/users/&lt;user_id&gt;</code></p>
+<p>You may update some of the attributes of a user (<code class="prettyprint">&lt;user_id&gt;</code>) that belongs to an organization (<code class="prettyprint">&lt;organization_id&gt;</code>)</p>
 
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/users/&lt;user_id&gt;</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;</code></p>
 
-<p>Once again, you may replace the user ID with word <code class="prettyprint">me</code> in order to update your own account details.</p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;</code></p>
 
 <p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains all the changed attributes of the <a title="Users" href="#users">user</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
 
-<h3 id="get-a-collection-of-users">Get a collection of users</h3>
-
-<p>Get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of users that you are allowed to list.</p>
-
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/users/</code></p>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">ordering</code></td>
-<td><a title="Ordering collections" href="#ordering-collections">ordering</a></td>
-<td><code class="prettyprint">created_at</code></td>
-<td>Ordering of results with options <code class="prettyprint">last_name</code>, <code class="prettyprint">first_name</code>, <code class="prettyprint">email</code>, <code class="prettyprint">alias</code>, <code class="prettyprint">created_at</code>, <code class="prettyprint">updated_at</code></td>
-</tr>
-<tr>
-<td><code class="prettyprint">include_deleted</code></td>
-<td>boolean</td>
-<td>false</td>
-<td>If <code class="prettyprint">true</code>, include deleted resources to results. If <code class="prettyprint">false</code> (default), excludes any deleted resources.</td>
-</tr>
-<tr>
-<td><code class="prettyprint">is_manager</code></td>
-<td>boolean</td>
-<td>(none)</td>
-<td>If <code class="prettyprint">true</code>, only include managers. If <code class="prettyprint">false</code>, exclude all managers.</td>
-</tr>
-<tr>
-<td><code class="prettyprint">page</code></td>
-<td>integer</td>
-<td>1</td>
-<td><a title="Paginated collections" href="#paginated-collections">Page</a> to get</td>
-</tr>
-<tr>
-<td><code class="prettyprint">page_size</code></td>
-<td>integer</td>
-<td>50</td>
-<td><a title="Paginated collections" href="#paginated-collections">Page size</a> for the pages, with max value of 200</td>
-</tr>
-</tbody></table>
+<aside class="warning">
+You are allowed to update your own details. You may only change other users&rsquo; details if you have management rights for the organization. Otherwise this endpoint will result in a 403 response.
+</aside>
 
           <h1 id="teams-api">Teams API</h1>
 
