@@ -1,0 +1,329 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>giosg API Reference - giosg BASKET</title>
+
+    <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      <script src="javascripts/all.js" type="text/javascript"></script>
+
+  </head>
+
+  <body class="basket">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/logo.png" />
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='./index.html'>Giosg HTTP API</a></li>
+            <li><a href='./javascript_api.html'>JavaScript SDK API</a></li>
+            <li><a href='./giosg_apps.html'>Giosg Apps</a></li>
+            <li><a href='http://www.giosg.com' target="_blank">Sign Up on giosg.com</a></li>
+            <li><a href="https://docs.giosg.com/doku.php?id=public:technical-documentation:backend-api" target="_blank">Old API documentation</a></li>
+            <li><a href='https://github.com/tripit/slate' target="_blank">Documentation Powered by Slate</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        
+          <h1 id="giosg-basket">Giosg BASKET</h1>
+
+<p>Giosg BASKET is an additional product for Giosg Live. With basket you can monitor and analyze visitor&rsquo;s shopping carts in real time and generate different kinds of reports afterwards.</p>
+
+<h2 id="how-to-setup-basket-tracking">How to setup basket tracking</h2>
+
+<p>Basket can be integrated to customer&rsquo;s online store with three different approaches:</p>
+
+<ul>
+<li>Use giosg <a href="#setup-using-javascript-api">javascript API</a>.</li>
+<li>Use giosg <a href="#setup-using-css-selectors">Basket configuration interface and CSS selectors</a>.</li>
+<li>Direct <a href="#setup-using-backend-integration">backend integration</a> from giosg platform to customer&rsquo;s online store application.</li>
+</ul>
+
+<h2 id="what-method-should-i-use">What method should I use?</h2>
+
+<p>Recommended way is to use giosg javascript API. This requires site owners to make changes to site code but the changes are trivial and can be easily placed next to the code that tracks e-commerce events to other analytics platforms. This way the developers of the site can decide what to track and can make sure that the data submitted to giosg is same as submitted to other analytics services.</p>
+
+<p>Second favorable method is to use direct backend integration but as this requires usually more work it is not the best option.</p>
+
+<p>Third and the least favored method is to use CSS selectors to collect basket data from sites existing html structure. This is usually fastest to setup and is very good option for quickly testing out the service but is also the most error prone. In the long run this method causes a lot more trouble than using javascript API.</p>
+
+<h3 id="why-using-css-selectors-is-not-recommended">Why using CSS selectors is not recommended?</h3>
+
+<p>Using CSS selectors and existing site html is fast and easy but is not recommended because the integration may break very easily and data may not be correct when comparing to other systems. For example if the developers of the site which usually are not aware of this integration change the page layout or CSS classes basket integration will not work anymore.</p>
+
+<p>Also when using site html there is cases when for example the price of discounted product is shown in different element or with different CSS classes or even with discount percent appended into same element. These kind of problems are almost impossible to debug and causes data to not be accurate.</p>
+
+<p>When basket is integrated using method that involves some work from site developers they know what to take into account and know to update integration code when ever needed. This way the code to push shopping cart data to giosg is usually located near other analytics javascript calls and is easier to keep those in sync that the data is comparable.</p>
+
+<aside class="warning">
+<strong>NOTE:</strong> Giosg will not support CSS selector usage and all will not help solving issues when the data is not correct!
+</aside>
+
+<h1 id="setup-using-javascript-api">Setup using javascript API</h1>
+<pre class="highlight javascript"><code><span class="c1">// Wait for giosg to be ready</span>
+<span class="nx">_giosg</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// On page: http://myshop.com/products/bunnies/</span>
+  <span class="c1">// Add one product to cart and submit data to server</span>
+  <span class="kd">var</span> <span class="nx">productList</span> <span class="o">=</span> <span class="p">[{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'Fluffy Bunny'</span><span class="p">,</span>
+    <span class="na">price</span><span class="p">:</span> <span class="s1">'20.50'</span><span class="p">,</span>
+    <span class="na">quantity</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">}];</span>
+  <span class="nx">giosg</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">shoppingCart</span><span class="p">.</span><span class="nx">submit</span><span class="p">(</span><span class="nx">products</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Shopping cart data submitted!'</span><span class="p">,</span> <span class="nx">products</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="c1">// On page: http://myshop.com/products/new/</span>
+  <span class="c1">// Add new products and remove Fluffy Bunny</span>
+  <span class="nx">products</span> <span class="o">=</span> <span class="p">[{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'Pink Bear'</span><span class="p">,</span>
+    <span class="na">price</span><span class="p">:</span> <span class="s1">'100.50'</span><span class="p">,</span>
+    <span class="na">quantity</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">},</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'Brown Hamster'</span><span class="p">,</span>
+    <span class="na">price</span><span class="p">:</span> <span class="s1">'5.50'</span><span class="p">,</span>
+    <span class="na">quantity</span><span class="p">:</span> <span class="mi">2</span>
+  <span class="p">}];</span>
+  <span class="nx">giosg</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">shoppingCart</span><span class="p">.</span><span class="nx">submit</span><span class="p">(</span><span class="nx">products</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Visitor has 3 product in cart. One Pink Bear and</span>
+    <span class="c1">// two Brown Hamsters.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Shopping cart data submitted!'</span><span class="p">,</span> <span class="nx">products</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="c1">// On page: http://myshop.com/cart/</span>
+  <span class="c1">// Visitor removed all products from cart so empty giosg cart also</span>
+  <span class="nx">giosg</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">shoppingCart</span><span class="p">.</span><span class="nx">clearCart</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Cart cleared!'</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="c1">// On page: http://myshop.com/products/bears/</span>
+  <span class="c1">// Add new product</span>
+  <span class="nx">products</span> <span class="o">=</span> <span class="p">[{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'Pink Bear'</span><span class="p">,</span>
+    <span class="na">price</span><span class="p">:</span> <span class="s1">'100.50'</span><span class="p">,</span>
+    <span class="na">quantity</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">}];</span>
+  <span class="nx">giosg</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">shoppingCart</span><span class="p">.</span><span class="nx">submit</span><span class="p">(</span><span class="nx">products</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Visitor has 1 Pink Bear product in cart.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Shopping cart data submitted!'</span><span class="p">,</span> <span class="nx">products</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="c1">// On page: http://myshop.com/cart/success/</span>
+  <span class="c1">// Mark cart as purchased</span>
+  <span class="nx">giosg</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">shoppingCart</span><span class="p">.</span><span class="nx">freeze</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Visitor purchased one Pink Bear product.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Shopping cart was successfully purchased!'</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre>
+
+<p>Configuring basket tracking with javascript API is the recommended method.</p>
+
+<p>You can submit cart data by passing <code class="prettyprint">Array</code> of <code class="prettyprint">Product</code>s to <code class="prettyprint">giosg.api.shoppingCart.submit</code> method.</p>
+
+<p>It is also possible to first call giosg api method <code class="prettyprint">giosg.api.shoppingCart.addProduct</code> to add products to cart one by one and then submit them to server when all products are added by calling <code class="prettyprint">giosg.api.shoppingCart.submit</code> without any arguments.
+Usually calling <code class="prettyprint">submit</code> directly with list of <code class="prettyprint">Product</code> objects is better way to go but <code class="prettyprint">addProduct</code> is provided as alternative.</p>
+
+<p>Giosg automatically tracks the state of the cart on the server and removes products from cart that are not present on the latest data set that was submitted to server. This means that you don&rsquo;t need to manually keep track which products to remove and which products to add to cart.</p>
+
+<p>When visitor navigates to success page or does some other action which causes cart to be purchased use <code class="prettyprint">giosg.api.shoppingCart.freeze()</code> method to mark cart as purchased. This method doesn&rsquo;t need any parameters as the current cart contents should have been already submitted with <code class="prettyprint">submit</code> method. If the cart data does not exists or freezing failed for some reason then this method will reject the promise.</p>
+
+<p>See usage examples on the right side.</p>
+
+<p>You can also read complete documentation about cart API and all of it&rsquo;s methods <a href="javascript_api.html">here</a>.</p>
+
+<h2 id="adding-products-to-cart-one-by-one">Adding products to cart one by one</h2>
+
+<p>To add products to cart one by one call <code class="prettyprint">giosg.api.shoppingCart.addProduct</code> with <code class="prettyprint">Product</code> object as parameter. Note that the products wont be submitted to server before you call <code class="prettyprint">submit</code>.</p>
+
+<p>Note that giosg will automatically remove products from cart if they are not present in the data when the <code class="prettyprint">submit</code> is called. This means that if you first add one product using <code class="prettyprint">addProduct</code>, then call <code class="prettyprint">submit</code> and then add another product and call submit again, you will have only one product in cart. To keep products in cart you need to always add all of them using <code class="prettyprint">addProduct</code> before calling submit.</p>
+
+<p>If the products change before you call <code class="prettyprint">submit</code> then it is possible to use <code class="prettyprint">giosg.api.shoppingCart.deleteProducts()</code> to remove all products from the cart on client. This doesn&rsquo;t remove products from the cart on server if you have already used <code class="prettyprint">submit</code> method to save cart data earlier.</p>
+<pre class="highlight javascript"><code><span class="c1">// Wait for giosg to be ready and add one product to cart</span>
+<span class="nx">_giosg</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">giosg</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">shoppingCart</span><span class="p">.</span><span class="nx">addProduct</span><span class="p">({</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'Fluffy Bunny'</span><span class="p">,</span>
+    <span class="na">price</span><span class="p">:</span> <span class="s1">'20.50'</span><span class="p">,</span>
+    <span class="na">quantity</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">});</span>
+  <span class="nx">giosg</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">shoppingCart</span><span class="p">.</span><span class="nx">submit</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Shopping cart data submitted!'</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre>
+
+<h2 id="removing-products-from-cart">Removing products from cart</h2>
+<pre class="highlight javascript"><code><span class="nx">_giosg</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// First add single product to cart</span>
+  <span class="kd">var</span> <span class="nx">products</span> <span class="o">=</span> <span class="p">[{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'Fluffy Bunny'</span><span class="p">,</span>
+    <span class="na">price</span><span class="p">:</span> <span class="s1">'20.50'</span><span class="p">,</span>
+    <span class="na">quantity</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">}];</span>
+  <span class="nx">giosg</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">shoppingCart</span><span class="p">.</span><span class="nx">submit</span><span class="p">(</span><span class="nx">products</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Visitor has 1 product in cart, Fluffy Bunny.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Shopping cart data submitted!'</span><span class="p">,</span> <span class="nx">products</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">products</span> <span class="o">=</span> <span class="p">[{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'Pink Bear'</span><span class="p">,</span>
+    <span class="na">price</span><span class="p">:</span> <span class="s1">'100.50'</span><span class="p">,</span>
+    <span class="na">quantity</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">}];</span>
+  <span class="nx">giosg</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">shoppingCart</span><span class="p">.</span><span class="nx">submit</span><span class="p">(</span><span class="nx">products</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Visitor has 1 product in cart, Pink Bear.</span>
+    <span class="c1">// Fluffy Bunny was removed as it wasn't present in the</span>
+    <span class="c1">// products array.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Shopping cart data submitted!'</span><span class="p">,</span> <span class="nx">products</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre>
+
+<p>Giosg automatically tracks the state of the cart on the server and removes products from cart that are not present on the latest data set that was submitted to server. So to remove products from cart you can just submit new set of products that still are on visitors cart. If the visitors cart is completely empty then you should use <code class="prettyprint">giosg.api.shoppingCart.clearCart()</code> to remove all products from the cart.</p>
+
+<h2 id="emptying-cart">Emptying cart</h2>
+<pre class="highlight javascript"><code><span class="c1">// Wait for giosg to be ready and remove all products from cart</span>
+<span class="nx">_giosg</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">giosg</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">shoppingCart</span><span class="p">.</span><span class="nx">clearCart</span><span class="p">();</span>
+<span class="p">});</span>
+</code></pre>
+
+<p>To remove all products from cart use <code class="prettyprint">giosg.api.shoppingCart.clearCart()</code>. This removes all the products from the cart on the server.</p>
+
+<h1 id="supported-fields-on-product-object">Supported fields on Product object</h1>
+
+<p><strong>Supported fields on <code class="prettyprint">Product</code></strong></p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">name</code></td>
+<td>string</td>
+<td> <strong>required</strong></td>
+<td>Name of the product</td>
+</tr>
+<tr>
+<td><code class="prettyprint">price</code></td>
+<td>string</td>
+<td> <strong>required</strong></td>
+<td>Price of the product in decimal format, for example &ldquo;10.50&rdquo;.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">quantity</code></td>
+<td>integer</td>
+<td><strong>required</strong></td>
+<td> Count of this kind of product in cart.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">description</code></td>
+<td>string</td>
+<td>optional</td>
+<td> Longer description of the product</td>
+</tr>
+<tr>
+<td><code class="prettyprint">monthly_price</code></td>
+<td>string</td>
+<td>optional</td>
+<td> Monthly billable price of the product in decimal format, for example &ldquo;9.90&rdquo;.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">monthly_quantity</code></td>
+<td>integer</td>
+<td>optional</td>
+<td> Monthly plan length (Deprecated: Use <code class="prettyprint">monthly_plan_length</code> instead).</td>
+</tr>
+<tr>
+<td><code class="prettyprint">monthly_plan_length</code></td>
+<td> integer</td>
+<td>optional</td>
+<td> Monthly plan length</td>
+</tr>
+<tr>
+<td><code class="prettyprint">category</code></td>
+<td>string</td>
+<td>optional</td>
+<td> Category of the product</td>
+</tr>
+<tr>
+<td><code class="prettyprint">product_number</code></td>
+<td>string</td>
+<td>optional</td>
+<td> Product number or code. For example &ldquo;313&rdquo; or &ldquo;SKU-234&rdquo;</td>
+</tr>
+</tbody></table>
+
+<h1 id="setup-using-backend-integration">Setup using backend integration</h1>
+
+<p>This approach is the most robust and reliable but involves also much more work than other methods. If you want to use direct backend integration please contact giosg support for more details. You can reach giosg support by chatting at <a href="http://www.giosg.com/">giosg.com</a> or by sending email to <a href="mailto:support@giosg.com">support@giosg.com</a>.</p>
+
+<h1 id="setup-using-css-selectors">Setup using CSS selectors</h1>
+
+<p>This approach is easiest and fastes but also the most error prone. Using CSS selectors is fast because it does not require any changes to the online store and uses sites existing html to provide the basket data. You can use this integration method if your online store has a clean and simple HTML structure. This method is however only recommended for testing giosg basket at is it not reliable.</p>
+
+<p><strong>Configure CSS selectors:</strong></p>
+
+<ul>
+<li>Login to giosg console</li>
+<li>Open basket configuration page:
+
+<ul>
+<li>Go to following page: <a href="https://service.giosg.com/en/settings/#/live/basket" target="_blank">https://service.giosg.com/en/settings/#/live/basket</a> <strong>or</strong> click wrench icon
+on top nav and after that click rooms. On settings page click Basket from the left nav.</li>
+</ul></li>
+<li>Click the name of the room you want to configure basket to.</li>
+<li>Configure the selectors for your online store.</li>
+<li>Selector for product <strong>name</strong> and <strong>price</strong> are required, others are optional.</li>
+<li><strong>Don&rsquo;t forget</strong> to add selector or URL for <strong>payment success page</strong>. This is the page where user is redirected after successful payment. When giosg detects that this URL is visited or the CSS selector matches, visitors shopping cart will be marked as purchased.</li>
+</ul>
+
+<h1 id="checklist-for-integration">Checklist for integration</h1>
+
+<ul>
+<li>Check that all pages contain giosg javascript tag. It&rsquo;s quite common that customers forgot to add giosg tag to payment pages and purchases will not be logged.</li>
+<li>After you have done the setup
+
+<ul>
+<li>Check from browser&rsquo;s console that there is not any Javascript errors.</li>
+<li>Check that cart information is shown correctly on giosg Live chat dialog.</li>
+<li>Wait couple of days and compare that store&rsquo;s actual sale and giosg&rsquo;s reports match.</li>
+</ul></li>
+</ul>
+
+<h1 id="collected-cart-data-does-not-match-actual-sales">Collected cart data does not match actual sales?</h1>
+
+<p>This can happen for number of reasons. Giosg cannot ensure that the data is always correct and matches with actual shop database or other analytics services. Neither can other analytics services ensure that.</p>
+
+<p>This is due to fact that the data is transmitted from client (browser) which may block the request for number of reasons. Also it is possible that there is network errors or outages in which case giosg will retry until succeeded but success cannot be verified.</p>
+
+<p>Most common reason however when data doesn&rsquo;t match is usually on basket configuration. Please check that the basket is configured correctly and carts are marked as purchased on success page.</p>
+
+<p>Also make sure that the data submitted takes discounts and delivery fees into account if you are comparing it to report that also takes these factors into account.</p>
+
+      </div>
+      <div class="dark-box">
+      </div>
+    </div>
+  </body>
+</html>
