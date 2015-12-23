@@ -156,106 +156,6 @@ If you need to load all resources using an endpoint returning paginated collecti
 
           <h1 id="customer-api">Customer API</h1>
 
-<h2 id="organizations">Organizations</h2>
-
-<p>An organization represents any organization account on giosg system. An organization consists of a number of users with their own user accounts. A user always belongs to exactly one organization.</p>
-
-<p>Please note that despite its name a &ldquo;organization&rdquo; in this context means any organization or group. It can even consists of only one user.</p>
-
-<p>An organization object contains the following attributes. Note that the contact information is public.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Type</th>
-<th style="text-align: left">Editable</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
-<td style="text-align: left">read-only</td>
-<td>Unique identifier for this organization</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">name</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><strong>required?</strong></td>
-<td>The name of the organization. Required, if your organization is using Network features, such as <a href="#partnership-api">partnerships</a> or <a href="#sharing-api">sharing</a>.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">email</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><strong>optional</strong></td>
-<td>Contact email address, or <code class="prettyprint">null</code></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">phone</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><strong>optional</strong></td>
-<td>Contact phone number, or <code class="prettyprint">null</code></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">street</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><strong>optional</strong></td>
-<td>Contact street address, or <code class="prettyprint">null</code></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">postal_code</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><strong>optional</strong></td>
-<td>Contact address postal code, or <code class="prettyprint">null</code></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">city</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><strong>optional</strong></td>
-<td>Contact address city, or <code class="prettyprint">null</code></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">country</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><strong>optional</strong></td>
-<td>Country as a two-letter, lowercase ISO 3166-1 code, or <code class="prettyprint">null</code></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">business_id</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><strong>optional</strong></td>
-<td>Business ID of the organization, if any, or <code class="prettyprint">null</code></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td style="text-align: left">read-only</td>
-<td>When this organization account was created. <strong>Available only for your own organization.</strong></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">updated_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td style="text-align: left">read-only</td>
-<td>When organization details were changed last time. <strong>Available only for your own organization.</strong></td>
-</tr>
-</tbody></table>
-
-<h3 id="retrieve-organization-details">Retrieve organization details</h3>
-
-<p>Get a single <a title="Organizations" href="#organizations">organization</a> object by its ID.</p>
-
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;</code></p>
-
-<h3 id="update-organization-details">Update organization details</h3>
-
-<p>You may update some of the attributes a organization, if you have permissions to do so.</p>
-
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;</code></p>
-
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;</code></p>
-
-<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes the <a title="Organizations" href="#organizations">organization</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
-
 <h2 id="users">Users</h2>
 
 <p>A user represents a giosg user account. A user resource has the following attributes.</p>
@@ -479,6 +379,106 @@ It is a common use case to first find out your own user or your organization&rsq
 <aside class="warning">
 You are allowed to update your own details. You may only change other users&rsquo; details if you have management rights for the organization. Otherwise this endpoint will result in a 403 response.
 </aside>
+
+<h2 id="organizations">Organizations</h2>
+
+<p>An organization represents any organization account on giosg system. An organization consists of a number of users with their own user accounts. A user always belongs to exactly one organization.</p>
+
+<p>Please note that despite its name a &ldquo;organization&rdquo; in this context means any organization or group. It can even consists of only one user.</p>
+
+<p>An organization object contains the following attributes. Note that the contact information is public.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td style="text-align: left">read-only</td>
+<td>Unique identifier for this organization</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">name</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>required?</strong></td>
+<td>The name of the organization. Required, if your organization is using Network features, such as <a href="#partnership-api">partnerships</a> or <a href="#sharing-api">sharing</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">email</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Contact email address, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">phone</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Contact phone number, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">street</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Contact street address, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">postal_code</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Contact address postal code, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">city</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Contact address city, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">country</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Country as a two-letter, lowercase ISO 3166-1 code, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">business_id</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Business ID of the organization, if any, or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When this organization account was created. <strong>Available only for your own organization.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">updated_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When organization details were changed last time. <strong>Available only for your own organization.</strong></td>
+</tr>
+</tbody></table>
+
+<h3 id="retrieve-organization-details">Retrieve organization details</h3>
+
+<p>Get a single <a title="Organizations" href="#organizations">organization</a> object by its ID.</p>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;</code></p>
+
+<h3 id="update-organization-details">Update organization details</h3>
+
+<p>You may update some of the attributes a organization, if you have permissions to do so.</p>
+
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;</code></p>
+
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;</code></p>
+
+<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes the <a title="Organizations" href="#organizations">organization</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
 
           <h1 id="teams-api">Teams API</h1>
 
