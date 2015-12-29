@@ -1072,7 +1072,7 @@ Deleting a room will immediately unshare it from your partners! Even though your
 
 <h2 id="chats">Chats</h2>
 
-<p>A chat represents a single conversation. In practice, there is exactly one visitor participant and an arbitrary number of user (&ldquo;operator&rdquo;) participants.</p>
+<p>A chat represents a single conversation. In practice, there is exactly one visitor member and an arbitrary number of user (&ldquo;operator&rdquo;) members.</p>
 
 <p>A chat has the following attributes:</p>
 
@@ -1211,19 +1211,19 @@ Deleting a room will immediately unshare it from your partners! Even though your
 <td>How many visitor there are currently present at this chat (0 or 1)</td>
 </tr>
 <tr>
-<td><code class="prettyprint">participant_count</code></td>
+<td><code class="prettyprint">member_count</code></td>
 <td>integer</td>
 <td>read-only</td>
 <td>How many people (visitor and users) have attended or sent messages to this chat.</td>
 </tr>
 <tr>
-<td><code class="prettyprint">user_participant_count</code></td>
+<td><code class="prettyprint">user_member_count</code></td>
 <td>integer</td>
 <td>read-only</td>
 <td>How many users have sent at least one message to the chat.</td>
 </tr>
 <tr>
-<td><code class="prettyprint">visitor_participant_count</code></td>
+<td><code class="prettyprint">visitor_member_count</code></td>
 <td>integer</td>
 <td>read-only</td>
 <td>How many visitors have attended this chat. In practice, this always <code class="prettyprint">1</code>, but this attribute exists for future.</td>
@@ -1244,7 +1244,7 @@ Deleting a room will immediately unshare it from your partners! Even though your
 </tr>
 <tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats</code></td>
-<td>For each participant and currently present user of the chat</td>
+<td>For each member and currently present user of the chat</td>
 </tr>
 <tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats</code></td>
@@ -1281,9 +1281,9 @@ Deleting a room will immediately unshare it from your partners! Even though your
       </span><span class="nt">"presence_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
       </span><span class="nt">"user_presence_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
       </span><span class="nt">"visitor_presence_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"participant_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"user_participant_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"visitor_participant_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+      </span><span class="nt">"member_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"user_member_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"visitor_member_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -1344,10 +1344,10 @@ Deleting a room will immediately unshare it from your partners! Even though your
 <td>If <code class="prettyprint">true</code>, only return chats where <code class="prettyprint">&lt;user_id&gt;</code> <strong>currently</strong> has a <a title="Chat presences" href="#chat-presences">chat presence</a>. If <code class="prettyprint">false</code>, exclude thats where <code class="prettyprint">&lt;user_id&gt;</code> currently has a chat presence.</td>
 </tr>
 <tr>
-<td><code class="prettyprint">is_participant</code></td>
+<td><code class="prettyprint">is_member</code></td>
 <td>boolean</td>
 <td>(none)</td>
-<td>If <code class="prettyprint">true</code>, only return chats where <code class="prettyprint">&lt;user_id&gt;</code> is a <a title="Chat participants" href="#chat-participants">chat participant</a>. If <code class="prettyprint">false</code>, exclude thats where <code class="prettyprint">&lt;user_id&gt;</code> is a chat participant.</td>
+<td>If <code class="prettyprint">true</code>, only return chats where <code class="prettyprint">&lt;user_id&gt;</code> is a <a title="Chat members" href="#chat-members">chat member</a>. If <code class="prettyprint">false</code>, exclude thats where <code class="prettyprint">&lt;user_id&gt;</code> is a chat member.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">is_ended</code></td>
@@ -1374,10 +1374,10 @@ Deleting a room will immediately unshare it from your partners! Even though your
 <td>Whether or not the <code class="prettyprint">&lt;user_id&gt;</code> <strong>currently</strong> has a <a title="Chat presences" href="#chat-presences">chat presence</a> at this chat</td>
 </tr>
 <tr>
-<td><code class="prettyprint">is_participant</code></td>
+<td><code class="prettyprint">is_member</code></td>
 <td>boolean</td>
 <td>read-only</td>
-<td>Whether or not the <code class="prettyprint">&lt;user_id&gt;</code> is a <a title="Chat participants" href="#chat-participants">participant of this chat</a></td>
+<td>Whether or not the <code class="prettyprint">&lt;user_id&gt;</code> is a <a title="Chat members" href="#chat-members">member of this chat</a></td>
 </tr>
 </tbody></table>
 
@@ -1409,7 +1409,7 @@ Deleting a room will immediately unshare it from your partners! Even though your
 Returns 200 if resumed an existing chat when <code class="prettyprint">auto_resume</code> parameter was provided.
 Returns 403 if you have no permission to the room and you are not a manager.</p>
 
-<p>This notifies the <a title="Socket API and channels" href="#socket-api">channels</a> of the chat, as well as appropriate channels of <a title="Chat presences" href="#chat-presences">chat presences</a> and <a title="Chat participants" href="#chat-participants">chat participants</a>.</p>
+<p>This notifies the <a title="Socket API and channels" href="#socket-api">channels</a> of the chat, as well as appropriate channels of <a title="Chat presences" href="#chat-presences">chat presences</a> and <a title="Chat members" href="#chat-members">chat members</a>.</p>
 
 <h2 id="chat-presences">Chat presences</h2>
 
@@ -1429,7 +1429,7 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 <td style="text-align: left"><code class="prettyprint">id</code></td>
 <td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a>/string</td>
 <td style="text-align: left">read-only</td>
-<td>ID of the user or visitor that has participated in the chat.</td>
+<td>ID of the user or visitor being present at the chat.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">type</code></td>
@@ -1483,7 +1483,7 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 </tr>
 <tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/presences</code></td>
-<td>For each participant and currently present user of the chat</td>
+<td>For each user member</td>
 </tr>
 <tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/presences</code></td>
@@ -1606,17 +1606,105 @@ Returns 400 if the user ID is invalid or the user cannot be joined to the chat.<
 
 <p>This request sends notifications to the <a title="Socket API and channels" href="#socket-api">channels</a> of the chat presences as well as the related chat.</p>
 
-<h2 id="chat-participants">Chat participants</h2>
+<h2 id="chat-members">Chat members</h2>
 
-<p>The visitor as well as each user who have sent at least one message to the chat is added as a &ldquo;participant&rdquo; to the chat.</p>
+<p>The visitor as well as each user who have sent at least one message to the chat is added as a &ldquo;member&rdquo; to the chat.</p>
 
-<p>In contrast to the <a title="Chat presences" href="#chat-presences">chat presences</a>, chat <em>participant</em> describes a person who has ever attended to the chat. They may not be currently present at the chat.</p>
+<p>In contrast to the <a title="Chat presences" href="#chat-presences">chat presences</a>, chat <em>member</em> describes a person who has ever attended to the chat. They may not be currently present at the chat.</p>
 
-<h3 id="get-a-collection-of-chat-participants">Get a collection of chat participants</h3>
-<pre class="highlight plaintext"><code>GET /api/v5/orgs/7f9e9580-095b-42c7-838c-c04e667b26f7/rooms/aad26fe2-c8f3-45dc-931b-4b0b5e06467d/chats/58f5055c-56e0-11e5-9354-6c4008c08dfe/participants
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Format</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a>/string</td>
+<td style="text-align: left">read-only</td>
+<td>ID of the user or visitor being present at the chat.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">type</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">read-only</td>
+<td>Either <code class="prettyprint">visitor</code> or <code class="prettyprint">user</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">name</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">read-only</td>
+<td>The name of the user/visitor as it would be displayed for the operator. For users this the actual name. For visitors this is any custom name, or <code class="prettyprint">null</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">public_name</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">read-only</td>
+<td>The name of the user/visitor as it would be displayed for the visitor. This is user&rsquo;s alias if they have one, otherwise it is their real name. For visitors, this is any custom username (e.g. set by API data) or <code class="prettyprint">null</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">avatar</code></td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">read-only</td>
+<td>If the user/visitor has an avatar image, then this is is an object with <code class="prettyprint">id</code> and <code class="prettyprint">url</code> attributes. Otherwise this is <code class="prettyprint">null</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">chat_id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td style="text-align: left">read-only</td>
+<td>ID of the chat.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When the user/visitor was added as a chat member.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">message_count</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">read-only</td>
+<td>How many messages the user/visitor has sent to the chat. This may be 0, e.g. when operator has joined the chat but has not sent any message yet.</td>
+</tr>
+</tbody></table>
+
+<p>Changes to chat members are notified to the following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
+
+<table><thead>
+<tr>
+<th>Channels</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/api/v5/client/visitors/&lt;visitor_id&gt;/chats/&lt;chat_id&gt;/members</code></td>
+<td>For each visitor of the chat</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/members</code></td>
+<td>For each user member of the chat</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/members</code></td>
+<td>For the related room and each organization having access to that room</td>
+</tr>
+</tbody></table>
+
+<p>In addition, chat members affect the following attributes of a <a title="Chats" href="#chats">chat</a>, notifying its channels:</p>
+
+<ul>
+<li><code class="prettyprint">member_count</code></li>
+<li><code class="prettyprint">user_member_count</code></li>
+<li><code class="prettyprint">visitor_member_count</code></li>
+</ul>
+
+<h3 id="get-a-collection-of-chat-members">Get a collection of chat members</h3>
+<pre class="highlight plaintext"><code>GET /api/v5/orgs/7f9e9580-095b-42c7-838c-c04e667b26f7/rooms/aad26fe2-c8f3-45dc-931b-4b0b5e06467d/chats/58f5055c-56e0-11e5-9354-6c4008c08dfe/members
 </code></pre>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v5/orgs/7f9e9580-095b-42c7-838c-c04e667b26f7/chats/58f5055c-56e0-11e5-9354-6c4008c08dfe/participants?cursor=45d9e7358e1249c491b4fa0212310f55"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v5/orgs/7f9e9580-095b-42c7-838c-c04e667b26f7/chats/58f5055c-56e0-11e5-9354-6c4008c08dfe/members?cursor=45d9e7358e1249c491b4fa0212310f55"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"previous"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -1629,7 +1717,8 @@ Returns 400 if the user ID is invalid or the user cannot be joined to the chat.<
         </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/avatar/5ef1a0ef-8b61-4473-8706-9669e30b47e6.jpg"</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="nt">"chat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"58f5055c-56e0-11e5-9354-6c4008c08dfe"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T11:31:36.042"</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T11:31:36.042"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b90ef7c93484af4965a79ace7bc9a62"</span><span class="p">,</span><span class="w">
@@ -1638,19 +1727,20 @@ Returns 400 if the user ID is invalid or the user cannot be joined to the chat.<
       </span><span class="nt">"public_name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="nt">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="nt">"chat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"58f5055c-56e0-11e5-9354-6c4008c08dfe"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:14:34.154"</span><span class="w">
+      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:14:34.154"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>You can get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the participants of the chat:</p>
+<p>You can get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the members of the chat:</p>
 
-<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/participants</code></p>
+<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/members</code></p>
 
 <p>Or alternatively:</p>
 
-<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/participants</code></p>
+<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/members</code></p>
 
 <h2 id="chat-messages">Chat messages</h2>
 
@@ -1734,7 +1824,7 @@ Returns 400 if the user ID is invalid or the user cannot be joined to the chat.<
 </tr>
 <tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/messages</code></td>
-<td>For each participant and currently present user of the chat</td>
+<td>For each member and currently present user of the chat</td>
 </tr>
 <tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/messages</code></td>
@@ -1749,6 +1839,12 @@ Returns 400 if the user ID is invalid or the user cannot be joined to the chat.<
 <li><code class="prettyprint">user_message_count</code></li>
 <li><code class="prettyprint">visitor_message_count</code></li>
 <li><code class="prettyprint">is_waiting</code></li>
+</ul>
+
+<p>In addition, sending chat messages affect the following attributes of a <a title="Chat members" href="#chat-members">chat member</a>, notifying its related channels.</p>
+
+<ul>
+<li><code class="prettyprint">message_count</code></li>
 </ul>
 
 <h3 id="list-chat-messages">List chat messages</h3>
@@ -1823,13 +1919,13 @@ Returns 400 if the user ID is invalid or the user cannot be joined to the chat.<
 
 <p><code class="prettyprint">POST /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/messages</code></p>
 
-<p>The <code class="prettyprint">&lt;user_id&gt;</code> will be set as the sender of the message. If the sender is not yet added as a participant of this chat, then a new <a title="Chat participants" href="#chat-participants">participant</a> is automatically created.</p>
+<p>The <code class="prettyprint">&lt;user_id&gt;</code> will be set as the sender of the message. If the sender is not yet added as a member of this chat, then a new <a title="Chat members" href="#chat-members">member</a> is automatically created.</p>
 
 <p>This returns 404 if the chat does not belong to the chats of the user. That is, in order to send a message, the user must have joined the chat at least once. However, he/she do not have to have a current presence.</p>
 
 <p>If the chat was previously in waiting state, then <code class="prettyprint">is_waiting</code> of the chat is automatically changed to <code class="prettyprint">false</code>.</p>
 
-<p>This notifies any channels of chat messages, as well as channels of the related <a title="Chats" href="#chats">chat</a> and <a title="Chat participants" href="#chat-participants">chat participants</a> accordingly.</p>
+<p>This notifies any channels of chat messages, as well as channels of the related <a title="Chats" href="#chats">chat</a> and <a title="Chat members" href="#chat-members">chat members</a> accordingly.</p>
 
 <h2 id="get-a-collection-of-chats-on-organization">Get a collection of chats on organization</h2>
 
