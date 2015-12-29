@@ -221,19 +221,19 @@ If you need to load all resources using an endpoint returning paginated collecti
 <td>How many <a title="Chat messages" href="#chat-messages">messages</a> there were by visitor in this chat</td>
 </tr>
 <tr>
-<td><code class="prettyprint">presence_count</code></td>
+<td><code class="prettyprint">present_member_count</code></td>
 <td>integer</td>
 <td>read-only</td>
 <td>How many people (visitor and users) there are currently present at this chat.</td>
 </tr>
 <tr>
-<td><code class="prettyprint">user_presence_count</code></td>
+<td><code class="prettyprint">present_user_member_count</code></td>
 <td>integer</td>
 <td>read-only</td>
 <td>How many users there are currently present at this chat.</td>
 </tr>
 <tr>
-<td><code class="prettyprint">visitor_presence_count</code></td>
+<td><code class="prettyprint">present_visitor_member_count</code></td>
 <td>integer</td>
 <td>read-only</td>
 <td>How many visitor there are currently present at this chat (0 or 1)</td>
@@ -254,7 +254,7 @@ If you need to load all resources using an endpoint returning paginated collecti
 <td><code class="prettyprint">visitor_member_count</code></td>
 <td>integer</td>
 <td>read-only</td>
-<td>How many visitors have attended this chat. In practice, this always <code class="prettyprint">1</code>, but this attribute exists for future.</td>
+<td>How many visitors have attended this chat.</td>
 </tr>
 </tbody></table>
 
@@ -300,9 +300,9 @@ If you need to load all resources using an endpoint returning paginated collecti
       </span><span class="nt">"message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="nt">"user_message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="nt">"visitor_message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"presence_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"user_presence_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"visitor_presence_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"present_member_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"present_user_member_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"present_visitor_member_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
       </span><span class="nt">"member_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
       </span><span class="nt">"user_member_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
       </span><span class="nt">"visitor_member_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
@@ -349,131 +349,9 @@ Returns 200 if resumed an existing chat when <code class="prettyprint">auto_resu
 <li>For the chat parent room chat collection and each organization having access that room: <code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats</code></li>
 </ul>
 
-<h2 id="chat-presences">Chat presences</h2>
-
-<p>A chat presence describes either a user (a chat operator) or a visitor being currently &ldquo;joined&rdquo; to a chat. In case of visitors, the presence is equal to the online status of the visitor in the related room. Users on the other hands need explicitly to &ldquo;join&rdquo; the chat.</p>
-
-<p>Both visitors&rsquo; and operators&rsquo; presences are automatically removed from chat presences if we have not heard about them for a while, indicating that they have closed their browser tab or they have lost their connection.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Format</th>
-<th style="text-align: left">Editable</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a>/string</td>
-<td style="text-align: left">read-only</td>
-<td>ID of the user or visitor being present at the chat.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">type</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left">read-only</td>
-<td>Either <code class="prettyprint">visitor</code> or <code class="prettyprint">user</code>.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">public_name</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left">read-only</td>
-<td>The name of the user/visitor as it would be displayed for the visitor. This is user&rsquo;s alias if they have one, otherwise it is their real name. For visitors, this is any custom username (e.g. set by API data) or <code class="prettyprint">null</code></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">avatar</code></td>
-<td style="text-align: left">object</td>
-<td style="text-align: left">read-only</td>
-<td>If the user/visitor has an avatar image, then this is is an object with <code class="prettyprint">id</code> and <code class="prettyprint">url</code> attributes. Otherwise this is <code class="prettyprint">null</code>.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">chat_id</code></td>
-<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
-<td style="text-align: left">read-only</td>
-<td>ID of the chat.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td style="text-align: left">read-only</td>
-<td>When the user/visitor become present in the chat.</td>
-</tr>
-</tbody></table>
-
-<p>Changes to chat presences are notified to the following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
-
-<table><thead>
-<tr>
-<th>Channels</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">/api/v5/client/visitors/&lt;visitor_id&gt;/chats/&lt;chat_id&gt;/presences</code></td>
-<td>For each visitor of the chat</td>
-</tr>
-<tr>
-<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/presences</code></td>
-<td>For each user member</td>
-</tr>
-<tr>
-<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/presences</code></td>
-<td>For the related room and each organization having access to that room</td>
-</tr>
-</tbody></table>
-
-<p>In addition, chat presences affect the following attributes of a <a title="Chats" href="#chats">chat</a>, notifying the channels of the related chat:</p>
-
-<ul>
-<li><code class="prettyprint">presence_count</code></li>
-<li><code class="prettyprint">user_presence_count</code></li>
-<li><code class="prettyprint">visitor_presence_count</code></li>
-</ul>
-
-<h3 id="list-currently-present-people-at-a-chat">List currently present people at a chat</h3>
-<pre class="highlight plaintext"><code>GET https://service.giosg.com/api/v5/client/visitors/3b90ef7c93484af4965a79ace7bc9a62/chats/58f5055c-56e0-11e5-9354-6c4008c08dfe/presences
-</code></pre>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v5/client/visitors/3b90ef7c93484af4965a79ace7bc9a62/chats/58f5055c-56e0-11e5-9354-6c4008c08dfe/presences?cursor=45d9e7358e1249c491b4fa0212310f55"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"previous"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"378ad5a0-bb89-481b-978b-4268b368cfef"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"public_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer Service"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7f9cb877-0fd9-4c27-90b0-bd4c2842da3d"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/avatar/5ef1a0ef-8b61-4473-8706-9669e30b47e6.jpg"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nt">"chat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"58f5055c-56e0-11e5-9354-6c4008c08dfe"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T11:31:36.042"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b90ef7c93484af4965a79ace7bc9a62"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"visitor"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"public_name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"chat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"58f5055c-56e0-11e5-9354-6c4008c08dfe"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:14:34.154"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<p>You can get a collection of chat operator presences.</p>
-
-<p><code class="prettyprint">GET /api/v5/client/visitors/&lt;visitor_id&gt;/chats/&lt;chat_id&gt;/presences</code></p>
-
-<p>This API endpoint returns a <a title="Paginated collections" href="#paginated-collections">paginated collection</a>. They are sorted by the time on which the operators have joined the chat.</p>
-
 <h2 id="chat-members">Chat members</h2>
 
 <p>The visitor and each user who has participated to a chat is added as a chat member to the chat.</p>
-
-<p>In contrast to the <a title="Chat presences" href="#chat-presences">chat presences</a>, chat <em>member</em> describes a person who has ever attended to the chat. They may not be currently present at the chat.</p>
 
 <table><thead>
 <tr>
@@ -525,6 +403,12 @@ Returns 200 if resumed an existing chat when <code class="prettyprint">auto_resu
 <td style="text-align: left">read-only</td>
 <td>How many messages the user/visitor has sent to the chat. This may be 0, e.g. when operator has joined the chat but has not sent any message yet.</td>
 </tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_present</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">read-only</td>
+<td>Whether or not the user/visitor is currently present at the chat.</td>
+</tr>
 </tbody></table>
 
 <p>Changes to chat members are notified to the following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
@@ -555,6 +439,9 @@ Returns 200 if resumed an existing chat when <code class="prettyprint">auto_resu
 <li><code class="prettyprint">member_count</code></li>
 <li><code class="prettyprint">user_member_count</code></li>
 <li><code class="prettyprint">visitor_member_count</code></li>
+<li><code class="prettyprint">present_member_count</code></li>
+<li><code class="prettyprint">present_user_member_count</code></li>
+<li><code class="prettyprint">present_visitor_member_count</code></li>
 </ul>
 
 <h3 id="list-chat-members">List chat members</h3>
@@ -597,7 +484,7 @@ Returns 200 if resumed an existing chat when <code class="prettyprint">auto_resu
 
 <h2 id="chat-messages">Chat messages</h2>
 
-<p>Chat consists of a number of messages. Some of them are actual typed messages from either operator or visitor, and some of them are automatically added events about the chat, especially when an operator has <a title="Chat presences" href="#chat-presences">joined or leaved</a> the chat.</p>
+<p>Chat consists of a number of messages. Some of them are actual typed messages from either operator or visitor, and some of them are automatically added events about the chat, especially when an operator has joined or leaved the chat.</p>
 
 <table><thead>
 <tr>
