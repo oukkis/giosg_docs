@@ -1050,10 +1050,29 @@ Deleting a room will immediately unshare it from your partners! Even though your
 <td style="text-align: left">integer</td>
 <td style="text-align: left">The height resolution of the visitor&rsquo;s screen</td>
 </tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">shopping_cart_currency</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">The currency of the visitor&rsquo;s shopping cart in the room, if the visitor has any, otherwise <code class="prettyprint">null</code>. Currency is an upper-case string, e.g. <code class="prettyprint">EUR</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">shopping_cart_total_value</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">The total value of the visitor&rsquo;s shopping cart in the room, if the visitor has any. Value <code class="prettyprint">null</code> means the shopping cart is not defined. The value is presented as a decimal string, e.g. <code class="prettyprint">59.00</code> in the currency defined by <code class="prettyprint">shopping_cart_currency</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">shopping_cart_total_subscription_value</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">The total monthly subscription value of the visitor&rsquo;s shopping cart in the room, if the visitor has any. Value <code class="prettyprint">null</code> means the shopping cart is not defined. The value is presented as a decimal string, e.g. <code class="prettyprint">59.00</code> in the currency defined by <code class="prettyprint">shopping_cart_currency</code> and <strong>per month</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">shopping_cart_locked_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
+<td style="text-align: left">When the visitor checked out their shopping cart in this room, during this session. It is <code class="prettyprint">null</code> if the cart is not yet checked out or the cart is not defined.</td>
+</tr>
 </tbody></table>
 
-<p><strong>TODO:</strong> Pipeline?
-<strong>TODO:</strong> Shopping carts?</p>
+<p><strong>TODO:</strong> Pipeline?</p>
 
 <p>Changes to a visitor is notified to the following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
 
@@ -1070,7 +1089,7 @@ Deleting a room will immediately unshare it from your partners! Even though your
 </tbody></table>
 
 <aside class="warning">
-Note that <strong>there is no</strong> collection channel <code>/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/online_visitors</code> for performance reasons. You need to listen each visitor separately.
+Note that for performance reasons <strong>there is no collection channel</strong> for listening multiple visitors. You need to listen each visitor separately.
 </aside>
 
 <h3 id="get-a-collection-of-visitors-currently-online-at-a-room">Get a collection of visitors currently online at a room</h3>
