@@ -924,7 +924,9 @@ Deleting a room will immediately unshare it from your partners! Even though your
 
 <p>A visitor has a separate representation <strong>for each room</strong>. The returned attributes are different depending on from which room the visitor was requested.</p>
 
-<p><strong>NOTE</strong>: Not all visitor metadata may be available at the time of a request. In that case, they will be <code class="prettyprint">null</code>. An appropriate notification will be sent via channels when the information becomes available.</p>
+<aside class="warning">
+<strong>NOTE</strong> that all the metadata may not be available at the time of a request. In that case, they will be <code>null</code>. An appropriate notification will be sent via channels when the information becomes available.
+</aside>
 
 <table><thead>
 <tr>
@@ -969,19 +971,24 @@ Deleting a room will immediately unshare it from your partners! Even though your
 <td style="text-align: left">Either <code class="prettyprint">desktop</code>, <code class="prettyprint">mobile</code> or <code class="prettyprint">tablet</code></td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">browser</code></td>
+<td style="text-align: left"><code class="prettyprint">browser_name</code></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left">Browser which the visitor is currently using</td>
+<td style="text-align: left">Name of the browser which the visitor is currently using, without any version number.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">os</code></td>
+<td style="text-align: left"><code class="prettyprint">browser_version</code></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left">Operating system which the visitor is using</td>
+<td style="text-align: left">Version of the browser which the visitor is currently using.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">language_code</code></td>
+<td style="text-align: left"><code class="prettyprint">os_name</code></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left">The language of the visitor&rsquo;s browser as a lower-case, two-letter ISO 639-1 language code</td>
+<td style="text-align: left">Name of the operating system which the visitor is using</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">os_version</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Version of the operating system which the visitor is using</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">user_agent</code></td>
@@ -991,37 +998,27 @@ Deleting a room will immediately unshare it from your partners! Even though your
 <tr>
 <td style="text-align: left"><code class="prettyprint">ip_address</code></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left">IP address of the visitor</td>
+<td style="text-align: left">IP address of the visitor (IPv4)</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">ip_company</code></td>
+<td style="text-align: left"><code class="prettyprint">ip_organization</code></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left">Company resolved from the IP address</td>
+<td style="text-align: left">An organization name resolved from the IP address</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">isp</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left">The best guess about the name of the Internet Service Provider for the visitor&rsquo;s Internet connection.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">country_code</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left">The best guess about the country where the visitor is currently located. This is usually resolved from their IP address. This is a upper-case, two-letter ISO 3166-1 country code</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">country</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left">The country as in <code class="prettyprint">country_code</code>, but represented as the name of the country.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">city</code></td>
+<td style="text-align: left"><code class="prettyprint">geo_city</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left">The best guess about the name of the city where the visitor is currently located. This is usually resolved from their IP address.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">referrer_domain</code></td>
+<td style="text-align: left"><code class="prettyprint">geo_country_code</code></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left">Hostname from which the visitor entered the room during this session</td>
+<td style="text-align: left">The best guess about the country where the visitor is currently located. This is usually resolved from their IP address. This is a upper-case, two-letter ISO 3166-1 country code</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">geo_country</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">The country as in <code class="prettyprint">country_code</code>, but represented as the name of the country.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">referrer_url</code></td>
@@ -1029,17 +1026,27 @@ Deleting a room will immediately unshare it from your partners! Even though your
 <td style="text-align: left">The full URL from which the visitor entered the room during this session</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">referrer_kind</code></td>
+<td style="text-align: left"><code class="prettyprint">referrer_hostname</code></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left">Either <code class="prettyprint">website</code>, <code class="prettyprint">direct</code>, <code class="prettyprint">search</code>, <code class="prettyprint">partner</code> or <code class="prettyprint">int</code></td>
+<td style="text-align: left">Hostname from which the visitor entered the room during this session</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">screen_width</code></td>
+<td style="text-align: left"><code class="prettyprint">referrer_medium</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Either <code class="prettyprint">internal</code>, <code class="prettyprint">search</code>, <code class="prettyprint">email</code>, <code class="prettyprint">social</code>, or <code class="prettyprint">website</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">referrer_source</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">The name of the referrer source</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">device_screen_width</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">The width resolution of the visitor&rsquo;s screen</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">screen_height</code></td>
+<td style="text-align: left"><code class="prettyprint">device_screen_height</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">The height resolution of the visitor&rsquo;s screen</td>
 </tr>
@@ -1047,6 +1054,24 @@ Deleting a room will immediately unshare it from your partners! Even though your
 
 <p><strong>TODO:</strong> Pipeline?
 <strong>TODO:</strong> Shopping carts?</p>
+
+<p>Changes to a visitor is notified to the following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
+
+<table><thead>
+<tr>
+<th>Channels</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/online_visitors/&lt;visitor_id&gt;</code></td>
+<td>For a changed visitor, for each room where the visitor is currently online, and for each organization having access to that room</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+Note that <strong>there is no</strong> collection channel <code>/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/online_visitors</code> for performance reasons. You need to listen each visitor separately.
+</aside>
 
 <h3 id="get-a-collection-of-visitors-currently-online-at-a-room">Get a collection of visitors currently online at a room</h3>
 
