@@ -948,12 +948,7 @@ Deleting a room will immediately unshare it from your partners! Even though your
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_online</code></td>
 <td style="text-align: left">boolean</td>
-<td style="text-align: left">Whether or not the visitor currently online in the room</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">become_online_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td style="text-align: left">When the visitor become online last time. This is always set when <code class="prettyprint">is_online</code> is <code class="prettyprint">true</code>.</td>
+<td style="text-align: left">Whether or not the visitor is currently online in the room</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">session_id</code></td>
@@ -969,6 +964,16 @@ Deleting a room will immediately unshare it from your partners! Even though your
 <td style="text-align: left"><code class="prettyprint">device_type</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left">Either <code class="prettyprint">desktop</code>, <code class="prettyprint">mobile</code> or <code class="prettyprint">tablet</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">device_screen_width</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">The width resolution of the visitor&rsquo;s screen</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">device_screen_height</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">The height resolution of the visitor&rsquo;s screen</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">browser_name</code></td>
@@ -1041,19 +1046,44 @@ Deleting a room will immediately unshare it from your partners! Even though your
 <td style="text-align: left">The name of the referrer source</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">device_screen_width</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">The width resolution of the visitor&rsquo;s screen</td>
+<td style="text-align: left"><code class="prettyprint">original_referrer_url</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">The full URL from which the visitor originally entered the room</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">device_screen_height</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">The height resolution of the visitor&rsquo;s screen</td>
+<td style="text-align: left"><code class="prettyprint">original_referrer_hostname</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Hostname from which the visitor originally entered the room</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">original_referrer_medium</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Either <code class="prettyprint">internal</code>, <code class="prettyprint">search</code>, <code class="prettyprint">email</code>, <code class="prettyprint">social</code>, or <code class="prettyprint">website</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">original_referrer_source</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">The name of the original referrer source</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">current_page_url</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">URL of the web page at which the visitor is currently, at this room.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">current_page_canonical_url</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Canonical URL of the web page at which the visitor is currently, at this room. Same than <code class="prettyprint">current_page_url</code> if no canonical URL is available.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">current_page_title</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Title of the web page at which the visitor is currently, at this room.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">shopping_cart_currency</code></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left">The currency of the visitor&rsquo;s shopping cart in the room, if the visitor has any, otherwise <code class="prettyprint">null</code>. Currency is an upper-case string, e.g. <code class="prettyprint">EUR</code>.</td>
+<td style="text-align: left">The currency of the visitor&rsquo;s shopping cart in the room, if the visitor has any, otherwise <code class="prettyprint">null</code>. Currency is a upper-case <a href="http://www.xe.com/iso4217.php">ISO 4217 currency code</a>, e.g. <code class="prettyprint">EUR</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">shopping_cart_total_value</code></td>
@@ -1068,11 +1098,37 @@ Deleting a room will immediately unshare it from your partners! Even though your
 <tr>
 <td style="text-align: left"><code class="prettyprint">shopping_cart_locked_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td style="text-align: left">When the visitor checked out their shopping cart in this room, during this session. It is <code class="prettyprint">null</code> if the cart is not yet checked out or the cart is not defined.</td>
+<td style="text-align: left">When the visitor checked out their shopping cart in this room. It is <code class="prettyprint">null</code> if the cart is not yet checked out or the cart is not defined.</td>
 </tr>
 </tbody></table>
 
-<p><strong>TODO:</strong> Pipeline?</p>
+<aside class="warning">
+The following attributes also exists but they are <strong>deprecated</strong>, so you should avoid using them.
+</aside>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">pipeline_step_index</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Number of the current pipeline step of the visitor starting from 1, or <code class="prettyprint">null</code> if not in a pipeline.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">pipeline_step_title</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Name of the current pipeline step of the visitor, or <code class="prettyprint">null</code> if not in a pipeline.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">pipeline_step_count</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">The total number of steps in the pipeline, or <code class="prettyprint">null</code> if not in a pipeline.</td>
+</tr>
+</tbody></table>
 
 <p>Changes to a visitor is notified to the following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
 
