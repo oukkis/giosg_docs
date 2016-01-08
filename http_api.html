@@ -259,10 +259,16 @@ If you need to load all resources using an endpoint returning paginated collecti
 <td>The avatar of the user as an object. It contains attributes <code class="prettyprint">id</code>and <code class="prettyprint">url</code>. This is <code class="prettyprint">null</code> if the user has no avatar.</td>
 </tr>
 <tr>
+<td style="text-align: left"><code class="prettyprint">is_online_enabled</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left"><strong>optional</strong></td>
+<td>Whether or not the user wants to serve online as an operator. This determines if the <code class="prettyprint">is_online</code> can be true.</td>
+</tr>
+<tr>
 <td style="text-align: left"><code class="prettyprint">is_online</code></td>
 <td style="text-align: left">boolean</td>
 <td style="text-align: left">read-only</td>
-<td>Whether the user is currently in online status as an operator, based on the most recent information about the user.</td>
+<td>Whether the user is currently in online status as an operator, based on the most recent information about the user. This can only be <code class="prettyprint">true</code> if <code class="prettyprint">is_online_enabled</code> is <code class="prettyprint">true</code> <em>and</em> the user is considered signed in. Otherwise this is <code class="prettyprint">false</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_signed_in</code></td>
@@ -368,13 +374,23 @@ It is a common use case to first find out your own user or your organization&rsq
 
 <h3 id="update-details-of-an-organization-member">Update details of an organization member</h3>
 
-<p>You may update some of the attributes of a user (<code class="prettyprint">&lt;user_id&gt;</code>) that belongs to an organization (<code class="prettyprint">&lt;organization_id&gt;</code>)</p>
+<blockquote>
+<p><strong>Example request and payload</strong>: Switch user to online</p>
+</blockquote>
+<pre class="highlight plaintext"><code>PATCH https://service.giosg.com/api/v5/orgs/2577ef72-efa0-4b4c-b5b6-0fc3a73e818f/users/fb993c84-1591-41f1-8d36-3804117f64e0
+</code></pre>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"is_online_enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;</code></p>
+<p>You may update some of the attributes of a user (<code class="prettyprint">&lt;user_id&gt;</code>) that belongs to an organization (<code class="prettyprint">&lt;organization_id&gt;</code>) by making a <code class="prettyprint">PATCH</code> request:</p>
 
 <p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;</code></p>
 
-<p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains all the changed attributes of the <a title="Users" href="#users">user</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
+<p>You may also update the whole user resource with a <code class="prettyprint">PUT</code> request. In this case, you need to define all the required attributes and any omitted optional attributes will be set to their defaults:</p>
+
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;</code></p>
 
 <aside class="warning">
 You are allowed to update your own details. You may only change other users&rsquo; details if you have management rights for the organization. Otherwise this endpoint will result in a 403 response.
