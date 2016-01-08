@@ -4036,6 +4036,140 @@ This endpoint returns a paginated collection!
 </tr>
 </tbody></table>
 
+          <h1 id="exporting-api">Exporting API</h1>
+
+<h2 id="report-exports">Report Exports</h2>
+
+<p>A report export has the following attributes:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td style="text-align: left">read-only</td>
+<td>An unique ID for the export</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">starting_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>The start time of the exported time range (inclusive)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">ending_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>The end time of the exported time range (exclusive)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">room_id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>The ID of the <a title="Rooms and domains" href="#rooms-and-domains">room</a> from which the data is exported</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">type</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>Either <code class="prettyprint">logs</code> or <code class="prettyprint">stats</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">format</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>The format of the file being exported. If type is <code class="prettyprint">logs</code>, then the allowed options are <code class="prettyprint">csv</code>, <code class="prettyprint">xlsx</code> or <code class="prettyprint">txt</code>. If type is <code class="prettyprint">stats</code>, then the allowed options are <code class="prettyprint">csv</code> or <code class="prettyprint">xlsx</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_real_conversation</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">optional</td>
+<td>Available only if type is <code class="prettyprint">logs</code>. If <code class="prettyprint">true</code>, then only export real conversations. If <code class="prettyprint">false</code>, then only export non-real conversations. If <code class="prettyprint">null</code> (the default) then do not filter.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">min_message_count</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">optional</td>
+<td>Available only if type is <code class="prettyprint">logs</code>. Defines the minimum number of actual messages that the chat should have to be included in the export. If omitted, then defaults to 0.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When the export was started</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">created_by_user_id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td style="text-align: left">read-only</td>
+<td>ID of the user who started this export</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">updated_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When the export was last time modified</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">completed_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When the export completed (either successfully or with an error). It is <code class="prettyprint">null</code> if the exporting is still in progress.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_failed</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">read-only</td>
+<td><code class="prettyprint">true</code> if the exporting has failed, <code class="prettyprint">failed</code> if the export was successful, <code class="prettyprint">null</code> if the export is still in progress</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">url</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">read-only</td>
+<td>The full absolute <code class="prettyprint">url</code> at which the exported report file can be downloaded. Only available if the export has completed successfully, otherwise <code class="prettyprint">null</code></td>
+</tr>
+</tbody></table>
+
+<h3 id="start-exporting-a-report">Start exporting a report</h3>
+
+<p>You can start a new report export:</p>
+
+<p><code class="prettyprint">POST /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/reportexports</code></p>
+
+<p>You need to provide the required attributes as a payload. This returns the created report export resource in incomplete state. You can then later make a request to resolve if the export has finished.</p>
+
+<p>This returns 201 when a export was started successfully. Returns 403 if you do not have access to the organization or the user, or <strong>if you are not a manager</strong>. Returns 404 if the organization is not found, or if the user does not belong to the user.</p>
+
+<aside class="info">
+The real-time channel support will be added later!
+</aside>
+
+<h3 id="retrieve-a-report-export">Retrieve a report export</h3>
+
+<p>You can check if the report export has completed and where the final report file can be downloaded:</p>
+
+<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/reportexports/&lt;report_id&gt;</code></p>
+
+<p>This returns 200 when successful. Returns 403 if you do not have access to the organization or the user. Returns 404 if the organization is not found, or if the user does not belong to the user.</p>
+
+<aside class="success">
+Use the <code>url</code> attribute to start the download for the generated report file!
+</aside>
+
+<h3 id="list-report-exports-by-a-user">List report exports by a user</h3>
+
+<p>You can list all report exports created by a user as a <a title="Paginated collections" href="#paginated-collections">paginated collection</a>. The results are sorted by the <code class="prettyprint">created_at</code> timestamp in descending order, the newest first.</p>
+
+<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/reportexports</code></p>
+
+<p>This returns 200 when successful. Returns 403 if you do not have access to the organization or the user. Returns 404 if the organization is not found, or if the user does not belong to the user.</p>
+
           <h1 id="socket-api">Socket API</h1>
 
 <p>You can listen real-time notifications about any interesting changes in the system by subscribing a <strong>channel on the message router</strong>.</p>
