@@ -380,6 +380,120 @@ It is a common use case to first find out your own user or your organization&rsq
 You are allowed to update your own details. You may only change other users&rsquo; details if you have management rights for the organization. Otherwise this endpoint will result in a 403 response.
 </aside>
 
+<h2 id="user-preferences">User preferences</h2>
+
+<p>Each user always has a single preferences resource containing private settings conserning the user account. A user prefernces resource has the following attributes.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td style="text-align: left">read-only</td>
+<td></td>
+<td>ID which equaling the ID of the related user</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">chat_capacity</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>5</td>
+<td>An estimate about the maximum number of people the user is willing to chat with simultaneously. The system uses this value in its algorithms to determine how many messages are sent in the name of the user.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">desktop_message_sound</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td><code class="prettyprint">visitor_message</code></td>
+<td>Identifier for the message sound used when a visitor sends a message.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_desktop_message_sound_continuous</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td><code class="prettyprint">true</code></td>
+<td>Whether or not to play the message sound continuously until the user interacts with the UI.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">desktop_visitor_added_sound</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td><code class="prettyprint">visitor_connect</code></td>
+<td>Identifier for the message sound played when a new visitor becomes present.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_desktop_visitor_added_sound_continuous</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td><code class="prettyprint">true</code></td>
+<td>Whether or not to play the visitor added sound continuously until the user interacts with the UI.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">ui_language_code</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td><code class="prettyprint">en</code></td>
+<td>Preferred UI Language in ISO 639-1 code.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_muted_offline</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td><code class="prettyprint">false</code></td>
+<td>Whether or not to disable the sounds while the user is offline.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_statistics_email_enabled</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td><code class="prettyprint">true</code></td>
+<td>Whether or not to send statistic emails to the user.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_desktop_notification_enabled</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td><code class="prettyprint">false</code></td>
+<td>Whether or not to use desktop notifcations (if supported by the browser)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_spellcheck_enabled</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td><code class="prettyprint">false</code></td>
+<td>Whether or not to enable spellchecking when composing messages (if supported by the browser)</td>
+</tr>
+</tbody></table>
+
+<aside class="info">
+User preferences are created and deleted with the user. They can only be updated. The preference attributes are initially set to their default values.
+</aside>
+
+<h3 id="retrieve-user-preferences">Retrieve user preferences</h3>
+
+<p>You can get the preferences of the user:</p>
+
+<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/preferences</code></p>
+
+<h3 id="update-user-preferences">Update user preferences</h3>
+
+<p>You can update <em>some or all</em> your preferenes with a <code class="prettyprint">PATCH</code> request:</p>
+
+<p><code class="prettyprint">PATCH /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/preferences</code></p>
+
+<p>Any omitted preference attributes are kept in their previous values.</p>
+
+<p>You can also make a <code class="prettyprint">PUT</code> request, but in this case you need to provide <em>all</em> the preference attributes, otherwise a 400 response is returned:</p>
+
+<p><code class="prettyprint">PUT /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/preferences</code></p>
+
 <h2 id="organizations">Organizations</h2>
 
 <p>An organization represents any organization account on giosg system. An organization consists of a number of users with their own user accounts. A user always belongs to exactly one organization.</p>
@@ -1139,14 +1253,18 @@ The following attributes also exists but they are <strong>deprecated</strong>, s
 </tr>
 </thead><tbody>
 <tr>
+<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/online_visitors</code></td>
+<td>For each room where the visitor is currently online, and for each organization having access to that room. <strong>WARNING!</strong> This channel may get a large amount of notifications for rooms with heavy traffic!</td>
+</tr>
+<tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/online_visitors/&lt;visitor_id&gt;</code></td>
 <td>For a changed visitor, for each room where the visitor is currently online, and for each organization having access to that room</td>
 </tr>
 </tbody></table>
 
-<aside class="warning">
-Note that for performance reasons <strong>there is no collection channel</strong> for listening multiple visitors. You need to listen each visitor separately.
-</aside>
+<p>Channels are notified with a <code class="prettyprint">added</code> notification whenever a visitor becomes online at that specific room (i.e. the <code class="prettyprint">is_online</code> attribute on the <a title="Room visitors" href="#room-visitors">room visitor</a> changes). Similarly, it is notified with a <code class="prettyprint">removed</code> notification whenever we have not heard about the visitor (in that specific room) for a while, making the visitor offline at the room.</p>
+
+<p>If any attribute of the room visitor changes, the channel receives a <code class="prettyprint">changed</code> notification.</p>
 
 <h3 id="get-a-collection-of-visitors-currently-online-at-a-room">Get a collection of visitors currently online at a room</h3>
 
@@ -1157,10 +1275,6 @@ Note that for performance reasons <strong>there is no collection channel</strong
 <p>This API endpoint returns a <a title="Paginated collections" href="#paginated-collections">paginated collection</a>.</p>
 
 <p><strong>TODO</strong>: The ordering??</p>
-
-<p>The corresponding channel is notified with a <code class="prettyprint">added</code> notification whenever a visitor becomes online at that specific room (i.e. the <code class="prettyprint">is_online</code> attribute on the <a title="Room visitors" href="#room-visitors">room visitor</a> changes). Similarly, it is notified with a <code class="prettyprint">removed</code> notification whenever we have not heard about the visitor (in that specific room) for a while, making the visitor offline at the room.</p>
-
-<p>If any attribute of the room visitor changes, the channel receives a <code class="prettyprint">changed</code> notification.</p>
 
 <h3 id="get-a-single-visitor-at-a-room">Get a single visitor at a room</h3>
 
@@ -1941,423 +2055,6 @@ The user must be a member of the chat in order to send a message. Otherwise a 40
 <p>If the chat was previously in waiting state, then <code class="prettyprint">is_waiting</code> of the chat is automatically changed to <code class="prettyprint">false</code>.</p>
 
 <p>This notifies any channels of chat messages, as well as channels of the related <a title="Chats" href="#chats">chat</a> and <a title="Chat members" href="#chat-members">chat members</a> accordingly.</p>
-
-<h2 id="get-a-collection-of-chats-on-organization">Get a collection of chats on organization</h2>
-
-<aside class="warning">
-  The following is <strong>work in progress!!!</strong>
-</aside>
-
-<p>You can get a list of your organization&rsquo;s chats by making a GET request.</p>
-
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/chats</code></p>
-
-<p>By default, the API returns all the available chats paginated, sorted by ascending ID order. You may want to filter the chats or change the order or pagination parameters by providing GET parameters in the URL. Remember to URL-encode any parameter values.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Parameter</th>
-<th style="text-align: left">Format</th>
-<th style="text-align: left">Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">created_after</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td style="text-align: left">(none)</td>
-<td>Only return chats that are created after this moment (exclusive)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">created_up_to</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td style="text-align: left">(none)</td>
-<td>Only return chats that are created after this moment (inclusive)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">is_real_conversation</code></td>
-<td style="text-align: left">boolean</td>
-<td style="text-align: left"></td>
-<td>If <code class="prettyprint">true</code>/<code class="prettyprint">false</code>, only return real/non-real chats</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">tagged_with</code></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"></td>
-<td>Only chats that have this tag added to them by an operator.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">min_message_count</code></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left"></td>
-<td>Only chats with at least this number of actual <a title="Chat messages" href="#chat-messages">chat messages</a> (not counting autosuggestions or other events)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">is_ended</code></td>
-<td style="text-align: left">boolean</td>
-<td style="text-align: left"></td>
-<td>If <code class="prettyprint">true</code>, only include chats that have been ended. If <code class="prettyprint">false</code>, only include chats that are open.</td>
-</tr>
-</tbody></table>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">57</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"num_pages"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"next_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"previous_page"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"next_page_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v5/orgs/7f9e9580-095b-42c7-838c-c04e667b26f7/chats?page=2"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"previous_page_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"58f5055c-56e0-11e5-9354-6c4008c08dfe"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uibdbtmk5etolmjaduaafnqpl2ujzkyr4slkq3cabdai37qm"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T11:31:36.042"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"ended_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:38:36.424"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:38:36.431"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"is_private"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"is_real_conversation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"is_autosuggested"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"room_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9926bdfa-56e0-11e5-b98c-6c4008c08dfe"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"api_data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Milan Indrajit"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"customer_number"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345678"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nt">"user_message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"visitor_message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"start_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.customerpage.com/settings"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"start_url_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Settings page"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"autosuggest_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.customerpage.com/"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"autosuggest_url_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frontpage of our site"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"logs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-15T13:43:28.572"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"sender_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"sender_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"How may I help you?"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-15T13:43:23.655"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"sender_type"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"sender_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"429569b04f31f1f507236ea7359b50cf"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Could you tell me about whether this product is in stock?"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Milan Indrajit"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nt">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Premium"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nt">"shopping_carts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca0a324f-56e0-11e5-8d07-6c4008c08dfe"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"opened_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:23:57.331"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"total_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"83.00"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"monthly_total_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"360.00"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"locked_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:24:57.588"</span><span class="p">,</span><span class="w">
-          </span><span class="nt">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-              </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db66a978-56e0-11e5-878d-6c4008c08dfe"</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apple iPad Air 2"</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Work and play faster, thinner, and lighter with the iPad Air 2 from Apple. Featuring Apple's 64-bit A8X chip and M8 coprocessor, the Air 2 delivers 40% faster CPU performance and 2.5 times the graphics performance when compared to its predecessor."</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Chat"</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"product_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345"</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"499.90"</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"monthly_price"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"monthly_quantity"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"stock_balance"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"added_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T08:23:57.341"</span><span class="p">,</span><span class="w">
-              </span><span class="nt">"deleted_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-          </span><span class="p">]</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<p>This API end-point returns a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of chat objects, having the following attributes.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
-<td>Unique identifier for this chat</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">token</code></td>
-<td style="text-align: left">string</td>
-<td>Encoded Giosg token for the chat itself</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td>When the chat conversation started</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">ended_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td>When the chat conversation ended (or <code class="prettyprint">null</code> if not yet ended)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">updated_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td>When the chat conversation was last time updated</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">is_private</code></td>
-<td style="text-align: left">boolean</td>
-<td>Whether or not the chat is marked as private for its operators</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">is_real_conversation</code></td>
-<td style="text-align: left">boolean</td>
-<td>Whether or not the chat is an actual conversation</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">is_autosuggested</code></td>
-<td style="text-align: left">boolean</td>
-<td>Whether or not the chat started with an autosuggestion</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">room_id</code></td>
-<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
-<td>ID of the <a title="Rooms and domains" href="#rooms-and-domains">room</a> in which the chat occurred</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">api_data</code></td>
-<td style="text-align: left">array of objects</td>
-<td>A list of any data that has been submitted for the visitor with APIs. Each object has the attributes <code class="prettyprint">name</code> and <code class="prettyprint">value</code>.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">user_message_count</code></td>
-<td style="text-align: left">integer</td>
-<td>How many messages there were by operator in this chat</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">visitor_message_count</code></td>
-<td style="text-align: left">integer</td>
-<td>How many messages there were by visitor in this chat</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">message_count</code></td>
-<td style="text-align: left">integer</td>
-<td>How many messages there were in total in this chat</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">start_url</code></td>
-<td style="text-align: left">string</td>
-<td>Full URL of the page that the visitor was on when they sent their first message</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">start_url_title</code></td>
-<td style="text-align: left">string</td>
-<td>Title of the page that the visitor was on when they sent their first message</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">autosuggest_url</code></td>
-<td style="text-align: left">string</td>
-<td>Full URL of the page that the visitor was on when they received an autosuggest</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">autosuggest_url_title</code></td>
-<td style="text-align: left">string</td>
-<td>Title of the page that the visitor was on when they received an autosuggest</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">logs</code></td>
-<td style="text-align: left">array of objects</td>
-<td>All the chat messages in this chat, see below.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">tags</code></td>
-<td style="text-align: left">array of objects</td>
-<td>All the tags added by operators to the chat. Each tag object has the attribute <code class="prettyprint">name</code>.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">shopping_carts</code></td>
-<td style="text-align: left">array of objects</td>
-<td>All the shopping carts of the visitor, related to this chat, see below.</td>
-</tr>
-</tbody></table>
-
-<p>Every nested <strong>chat log</strong> object has the following attributes.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">created_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td>When the message was sent</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">sender_type</code></td>
-<td style="text-align: left">integer</td>
-<td>Whether the sender is operator (<code class="prettyprint">1</code>) or visitor (<code class="prettyprint">2</code>)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">sender_id</code></td>
-<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a>/string</td>
-<td>Identifier for the sender. If the sender is an operator, then this is the user&rsquo;s ID. Otherwise this is an unique string for the visitor.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">type</code></td>
-<td style="text-align: left">integer</td>
-<td>Whether the message is an actual message (<code class="prettyprint">1</code>) or autosuggest (<code class="prettyprint">2</code>)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">message</code></td>
-<td style="text-align: left">string</td>
-<td>Content text of the message</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">display_name</code></td>
-<td style="text-align: left">string</td>
-<td>A display name for the sender</td>
-</tr>
-</tbody></table>
-
-<p>Every nested <strong>shopping cart</strong> object has the following attributes.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
-<td>Unique identifier for the shopping cart</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">opened_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td>When the first item was added to the shopping cart</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">total_price</code></td>
-<td style="text-align: left">string</td>
-<td>The total sum of the shopping cart, as a decimal string</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">monthly_total_price</code></td>
-<td style="text-align: left">string</td>
-<td>The total monthly subscription sum of the shopping cart, as a decimal string</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">currency</code></td>
-<td style="text-align: left">string</td>
-<td>The currency in which the shopping cart value is given, e.g. <code class="prettyprint">EUR</code></td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">locked_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td>When the cart was purchased, i.e. &ldquo;locked&rdquo;. It is <code class="prettyprint">null</code> if the visitor has not purchased the shopping cart (yet)</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">products</code></td>
-<td style="text-align: left">array of objects</td>
-<td>List of products in the shopping cart, see below.</td>
-</tr>
-</tbody></table>
-
-<p>Every nested <strong>shopping cart product</strong> object has the following attributes.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Attribute</th>
-<th style="text-align: left">Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
-<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
-<td>Unique identifier for this item</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">name</code></td>
-<td style="text-align: left">string</td>
-<td>Name of the product</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">description</code></td>
-<td style="text-align: left">string</td>
-<td>Description of the product</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">category</code></td>
-<td style="text-align: left">string</td>
-<td>Name of the category to which the product belongs</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">product_number</code></td>
-<td style="text-align: left">string</td>
-<td>The product number or ID in the shop</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">price</code></td>
-<td style="text-align: left">string</td>
-<td>The price of a (single) product as a decimal string</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">quantity</code></td>
-<td style="text-align: left">integer</td>
-<td>How many pieces of this product there are in the shopping cart</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">monthly_price</code></td>
-<td style="text-align: left">string</td>
-<td>The monthly subscription price of a (single) product as a decimal string</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">monthly_quantity</code></td>
-<td style="text-align: left">integer</td>
-<td>How many pieces of a monthly subscriptions there are in the shopping cart</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">stock_balance</code></td>
-<td style="text-align: left">integer</td>
-<td>How many available pieces of product there are in stock</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">added_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td>When the product was added to the shopping cart</td>
-</tr>
-<tr>
-<td style="text-align: left"><code class="prettyprint">deleted_at</code></td>
-<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
-<td>When the product was removed from the shopping cart. If <code class="prettyprint">null</code>, then the products actually exists in the shopping cart. Otherwise, it has actually been removed and should not be considered to be in the cart.</td>
-</tr>
-</tbody></table>
 
           <h1 id="partnership-api">Partnership API</h1>
 
