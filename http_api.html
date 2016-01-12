@@ -195,14 +195,14 @@ If you need to load all resources using an endpoint returning paginated collecti
 <tr>
 <td style="text-align: left"><code class="prettyprint">first_name</code></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left"><strong>optional</strong></td>
-<td>First name</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>First name. Must be a non-blank string.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">last_name</code></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left"><strong>optional</strong></td>
-<td>Last name</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>Last name. Must be a non-blank string.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">is_manager</code></td>
@@ -214,7 +214,7 @@ If you need to load all resources using an endpoint returning paginated collecti
 <td style="text-align: left"><code class="prettyprint">alias</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left"><strong>optional</strong></td>
-<td>Display name, used when chatting. May be <code class="prettyprint">null</code></td>
+<td>Display name, used when chatting. May be <code class="prettyprint">null</code> but not a blank string</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">gender</code></td>
@@ -238,7 +238,7 @@ If you need to load all resources using an endpoint returning paginated collecti
 <td style="text-align: left"><code class="prettyprint">title</code></td>
 <td style="text-align: left">title</td>
 <td style="text-align: left"><strong>optional</strong></td>
-<td>Title of the user</td>
+<td>Title of the user. May be <code class="prettyprint">null</code> but not a blank string</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
