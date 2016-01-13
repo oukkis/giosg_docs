@@ -415,6 +415,12 @@ Returns 200 if resumed an existing chat when <code class="prettyprint">auto_resu
 <td style="text-align: left">read-only</td>
 <td>Whether or not the user/visitor is currently present at the chat.</td>
 </tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">composing_status</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>One of the following: <code class="prettyprint">idle</code>, <code class="prettyprint">composing</code>, <code class="prettyprint">has_composed</code>. The <code class="prettyprint">composing</code> status will be automatically downgraded to <code class="prettyprint">has_composed</code> if the composing status has not been refreshed for a while.</td>
+</tr>
 </tbody></table>
 
 <p>Changes to chat members are notified to the following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
@@ -430,12 +436,20 @@ Returns 200 if resumed an existing chat when <code class="prettyprint">auto_resu
 <td>For each visitor of the chat</td>
 </tr>
 <tr>
+<td><code class="prettyprint">/api/v5/client/visitors/&lt;visitor_id&gt;/chats_memberships</code></td>
+<td>For the chat member, if a visitor</td>
+</tr>
+<tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/members</code></td>
 <td>For each user member of the chat</td>
 </tr>
 <tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/members</code></td>
 <td>For the related room and each organization having access to that room</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chat_memberships</code></td>
+<td>For the chat member, if a user</td>
 </tr>
 </tbody></table>
 
@@ -487,6 +501,34 @@ Returns 200 if resumed an existing chat when <code class="prettyprint">auto_resu
 <p><code class="prettyprint">GET /api/v5/client/visitors/&lt;visitor_id&gt;/chats/&lt;chat_id&gt;/members</code></p>
 
 <p>Returns 404 if the chat is not one of the visitor&rsquo;s chats.</p>
+
+<h3 id="list-chat-memberships-of-a-visitor">List chat memberships of a visitor</h3>
+
+<p>As an alternative to list a visitor&rsquo;s <em>chats</em>, you can also list a visitor&rsquo;s <em>chat memberships</em> as a <a title="Paginated collections" href="#paginated-collections">paginated collection</a>. This includes each chat member object that represents the visitor in each of his chats.</p>
+
+<p><code class="prettyprint">GET /api/v5/client/visitors/&lt;visitor_id&gt;/chat_memberships</code></p>
+
+<h3 id="change-visitor-composing-status">Change visitor composing status</h3>
+
+<blockquote>
+<p>Example request for making the visitor typing at the chat</p>
+</blockquote>
+<pre class="highlight plaintext"><code>PUT /api/v5/client/visitors/5cd16aaf35d6488094a5f160afa29767/chat_memberships/e9f4c403-0d0f-4bb8-9883-8f2eb5c9079b
+</code></pre>
+
+<blockquote>
+<p>Example request payload</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"composing_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"composing"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>You can make a user present or not present at a chat like described in the previous section:</p>
+
+<p><code class="prettyprint">PUT /api/v5/client/visitors/&lt;visitor_id&gt;/chat_memberships/&lt;chat_id&gt;</code></p>
+
+<p>You should provide the <code class="prettyprint">composing_status</code> attribute describing whether or not the user is typing or has typed a message.</p>
 
 <h2 id="chat-messages">Chat messages</h2>
 

@@ -1631,7 +1631,7 @@ The following attributes also exists but they are <strong>deprecated</strong>, s
 <td style="text-align: left"><code class="prettyprint">auto_resume</code></td>
 <td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">(none)</td>
-<td>If provided, then attempt to get an existing recent chat where the given user can join, instead of creating a new chat. In addition, we will automatically (and atomically) create a <a title="Chat presences" href="#chat-presences">presence</a> for this user and chat. <strong>NOTE</strong>: The “private chats” setting affects the decision whether to create or resume a chat.</td>
+<td>If provided, then attempt to get an existing recent chat where the given user can join, instead of creating a new chat. In addition, we will automatically (and atomically) create a <a title="Chat members" href="#chat-members">membership</a> for this user and chat. <strong>NOTE</strong>: The “private chats” setting affects the decision whether to create or resume a chat.</td>
 </tr>
 </tbody></table>
 
@@ -1639,13 +1639,11 @@ The following attributes also exists but they are <strong>deprecated</strong>, s
 Returns 200 if resumed an existing chat when <code class="prettyprint">auto_resume</code> parameter was provided.
 Returns 403 if you have no permission to the room and you are not a manager.</p>
 
-<p>This notifies the <a title="Socket API and channels" href="#socket-api">channels</a> of the chat, as well as appropriate channels of <a title="Chat presences" href="#chat-presences">chat presences</a> and <a title="Chat members" href="#chat-members">chat members</a>.</p>
+<p>This notifies the <a title="Socket API and channels" href="#socket-api">channels</a> of the chat, as well as appropriate channels of <a title="Chat members" href="#chat-members">chat members</a>.</p>
 
 <h2 id="chat-members">Chat members</h2>
 
-<p>The visitor as well as each user who have sent at least one message to the chat is added as a &ldquo;member&rdquo; to the chat.</p>
-
-<p>In contrast to the <a title="Chat presences" href="#chat-presences">chat presences</a>, chat <em>member</em> describes a person who has ever attended to the chat. They may not be currently present at the chat.</p>
+<p>The visitor as well as each user who have attended to the chat is added as a &ldquo;member&rdquo; to the chat.</p>
 
 <table><thead>
 <tr>
@@ -1715,6 +1713,12 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 <td style="text-align: left"><strong>required</strong></td>
 <td>Whether or not the user/visitor is currently present at the chat.</td>
 </tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">composing_status</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>One of the following: <code class="prettyprint">idle</code>, <code class="prettyprint">composing</code>, <code class="prettyprint">has_composed</code>. The <code class="prettyprint">composing</code> status will be automatically downgraded to <code class="prettyprint">has_composed</code> if the composing status has not been refreshed for a while.</td>
+</tr>
 </tbody></table>
 
 <p>Changes to chat members are notified to the following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
@@ -1730,12 +1734,20 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 <td>For each visitor of the chat</td>
 </tr>
 <tr>
+<td><code class="prettyprint">/api/v5/client/visitors/&lt;visitor_id&gt;/chats_memberships</code></td>
+<td>For the chat member, if a visitor</td>
+</tr>
+<tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/members</code></td>
 <td>For each user member of the chat</td>
 </tr>
 <tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/members</code></td>
 <td>For the related room and each organization having access to that room</td>
+</tr>
+<tr>
+<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chat_memberships</code></td>
+<td>For the chat member, if a user</td>
 </tr>
 </tbody></table>
 
@@ -1792,6 +1804,10 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 
 <p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/members</code></p>
 
+<p>Also, as an alternative to list a user&rsquo;s <em>chats</em>, you may list their own <em>chat memberships</em>. Each result is a chat member resource for each of the chat of the user.</p>
+
+<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chat_memberships</code></p>
+
 <h3 id="join-a-user-to-a-chat">Join a user to a chat</h3>
 
 <blockquote>
@@ -1805,7 +1821,8 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ce771dbe-afbf-4e58-bbcb-9855ecacee9a"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"is_present"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="nt">"is_present"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"composing_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"idle"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -1825,7 +1842,7 @@ The <code>is_present</code> attribute of both visitors and operators is automati
 
 <p>Alternatively, you may use this endpoint:</p>
 
-<p><code class="prettyprint">PUT /api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/members/&lt;user_id&gt;</code></p>
+<p><code class="prettyprint">PUT /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chat_memberships/&lt;chat_id&gt;</code></p>
 
 <p>In this case you do not have to provide the <code class="prettyprint">id</code> attribute.</p>
 
@@ -1856,38 +1873,39 @@ If the <code>is_present</code> attribute was set to <code>true</code> and the re
 </tbody></table>
 
 <aside class="success">
-Use the `exclusive` parameter to prevent multiple operators taking the chat simultaneously.
+Use the <code>exclusive</code> parameter to prevent multiple operators taking the chat simultaneously.
 </aside>
 
-<p>This request sends notifications to the <a title="Socket API and channels" href="#socket-api">channels</a> of the chat presences as well as the related chat.</p>
+<p>This request sends notifications to the <a title="Socket API and channels" href="#socket-api">channels</a> of the chat members as well as the related chat.</p>
 
-<h3 id="change-operator-chat-presence">Change operator chat presence</h3>
+<h3 id="change-operator-chat-status">Change operator chat status</h3>
 
 <blockquote>
 <p>Example request for making the operator not to be present any more at the chat</p>
 </blockquote>
-<pre class="highlight plaintext"><code>PUT /api/v5/orgs/39351090-2f16-49e0-ae14-96c9a3a721f2/rooms/adab695d-a648-42d6-b956-19efc1124e89/chats/62eb5cd5-5d52-4bb1-b711-ba31f864e775/members/ce771dbe-afbf-4e58-bbcb-9855ecacee9a
+<pre class="highlight plaintext"><code>PUT /api/v5/orgs/39351090-2f16-49e0-ae14-96c9a3a721f2/users/ce771dbe-afbf-4e58-bbcb-9855ecacee9a/chat_memberships/62eb5cd5-5d52-4bb1-b711-ba31f864e775
 </code></pre>
 
 <blockquote>
 <p>Example request payload</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"is_present"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="nt">"is_present"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"composing_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"idle"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <p>You can make a user present or not present at a chat like described in the previous section:</p>
 
-<p><code class="prettyprint">PUT /api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/members/&lt;user_id&gt;</code></p>
+<p><code class="prettyprint">PUT /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chat_memberhips/&lt;chat_id&gt;</code></p>
 
-<p>You should provide the <code class="prettyprint">is_present</code> attribute with either <code class="prettyprint">true</code> or <code class="prettyprint">false</code> value, indicating whether or not the user should be currently present at the chat.</p>
+<p>You should provide the <code class="prettyprint">is_present</code> attribute with either <code class="prettyprint">true</code> or <code class="prettyprint">false</code> value, indicating whether or not the user should be currently present at the chat. Also, you should provide the <code class="prettyprint">composing_status</code> attribute describing whether or not the user is typing or has typed a message.</p>
 
 <p>The parameters and response codes are the same than described in the previous section.</p>
 
 <h2 id="chat-messages">Chat messages</h2>
 
-<p>Chat consists of a number of messages. Some of them are actual typed messages from either operator or visitor, and some of them are automatically added events about the chat, especially when an operator has <a title="Chat presences" href="#chat-presences">joined or leaved</a> the chat.</p>
+<p>Chat consists of a number of messages. Some of them are actual typed messages from either operator or visitor, and some of them are automatically added events about the chat, especially when an operator has <a title="Chat members" href="#chat-members">joined or leaved</a> the chat.</p>
 
 <table><thead>
 <tr>
