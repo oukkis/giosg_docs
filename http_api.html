@@ -1302,7 +1302,7 @@ The following attributes also exists but they are <strong>deprecated</strong>, s
 
 <h2 id="chats">Chats</h2>
 
-<p>A chat represents a single conversation. In practice, there is exactly one visitor member and an arbitrary number of user (&ldquo;operator&rdquo;) members.</p>
+<p>A chat represents a single conversation. In practice, there is usually zero or one visitor member and an arbitrary number of user (&ldquo;operator&rdquo;) members.</p>
 
 <p>A chat has the following attributes:</p>
 
@@ -1474,7 +1474,7 @@ The following attributes also exists but they are <strong>deprecated</strong>, s
 </tr>
 <tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats</code></td>
-<td>For each member and currently present user of the chat</td>
+<td>For each user <a title="Chat memberships" href="#chat-memberships">member of the chat</a></td>
 </tr>
 <tr>
 <td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats</code></td>
@@ -1568,46 +1568,16 @@ The following attributes also exists but they are <strong>deprecated</strong>, s
 </tr>
 </thead><tbody>
 <tr>
-<td><code class="prettyprint">is_present</code></td>
+<td><code class="prettyprint">is_participating</code></td>
 <td>boolean</td>
 <td>(none)</td>
-<td>If <code class="prettyprint">true</code>, only return chats where <code class="prettyprint">&lt;user_id&gt;</code> is <strong>currently</strong> present. If <code class="prettyprint">false</code>, exclude thats where <code class="prettyprint">&lt;user_id&gt;</code> is currently present.</td>
-</tr>
-<tr>
-<td><code class="prettyprint">is_member</code></td>
-<td>boolean</td>
-<td>(none)</td>
-<td>If <code class="prettyprint">true</code>, only return chats where <code class="prettyprint">&lt;user_id&gt;</code> is a <a title="Chat members" href="#chat-members">chat member</a>. If <code class="prettyprint">false</code>, exclude thats where <code class="prettyprint">&lt;user_id&gt;</code> is a chat member.</td>
+<td>If <code class="prettyprint">true</code>, only return chats where <code class="prettyprint">&lt;user_id&gt;</code> is participating. If <code class="prettyprint">false</code>, exclude thats where <code class="prettyprint">&lt;user_id&gt;</code> is currently participating.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">is_ended</code></td>
 <td>boolean</td>
 <td>(none)</td>
 <td>If <code class="prettyprint">true</code>, only return ended chats. If <code class="prettyprint">false</code>, only return open chats.</td>
-</tr>
-</tbody></table>
-
-<p>When using this endpoint, the chat as the following additional attributes:</p>
-
-<table><thead>
-<tr>
-<th>Attribute</th>
-<th>Type</th>
-<th>Editable</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">is_present</code></td>
-<td>boolean</td>
-<td>read-only</td>
-<td>Whether or not the <code class="prettyprint">&lt;user_id&gt;</code> is <strong>currently</strong> present at the chat</td>
-</tr>
-<tr>
-<td><code class="prettyprint">is_member</code></td>
-<td>boolean</td>
-<td>read-only</td>
-<td>Whether or not the <code class="prettyprint">&lt;user_id&gt;</code> is a <a title="Chat members" href="#chat-members">member of this chat</a></td>
 </tr>
 </tbody></table>
 
@@ -1631,7 +1601,7 @@ The following attributes also exists but they are <strong>deprecated</strong>, s
 <td style="text-align: left"><code class="prettyprint">auto_resume</code></td>
 <td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
 <td style="text-align: left">(none)</td>
-<td>If provided, then attempt to get an existing recent chat where the given user can join, instead of creating a new chat. In addition, we will automatically (and atomically) create a <a title="Chat members" href="#chat-members">membership</a> for this user and chat. <strong>NOTE</strong>: The “private chats” setting affects the decision whether to create or resume a chat.</td>
+<td>If provided, then attempt to get an existing recent chat where the given user can join, instead of creating a new chat. In addition, we will automatically (and atomically) create a <a title="Chat memberships" href="#chat-memberships">membership</a> for this user and chat. <strong>NOTE</strong>: The “private chats” setting affects the decision whether to create or resume a chat.</td>
 </tr>
 </tbody></table>
 
@@ -1639,11 +1609,11 @@ The following attributes also exists but they are <strong>deprecated</strong>, s
 Returns 200 if resumed an existing chat when <code class="prettyprint">auto_resume</code> parameter was provided.
 Returns 403 if you have no permission to the room and you are not a manager.</p>
 
-<p>This notifies the <a title="Socket API and channels" href="#socket-api">channels</a> of the chat, as well as appropriate channels of <a title="Chat members" href="#chat-members">chat members</a>.</p>
+<p>This notifies the <a title="Socket API and channels" href="#socket-api">channels</a> of the chat, as well as appropriate channels of <a title="Chat memberships" href="#chat-memberships">chat memberships</a>.</p>
 
-<h2 id="chat-members">Chat members</h2>
+<h2 id="chat-memberships">Chat memberships</h2>
 
-<p>The visitor as well as each user who have attended to the chat is added as a &ldquo;member&rdquo; to the chat.</p>
+<p>The visitor as well as each user who have attended to the chat (i.e. they are &ldquo;chat members&rdquo;) are represented with a <em>chat membership</em> objects.</p>
 
 <table><thead>
 <tr>
@@ -1654,31 +1624,31 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left"><code class="prettyprint">member_id</code></td>
 <td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a>/string</td>
-<td style="text-align: left">read-only</td>
+<td style="text-align: left"><strong>required</strong></td>
 <td>ID of the user or visitor being present at the chat.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">type</code></td>
+<td style="text-align: left"><code class="prettyprint">member_type</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left">read-only</td>
 <td>Either <code class="prettyprint">visitor</code> or <code class="prettyprint">user</code>.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">name</code></td>
+<td style="text-align: left"><code class="prettyprint">member_name</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left">read-only</td>
 <td>The name of the user/visitor as it would be displayed for the operator. For users this the actual name. For visitors this is any custom name, or <code class="prettyprint">null</code>.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">public_name</code></td>
+<td style="text-align: left"><code class="prettyprint">member_public_name</code></td>
 <td style="text-align: left">string</td>
 <td style="text-align: left">read-only</td>
 <td>The name of the user/visitor as it would be displayed for the visitor. This is user&rsquo;s alias if they have one, otherwise it is their real name. For visitors, this is any custom username (e.g. set by API data) or <code class="prettyprint">null</code></td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">avatar</code></td>
+<td style="text-align: left"><code class="prettyprint">member_avatar</code></td>
 <td style="text-align: left">object</td>
 <td style="text-align: left">read-only</td>
 <td>If the user/visitor has an avatar image, then this is is an object with <code class="prettyprint">id</code> and <code class="prettyprint">url</code> attributes. Otherwise this is <code class="prettyprint">null</code>.</td>
@@ -1708,10 +1678,16 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 <td>How many messages the user/visitor has sent to the chat. This may be 0, e.g. when operator has joined the chat but has not sent any message yet.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">is_present</code></td>
+<td style="text-align: left"><code class="prettyprint">is_participating</code></td>
 <td style="text-align: left">boolean</td>
 <td style="text-align: left"><strong>required</strong></td>
-<td>Whether or not the user/visitor is currently present at the chat.</td>
+<td>Whether or not the user/visitor has the chat &ldquo;open&rdquo;. In practise this reflects the state of the chat window. When the user/visitor closes the chat window, it is supposed that he is no more participating the chat (but the membership still remains)</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_present</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">read-only</td>
+<td>Whether or not the user/visitor is currently present. Equals the <code class="prettyprint">is_present</code> attribute of the member.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">composing_status</code></td>
@@ -1721,7 +1697,7 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 </tr>
 </tbody></table>
 
-<p>Changes to chat members are notified to the following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
+<p>Changes to chat memberships are notified to the following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
 
 <table><thead>
 <tr>
@@ -1730,7 +1706,7 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 </tr>
 </thead><tbody>
 <tr>
-<td><code class="prettyprint">/api/v5/client/visitors/&lt;visitor_id&gt;/chats/&lt;chat_id&gt;/members</code></td>
+<td><code class="prettyprint">/api/v5/client/visitors/&lt;visitor_id&gt;/chats/&lt;chat_id&gt;/memberships</code></td>
 <td>For each visitor of the chat</td>
 </tr>
 <tr>
@@ -1738,11 +1714,11 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 <td>For the chat member, if a visitor</td>
 </tr>
 <tr>
-<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/members</code></td>
+<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/memberships</code></td>
 <td>For each user member of the chat</td>
 </tr>
 <tr>
-<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/members</code></td>
+<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/memberships</code></td>
 <td>For the related room and each organization having access to that room</td>
 </tr>
 <tr>
@@ -1751,7 +1727,7 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 </tr>
 </tbody></table>
 
-<p>In addition, chat members affect the following attributes of a <a title="Chats" href="#chats">chat</a>, notifying its channels:</p>
+<p>In addition, chat memberships affect the following attributes of a <a title="Chats" href="#chats">chat</a>, notifying its channels:</p>
 
 <ul>
 <li><code class="prettyprint">member_count</code></li>
@@ -1762,49 +1738,55 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 <li><code class="prettyprint">present_visitor_member_count</code></li>
 </ul>
 
-<h3 id="get-a-collection-of-chat-members">Get a collection of chat members</h3>
-<pre class="highlight plaintext"><code>GET /api/v5/orgs/7f9e9580-095b-42c7-838c-c04e667b26f7/rooms/aad26fe2-c8f3-45dc-931b-4b0b5e06467d/chats/58f5055c-56e0-11e5-9354-6c4008c08dfe/members
+<h3 id="get-a-collection-of-chat-memberships">Get a collection of chat memberships</h3>
+<pre class="highlight plaintext"><code>GET /api/v5/orgs/7f9e9580-095b-42c7-838c-c04e667b26f7/rooms/aad26fe2-c8f3-45dc-931b-4b0b5e06467d/chats/58f5055c-56e0-11e5-9354-6c4008c08dfe/memberships
 </code></pre>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v5/orgs/7f9e9580-095b-42c7-838c-c04e667b26f7/chats/58f5055c-56e0-11e5-9354-6c4008c08dfe/members?cursor=45d9e7358e1249c491b4fa0212310f55"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://service.giosg.com/api/v5/orgs/7f9e9580-095b-42c7-838c-c04e667b26f7/chats/58f5055c-56e0-11e5-9354-6c4008c08dfe/memberships?cursor=45d9e7358e1249c491b4fa0212310f55"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"previous"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"378ad5a0-bb89-481b-978b-4268b368cfef"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"public_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer Service"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"member_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"378ad5a0-bb89-481b-978b-4268b368cfef"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"member_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"member_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"member_public_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer Service"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"member_avatar"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7f9cb877-0fd9-4c27-90b0-bd4c2842da3d"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/avatar/5ef1a0ef-8b61-4473-8706-9669e30b47e6.jpg"</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="nt">"chat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"58f5055c-56e0-11e5-9354-6c4008c08dfe"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T11:31:36.042"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"is_participating"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"is_present"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"composing_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"idle"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b90ef7c93484af4965a79ace7bc9a62"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"visitor"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"public_name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"member_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3b90ef7c93484af4965a79ace7bc9a62"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"member_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"visitor"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"member_name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"member_public_name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"member_avatar"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="nt">"chat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"58f5055c-56e0-11e5-9354-6c4008c08dfe"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-13T12:14:34.154"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"is_participating"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"is_present"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"composing_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"composing"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"message_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>You can get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the members of the chat:</p>
+<p>You can get a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the memberships of the chat:</p>
 
-<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/members</code></p>
+<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/memberships</code></p>
 
 <p>Or alternatively:</p>
 
-<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/members</code></p>
+<p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/memberships</code></p>
 
-<p>Also, as an alternative to list a user&rsquo;s <em>chats</em>, you may list their own <em>chat memberships</em>. Each result is a chat member resource for each of the chat of the user.</p>
+<p>Also, as an alternative to list a user&rsquo;s <em>chats</em>, you may list their own <em>chat memberships</em>. Each result is a chat member resource for each of the chat of the user:</p>
 
 <p><code class="prettyprint">GET /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chat_memberships</code></p>
 
@@ -1813,45 +1795,39 @@ Returns 403 if you have no permission to the room and you are not a manager.</p>
 <blockquote>
 <p>Example request for joining a user to a chat</p>
 </blockquote>
-<pre class="highlight plaintext"><code>POST /api/v5/orgs/39351090-2f16-49e0-ae14-96c9a3a721f2/rooms/adab695d-a648-42d6-b956-19efc1124e89/chats/62eb5cd5-5d52-4bb1-b711-ba31f864e775/members
+<pre class="highlight plaintext"><code>POST /api/v5/orgs/39351090-2f16-49e0-ae14-96c9a3a721f2/rooms/adab695d-a648-42d6-b956-19efc1124e89/chats/62eb5cd5-5d52-4bb1-b711-ba31f864e775/memberships
 </code></pre>
 
 <blockquote>
 <p>Example request payload</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ce771dbe-afbf-4e58-bbcb-9855ecacee9a"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"is_present"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"member_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ce771dbe-afbf-4e58-bbcb-9855ecacee9a"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"is_participating"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="nt">"composing_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"idle"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>You can add a user as a member to the chat by using the following endpoints.</p>
-
-<aside class="info">
-The <code>is_present</code> attribute of both visitors and operators is automatically set to <code>false</code> if the servers have not heard about them for a while, indicating that they have closed their browser tab or they have lost their connection. However, they will not be removed from the members.
-</aside>
+<p>You can add a user as a membership to the chat by using the following endpoints.</p>
 
 <p>If you are joining a user to a chat by a room, then use the following endpoint. It requires that you have a permission to the room. This can be used to join a chat that the user has not yet participated.</p>
 
-<p><code class="prettyprint">POST /api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/members</code></p>
+<p><code class="prettyprint">POST /api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/chats/&lt;chat_id&gt;/memberships</code></p>
 
-<p>The request object must contain the <code class="prettyprint">id</code> attribute, which is the ID of the user being joined.</p>
-
-<p>Also, by providing a <code class="prettyprint">is_present</code> attribute with value <code class="prettyprint">true</code> you can make the user to be currently present at the chat.</p>
+<p>The request object must contain the <code class="prettyprint">member_id</code> attribute, which is the ID of the user being joined. You also need to define whether you want to be participating the chat with <code class="prettyprint">is_participating</code>. You may usually want to set this <code class="prettyprint">true</code> when creating a new membership. Also, the <code class="prettyprint">composing_status</code> is required, but may usually want to set it initially to <code class="prettyprint">idle</code>.</p>
 
 <p>Alternatively, you may use this endpoint:</p>
 
 <p><code class="prettyprint">PUT /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chat_memberships/&lt;chat_id&gt;</code></p>
 
-<p>In this case you do not have to provide the <code class="prettyprint">id</code> attribute.</p>
+<p>In this case you do not have to provide the <code class="prettyprint">member_id</code> attribute. It is automatically determined from <code class="prettyprint">&lt;user_id&gt;</code>.</p>
 
-<p>Returns 201 if the user was added to the chat members.
-Returns 200 if the user was already a chat member.
-Returns 400 if the user cannot be joined to the chat or their presence cannot be updated.</p>
+<p>Returns 201 if a new chat membership was added for the user.
+Returns 200 if the user already had a chat membership for the chat.
+Returns 400 if the chat membership cannot be created for this user or chat.</p>
 
 <aside class="info">
-If the <code>is_present</code> attribute was set to <code>true</code> and the related chat was previously in waiting state, then <code>is_waiting</code> of the chat is automatically changed to <code>false</code>.
+If the <code>is_participating</code> attribute was set to <code>true</code> and the related chat was previously in waiting state, then <code>is_waiting</code> of the chat is automatically changed to <code>false</code>!
 </aside>
 
 <p>These endpoints accept the following URL parameters:</p>
@@ -1868,15 +1844,15 @@ If the <code>is_present</code> attribute was set to <code>true</code> and the re
 <td style="text-align: left"><code class="prettyprint">exclusive</code></td>
 <td style="text-align: left"><code class="prettyprint">true</code>/<code class="prettyprint">false</code></td>
 <td style="text-align: left"><code class="prettyprint">false</code></td>
-<td>This has effect only, if you are setting <code class="prettyprint">is_present</code> with value <code class="prettyprint">true</code>. This makes the join fail with 400 if there is already <strong>at least one other user currently present</strong> at the chat.</td>
+<td>This has effect only, if you are setting <code class="prettyprint">is_participating</code> with value <code class="prettyprint">true</code>. This makes the join fail with 400 if there is already <strong>at least one participating user</strong> at the chat who is also <strong>currently present</strong>.</td>
 </tr>
 </tbody></table>
 
 <aside class="success">
-Use the <code>exclusive</code> parameter to prevent multiple operators taking the chat simultaneously.
+Use the <code>exclusive</code> parameter to prevent multiple operators taking the chat simultaneously!
 </aside>
 
-<p>This request sends notifications to the <a title="Socket API and channels" href="#socket-api">channels</a> of the chat members as well as the related chat.</p>
+<p>This request sends notifications to the <a title="Socket API and channels" href="#socket-api">channels</a> of the chat memberships as well as the related chat.</p>
 
 <h3 id="change-operator-chat-status">Change operator chat status</h3>
 
@@ -1890,22 +1866,24 @@ Use the <code>exclusive</code> parameter to prevent multiple operators taking th
 <p>Example request payload</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"is_present"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"composing_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"idle"</span><span class="w">
+  </span><span class="nt">"is_participating"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"composing_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"typing"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>You can make a user present or not present at a chat like described in the previous section:</p>
+<p>The participation status should be refreshed when the user opens or closes a chat. In addition, you should frequently notify the backend about the composing status of the user. For example, you should make a request when the user starts typing a message for the chat (and more requests frequently if the user keeps typing, stops typing or clears the composition area).</p>
+
+<p>You can change the chat status of the user similarly than described in the previous session:</p>
 
 <p><code class="prettyprint">PUT /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chat_memberhips/&lt;chat_id&gt;</code></p>
 
-<p>You should provide the <code class="prettyprint">is_present</code> attribute with either <code class="prettyprint">true</code> or <code class="prettyprint">false</code> value, indicating whether or not the user should be currently present at the chat. Also, you should provide the <code class="prettyprint">composing_status</code> attribute describing whether or not the user is typing or has typed a message.</p>
+<p>You should provide the <code class="prettyprint">is_participating</code> attribute with either <code class="prettyprint">true</code> or <code class="prettyprint">false</code> value, indicating whether or not the user should be currently present at the chat. Also, you should provide the <code class="prettyprint">composing_status</code> attribute describing whether or not the user is typing or has typed a message.</p>
 
 <p>The parameters and response codes are the same than described in the previous section.</p>
 
 <h2 id="chat-messages">Chat messages</h2>
 
-<p>Chat consists of a number of messages. Some of them are actual typed messages from either operator or visitor, and some of them are automatically added events about the chat, especially when an operator has <a title="Chat members" href="#chat-members">joined or leaved</a> the chat.</p>
+<p>Chat consists of a number of messages. Some of them are actual typed messages from either operator or visitor, and some of them are automatically added events about the chat, especially when an operator has <a title="Chat memberships" href="#chat-memberships">joined or leaved</a> the chat.</p>
 
 <table><thead>
 <tr>
@@ -2002,7 +1980,7 @@ Use the <code>exclusive</code> parameter to prevent multiple operators taking th
 <li><code class="prettyprint">is_waiting</code></li>
 </ul>
 
-<p>In addition, sending chat messages affect the following attributes of a <a title="Chat members" href="#chat-members">chat member</a>, notifying its related channels.</p>
+<p>In addition, sending chat messages affect the following attributes of a <a title="Chat memberships" href="#chat-memberships">chat membership</a>, notifying its related channels.</p>
 
 <ul>
 <li><code class="prettyprint">message_count</code></li>
@@ -2080,7 +2058,7 @@ Use the <code>exclusive</code> parameter to prevent multiple operators taking th
 
 <p><code class="prettyprint">POST /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/chats/&lt;chat_id&gt;/messages</code></p>
 
-<p>The <code class="prettyprint">&lt;user_id&gt;</code> will be set as the sender of the message. If the sender is not yet added as a member of this chat, then a new <a title="Chat members" href="#chat-members">member</a> is automatically created.</p>
+<p>The <code class="prettyprint">&lt;user_id&gt;</code> will be set as the sender of the message.</p>
 
 <aside class="warning">
 The user must be a member of the chat in order to send a message. Otherwise a 404 response is returned, as the chat was not found in the chats of the user.
@@ -2088,7 +2066,7 @@ The user must be a member of the chat in order to send a message. Otherwise a 40
 
 <p>If the chat was previously in waiting state, then <code class="prettyprint">is_waiting</code> of the chat is automatically changed to <code class="prettyprint">false</code>.</p>
 
-<p>This notifies any channels of chat messages, as well as channels of the related <a title="Chats" href="#chats">chat</a> and <a title="Chat members" href="#chat-members">chat members</a> accordingly.</p>
+<p>This notifies any channels of chat messages, as well as channels of the related <a title="Chats" href="#chats">chat</a> and <a title="Chat memberships" href="#chat-memberships">chat memberships</a> accordingly.</p>
 
           <h1 id="partnership-api">Partnership API</h1>
 
