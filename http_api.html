@@ -268,13 +268,13 @@ If you need to load all resources using an endpoint returning paginated collecti
 <td style="text-align: left"><code class="prettyprint">is_online</code></td>
 <td style="text-align: left">boolean</td>
 <td style="text-align: left">read-only</td>
-<td>Whether the user is currently in online status as an operator, based on the most recent information about the user. This can only be <code class="prettyprint">true</code> if <code class="prettyprint">is_online_enabled</code> is <code class="prettyprint">true</code> <em>and</em> the user is considered signed in. Otherwise this is <code class="prettyprint">false</code>.</td>
+<td>Whether the user is currently in online status as an operator, based on the most recent information about the user. This can only be <code class="prettyprint">true</code> if <code class="prettyprint">is_online_enabled</code> is <code class="prettyprint">true</code> <em>and</em> the user is considered signed in. Otherwise this is <code class="prettyprint">false</code>. See <a title="User clients" href="#user-clients">user clients</a> for more information.</td>
 </tr>
 <tr>
-<td style="text-align: left"><code class="prettyprint">is_signed_in</code></td>
+<td style="text-align: left"><code class="prettyprint">is_present</code></td>
 <td style="text-align: left">boolean</td>
 <td style="text-align: left">read-only</td>
-<td>Whether the user is currenlty logged in to the service, based on the most recent information about the user.</td>
+<td>Whether the user is currenlty present, based on the most recent information about the user. See <a title="User clients" href="#user-clients">user clients</a> for more information.</td>
 </tr>
 <tr>
 <td style="text-align: left"><code class="prettyprint">current_chat_count</code></td>
@@ -395,6 +395,80 @@ It is a common use case to first find out your own user or your organization&rsq
 <aside class="warning">
 You are allowed to update your own details. You may only change other users&rsquo; details if you have management rights for the organization. Otherwise this endpoint will result in a 403 response.
 </aside>
+
+<h2 id="user-clients">User clients</h2>
+
+<p>Users have two special attributes that depends of whether or not the user has announced his presence: <code class="prettyprint">is_online</code> and <code class="prettyprint">is_present</code>. Their values may only be <code class="prettyprint">true</code> if there is at least one <em>user client</em> we have heard about. The system is remembering when the client has last time announced about themselves and automatically determines if the related user is present. Also, user may only be online if they are also present.</p>
+
+<p>What is a &ldquo;client&rdquo; depends on the type of the app:</p>
+
+<ul>
+<li>For web browser (either mobile or desktop) each browser <em>tab</em> or <em>window</em> is their own &ldquo;client&rdquo;. It is recommended that you generate a new client ID when the page loads and then keep it in memory as while the page is open. There is no need to persist the ID, e.g. in a web storage. The client will be automatically forgotten when expired!</li>
+<li>For mobile apps each app installation is their own &ldquo;client&rdquo;. You should generate the ID on installation (or when signing in with the app) and then persist it until uninstallation (or sign out).</li>
+</ul>
+
+<p>A user client has the following attributes:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Editable</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">read-only</td>
+<td>An identifier for the client that you have generated.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">rooms</code></td>
+<td style="text-align: left">array of <a title="Resource identifiers" href="#resource-identifiers">IDs</a></td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>An array of <a title="Rooms and domains" href="#rooms-and-domains">room IDs</a> at which this client is currently present at. The user must have access for each of the listed rooms. The list may be empty, indicating that the user is not serving online at any room, but is still available e.g. for other organization members.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">expires_in</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left"><strong>required</strong></td>
+<td>The number of seconds the system should keep this client present. This also defines how often you need to refresh the client&rsquo;s presence status. Longer timeout allows you to make less refresh requests. On the other hand, with longer timeouts it takes longer to notice that your client has been closed, shut down, or disconnected from the network. We recommend shorter timeouts for browsers (e.g. 60 seconds) and longer timeouts for mobile apps. You may change this value for the client. Only the latest expiration time applies.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">expires_at</code></td>
+<td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
+<td style="text-align: left">read-only</td>
+<td>When the client will expire, calculated from the <code class="prettyprint">expires_in</code>.</td>
+</tr>
+</tbody></table>
+
+<h3 id="refresh-user-client-presence">Refresh user client presence</h3>
+
+<aside class="info">
+You need to frequently tell the server about the presence of your client, otherwise the user will be automatiaclly switched to &ldquo;not present&rdquo; and &ldquo;offline&rdquo; state.
+</aside>
+
+<p>You refresh one of your clients&rsquo; presence:</p>
+
+<p><code class="prettyprint">PUT /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/clients/&lt;client_id&gt;</code></p>
+
+<p>The <code class="prettyprint">&lt;client_id&gt;</code> is the ID that you must generate for your client. It must be a non-empty string (max. 128 characters) that uniquelly identifies the client for the user. The ID must only contain letters A-Z (upper or lower case), digits 0-9, dashes (<code class="prettyprint">-</code>) and underscores (<code class="prettyprint">_</code>). <strong>We strongly recommended that you generate a random <a title="Universally Unique Identifier" href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a> for your client.</strong></p>
+
+<p>You must a payload object with the <code class="prettyprint">rooms</code> attribute, describing at which rooms your client is currently present. This overwrites any previously sent rooms list. <strong>You can only be online at the rooms that you list here!</strong></p>
+
+<p>You must also provide the <code class="prettyprint">expires_in</code> attribute. Please note that <strong>you should refresh the client presence again before this number of seconds have elapsed</strong> in order to keep your client online. You should consider your client devices performance for this.</p>
+
+<p>It returns 201 status if this was a new client, or any previous client with the same ID have expired.
+It returns 200 status if the client was already present and its presence is now refreshed.
+It returns 400 if the client ID was invalid.
+It returns 403 if the you have no access to the organization or to the user.</p>
+
+<h3 id="remove-user-client-presence">Remove user client presence</h3>
+
+<p>Sometimes you might want to &ldquo;expire&rdquo; a client immediately, e.g. when a user signs out:</p>
+
+<p><code class="prettyprint">DELETE /api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;/clients/&lt;client_id&gt;</code></p>
 
 <h2 id="user-preferences">User preferences</h2>
 
