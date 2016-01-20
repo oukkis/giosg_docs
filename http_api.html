@@ -1051,7 +1051,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>Get a single room object that your organization has access to, by its ID. This may be a shared room.</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;</code></p>
 
 <p>This endpoint accepts the following GET parameters.</p>
 
@@ -1077,7 +1077,7 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>Return a <a title="Paginated collections" href="#paginated-collections">paginated collection</a> of all the <a title="Rooms and domains" href="#rooms-and-domains">room</a> resources you have access to, including any shared rooms:</p>
 
-<p><code class="prettyprint">GET https://service.giosg.com/api/v5/rooms</code></p>
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/rooms</code></p>
 
 <table><thead>
 <tr>
@@ -1117,15 +1117,15 @@ Deleting a team will immediately clear all the memberships from the team. It wil
 
 <p>Create a new custom room or a domain room by making a <code class="prettyprint">POST</code> request, providing the <a title="Rooms and domains" href="#rooms-and-domains">room object</a> as a payload. By providing the <code class="prettyprint">domain</code> attribute with non-null value will create a new domain room.</p>
 
-<p><code class="prettyprint">POST https://service.giosg.com/api/v5/rooms</code></p>
+<p><code class="prettyprint">POST https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/rooms</code></p>
 
 <h3 id="update-a-room">Update a room</h3>
 
 <p>You may update the editable attributes of your own room by making either a <code class="prettyprint">PATCH</code> (update a subset of attributes) or <code class="prettyprint">POST</code> request (update all the attributes).</p>
 
-<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
+<p><code class="prettyprint">PUT https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;</code></p>
 
-<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
+<p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;</code></p>
 
 <h3 id="delete-a-room">Delete a room</h3>
 
@@ -1135,7 +1135,7 @@ Deleting a room will immediately unshare it from your partners! Even though your
 
 <p>You may delete one of your own rooms by making a <code class="prettyprint">DELETE</code> request.</p>
 
-<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/rooms/&lt;room_id&gt;</code></p>
+<p><code class="prettyprint">DELETE https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;</code></p>
 
           <h1 id="visitors-api">Visitors API</h1>
 
