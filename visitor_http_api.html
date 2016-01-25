@@ -201,6 +201,54 @@ If you need to load all resources using an endpoint returning paginated collecti
 </tr>
 </tbody></table>
 
+<h2 id="online-users-in-a-room">Online users in a Room</h2>
+
+<p>Visitors can fetch a collection of online users in a room</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Attribute</th>
+<th style="text-align: left">Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code class="prettyprint">id</code></td>
+<td style="text-align: left"><a title="Resource identifiers" href="#resource-identifiers">ID</a></td>
+<td>Unique identifier</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">public_name</code></td>
+<td style="text-align: left">string</td>
+<td>The name of the user as it would be displayed for the visitor. This is user&rsquo;s alias if they have one, otherwise it is their real name.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">avatar</code></td>
+<td style="text-align: left">object</td>
+<td>The avatar of the user as an object. It contains attributes <code class="prettyprint">id</code>and <code class="prettyprint">url</code>. This is <code class="prettyprint">null</code> if the user has no avatar.</td>
+</tr>
+</tbody></table>
+
+<h3 id="retrieve-a-list-of-online-users-in-a-room">Retrieve a list of online users in a room</h3>
+
+<p><code class="prettyprint">GET https://service.giosg.com/api/v5/client/rooms/&lt;room_id&gt;/online_users</code></p>
+
+<h3 id="channels">Channels</h3>
+
+<p>Any changes to rooms are notified to the following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
+
+<table><thead>
+<tr>
+<th>Channel</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/api/v5/client/rooms/&lt;room_id&gt;/online_users</code></td>
+<td>Changes to online user collection in a single room will be broadcasted to this channel</td>
+</tr>
+</tbody></table>
+
           <h1 id="chat-api">Chat API</h1>
 
 <h2 id="chats">Chats</h2>

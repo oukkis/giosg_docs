@@ -396,6 +396,26 @@ It is a common use case to first find out your own user or your organization&rsq
 You are allowed to update your own details. You may only change other users&rsquo; details if you have management rights for the organization. Otherwise this endpoint will result in a 403 response.
 </aside>
 
+<h3 id="channels">Channels</h3>
+
+<p>Changes to users will be broadcasted to following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
+
+<table><thead>
+<tr>
+<th>Channels</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">api/v5/orgs/&lt;organization_id&gt;/users</code></td>
+<td>Changes to any user in the organization</td>
+</tr>
+<tr>
+<td><code class="prettyprint">api/v5/orgs/&lt;organization_id&gt;/users/&lt;user_id&gt;</code></td>
+<td>Changes to a single user in the organization</td>
+</tr>
+</tbody></table>
+
 <h2 id="user-clients">User clients</h2>
 
 <p>Users have two special attributes that depends of whether or not the user has announced his presence: <code class="prettyprint">is_online</code> and <code class="prettyprint">is_present</code>. Their values may only be <code class="prettyprint">true</code> if there is at least one <em>user client</em> we have heard about. The system remembers when the client has last time announced about themselves and automatically determines if the related user is present. Also, user may only be online if they are also present.</p>
@@ -670,6 +690,18 @@ User preferences are created and deleted with the user. They can only be updated
 <td>Business ID of the organization, if any, or <code class="prettyprint">null</code></td>
 </tr>
 <tr>
+<td style="text-align: left"><code class="prettyprint">is_online</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">read-only</td>
+<td>Whether any user from the organization is online. See <a title="User clients" href="#user-clients">user clients</a> for more information.</td>
+</tr>
+<tr>
+<td style="text-align: left"><code class="prettyprint">is_present</code></td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">read-only</td>
+<td>Whether any user from the organization currently present. See <a title="User clients" href="#user-clients">user clients</a> for more information.</td>
+</tr>
+<tr>
 <td style="text-align: left"><code class="prettyprint">created_at</code></td>
 <td style="text-align: left"><a title="Date/time format" href="#date-time-format">date/time</a></td>
 <td style="text-align: left">read-only</td>
@@ -698,6 +730,22 @@ User preferences are created and deleted with the user. They can only be updated
 <p><code class="prettyprint">PATCH https://service.giosg.com/api/v5/orgs/&lt;organization_id&gt;</code></p>
 
 <p>When using <code class="prettyprint">PUT</code> you need to provide an object as a request payload that contains the changed attributes the <a title="Organizations" href="#organizations">organization</a>. When using <code class="prettyprint">PATCH</code>, you may omit those attributes that you do not want to change.</p>
+
+<h3 id="channels">Channels</h3>
+
+<p>Changes to organizations will be broadcasted to following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
+
+<table><thead>
+<tr>
+<th>Channels</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;</code></td>
+<td>Changes to a single organization</td>
+</tr>
+</tbody></table>
 
           <h1 id="teams-api">Teams API</h1>
 
