@@ -1223,6 +1223,11 @@ Deleting a room will immediately unshare it from your partners! Even though your
 <td style="text-align: left">Identifier for the latest session for the visitor in this room</td>
 </tr>
 <tr>
+<td style="text-align: left"><code class="prettyprint">priority</code></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Current priority of the visitor</td>
+</tr>
+<tr>
 <td style="text-align: left"><code class="prettyprint">visit_count</code></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">During how many distinct sessions the visitor has been active on this room.</td>
@@ -1397,6 +1402,22 @@ The following attributes also exists but they are <strong>deprecated</strong>, s
 </tr>
 </tbody></table>
 
+<h3 id="get-a-a-groups-of-priority-visitor-at-a-room">Get a a groups of priority visitor at a room</h3>
+
+<p>Returns a subset of room visitors. This collection contains visitors that have the most priority.</p>
+
+<p><code class="prettyprint">/api/v5/orgs/&lt;org_id&gt;/rooms/&lt;room_id&gt;/priority_visitors</code></p>
+
+<p>This API endpoint returns a <a title="Paginated collections" href="#paginated-collections">paginated collection</a>.</p>
+
+<h3 id="get-a-single-visitor-at-a-room">Get a single visitor at a room</h3>
+
+<p>You can get a single visitor at the given room.</p>
+
+<p><code class="prettyprint">/api/v5/orgs/&lt;org_id&gt;/rooms/&lt;room_id&gt;/present_visitors/&lt;visitor_id&gt;</code></p>
+
+<h3 id="channels">Channels</h3>
+
 <p>Changes to a visitor is notified to the following <a title="Socket API and channels" href="#socket-api">channels</a>:</p>
 
 <table><thead>
@@ -1406,11 +1427,11 @@ The following attributes also exists but they are <strong>deprecated</strong>, s
 </tr>
 </thead><tbody>
 <tr>
-<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/online_visitors</code></td>
-<td>For each room where the visitor is currently online, and for each organization having access to that room. <strong>WARNING!</strong> This channel may get a large amount of notifications for rooms with heavy traffic!</td>
+<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/priority_visitors</code></td>
+<td>For each room where the visitor is currently online, and for each organization having access to that room.</td>
 </tr>
 <tr>
-<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/online_visitors/&lt;visitor_id&gt;</code></td>
+<td><code class="prettyprint">/api/v5/orgs/&lt;organization_id&gt;/rooms/&lt;room_id&gt;/present_visitors/&lt;visitor_id&gt;</code></td>
 <td>For a changed visitor, for each room where the visitor is currently online, and for each organization having access to that room</td>
 </tr>
 </tbody></table>
@@ -1418,22 +1439,6 @@ The following attributes also exists but they are <strong>deprecated</strong>, s
 <p>Channels are notified with a <code class="prettyprint">added</code> notification whenever a visitor becomes online at that specific room (i.e. the <code class="prettyprint">is_online</code> attribute on the <a title="Room visitors" href="#room-visitors">room visitor</a> changes). Similarly, it is notified with a <code class="prettyprint">removed</code> notification whenever we have not heard about the visitor (in that specific room) for a while, making the visitor offline at the room.</p>
 
 <p>If any attribute of the room visitor changes, the channel receives a <code class="prettyprint">changed</code> notification.</p>
-
-<h3 id="get-a-collection-of-visitors-currently-online-at-a-room">Get a collection of visitors currently online at a room</h3>
-
-<p>You can get a collection of visitors that are currently online at a room.</p>
-
-<p><code class="prettyprint">/api/v5/orgs/&lt;org_id&gt;/rooms/&lt;room_id&gt;/online_visitors</code></p>
-
-<p>This API endpoint returns a <a title="Paginated collections" href="#paginated-collections">paginated collection</a>.</p>
-
-<p><strong>TODO</strong>: The ordering??</p>
-
-<h3 id="get-a-single-visitor-at-a-room">Get a single visitor at a room</h3>
-
-<p>You can get a single visitor at the given room.</p>
-
-<p><code class="prettyprint">/api/v5/orgs/&lt;org_id&gt;/rooms/&lt;room_id&gt;/visitors/&lt;visitor_id&gt;</code></p>
 
           <h1 id="chat-api">Chat API</h1>
 
